@@ -37,9 +37,10 @@
     :root {
       --night:   #0C1A16;
       --night2:  #081210;
-      --blue:    #2E7D72;
-      --blue2:   #1F5E59;
-      --warm:    #F5F7F6;
+      --accent:  #2E7D72;
+      --accent2: #1F5E59;
+      --accent3: #46A594;
+      --warm:    #F6F7F6;
       --white:   #FFFFFF;
       --ink:     #0F1A17;
       --ink2:    #3C4845;
@@ -69,18 +70,18 @@
 
     /* ── Fade-up ── */
     .fade-up {
-      opacity: 0; transform: translateY(20px);
+      opacity: 0; transform: translateY(22px);
       transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
 
     /* ── Eyebrow ── */
     .eyebrow {
-      font-size: 10.5px; font-weight: 700; letter-spacing: 2.2px;
-      text-transform: uppercase; color: var(--blue); margin-bottom: 16px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
       display: block;
     }
-    .eyebrow-light { color: rgba(80,180,166,0.85); }
+    .eyebrow-light { color: rgba(70,165,148,0.85); }
 
     /* ── Nav ── */
     nav {
@@ -92,23 +93,23 @@
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     .nav-logo { font-size: 17px; font-weight: 800; color: #fff; letter-spacing: -0.3px; text-decoration: none; }
-    .nav-logo em { font-style: normal; color: var(--blue); }
+    .nav-logo em { font-style: normal; color: var(--accent); }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 8px;
-      background: var(--blue); color: #fff; text-decoration: none;
+      background: var(--accent); color: #fff; text-decoration: none;
       font-size: 13.5px; font-weight: 600; padding: 9px 20px;
       border-radius: 8px; transition: background 0.2s, transform 0.15s;
     }
-    .nav-cta:hover { background: var(--blue2); transform: translateY(-1px); }
+    .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
 
     /* ── Buttons ── */
     .btn-primary {
       display: inline-flex; align-items: center; gap: 9px;
-      background: var(--blue); color: #fff; text-decoration: none;
+      background: var(--accent); color: #fff; text-decoration: none;
       font-size: 15px; font-weight: 700; padding: 14px 28px;
       border-radius: 10px; transition: background 0.2s, transform 0.15s; white-space: nowrap;
     }
-    .btn-primary:hover { background: var(--blue2); transform: translateY(-2px); }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
     .btn-ghost {
       display: inline-flex; align-items: center; gap: 9px;
       background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.68); text-decoration: none;
@@ -126,7 +127,7 @@
       background: var(--night);
       display: flex; align-items: center; justify-content: center;
       text-align: center;
-      padding: 120px 52px 108px;
+      padding: 140px 52px 120px;
       position: relative; overflow: hidden;
     }
     #heroMesh {
@@ -136,221 +137,261 @@
     #hero::before {
       content: ''; position: absolute; inset: 0; z-index: 1;
       background:
-        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-      background-size: 72px 72px, 72px 72px;
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 80px 80px;
       pointer-events: none;
     }
-    /* Vignette — soften grid edges */
     #hero::after {
       content: ''; position: absolute; inset: 0; z-index: 2;
-      background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(12,26,22,0.55) 100%);
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(12,26,22,0.6) 100%);
       pointer-events: none;
     }
 
-    .hero-inner { position: relative; z-index: 3; max-width: 780px; }
+    .hero-inner { position: relative; z-index: 3; max-width: 820px; }
 
     .hero-tag {
       display: inline-flex; align-items: center; gap: 9px;
-      font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: rgba(80,180,166,0.88);
-      margin-bottom: 40px;
+      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
+      text-transform: uppercase; color: rgba(70,165,148,0.85);
+      margin-bottom: 44px;
     }
-    .hero-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
+    .hero-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
     .hero-h1 {
-      font-size: clamp(56px, 8.5vw, 108px);
+      font-size: clamp(52px, 8.5vw, 112px);
       font-weight: 900; color: #fff;
-      line-height: 1.0; letter-spacing: -4.5px; margin-bottom: 32px;
+      line-height: 0.98; letter-spacing: -4.5px; margin-bottom: 36px;
     }
-    .hero-h1 em { font-style: normal; color: var(--blue); }
+    .hero-h1 em { font-style: normal; color: var(--accent3); }
 
     .hero-sub {
       font-size: clamp(16px, 1.3vw, 18.5px);
-      color: rgba(255,255,255,0.54);
-      line-height: 1.76; max-width: 420px; margin: 0 auto 52px;
+      color: rgba(255,255,255,0.44);
+      line-height: 1.76; max-width: 440px; margin: 0 auto 56px;
     }
 
     .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-    .hero-note { font-size: 12.5px; color: rgba(255,255,255,0.17); }
+    .hero-note { font-size: 12.5px; color: rgba(255,255,255,0.15); }
 
     /* ══════════════════════════════════
-       TRUST
+       REALITEIT — compact stat blocks
     ══════════════════════════════════ */
-    #trust { background: var(--warm); padding: 80px 64px; }
-    .trust-inner { max-width: 1040px; margin: 0 auto; }
-    .trust-header { margin-bottom: 40px; }
-    .trust-title {
-      font-size: clamp(22px, 2.4vw, 30px); font-weight: 800;
-      color: var(--ink); letter-spacing: -0.9px; line-height: 1.18; max-width: 520px;
+    #realiteit {
+      background: var(--white);
+      padding: 72px 52px;
+      border-bottom: 1px solid var(--border);
     }
-
-    .trust-grid {
-      display: grid; grid-template-columns: repeat(3,1fr);
+    .real-inner { max-width: 1040px; margin: 0 auto; }
+    .real-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 1px; background: var(--border);
-      border-radius: 20px; overflow: hidden;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+      border-radius: 18px; overflow: hidden;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.05);
     }
-    .trust-card {
-      background: var(--white); padding: 44px 36px;
-      position: relative; overflow: hidden; cursor: default;
+    .real-card {
+      background: var(--white); padding: 48px 36px;
+      text-align: center;
     }
-    .trust-card::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle 220px at var(--mx,50%) var(--my,50%), rgba(46,125,114,0.055), transparent);
-      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    .real-num {
+      font-size: clamp(48px, 6vw, 72px); font-weight: 900;
+      color: var(--ink); letter-spacing: -3px; line-height: 1;
+      margin-bottom: 12px;
     }
-    .trust-card:hover::before { opacity: 1; }
-
-    .trust-stat {
-      font-size: clamp(62px, 7.5vw, 92px); font-weight: 900;
-      color: var(--ink); letter-spacing: -4px; line-height: 1; margin-bottom: 16px;
+    .real-num em {
+      font-style: normal; font-size: 0.6em;
+      color: var(--ink3); letter-spacing: -1px;
     }
-    .trust-stat-word {
-      font-size: clamp(32px, 3.8vw, 52px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.08; margin-bottom: 16px;
+    .real-claim {
+      font-size: 14px; font-weight: 500; color: var(--ink3);
+      line-height: 1.5; max-width: 220px; margin: 0 auto;
     }
-    .trust-stat-word em { color: var(--blue); font-style: normal; }
-    .trust-claim { font-size: 13.5px; font-weight: 500; color: var(--ink3); line-height: 1.52; }
 
     /* ══════════════════════════════════
        PROBLEM
     ══════════════════════════════════ */
     #pijnpunten {
-      background: var(--white); padding: 80px 64px;
-      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--warm); padding: 88px 52px;
     }
     .pain-inner { max-width: 1040px; margin: 0 auto; }
     .pain-top {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 64px; margin-bottom: 52px; align-items: start;
+      gap: 72px; margin-bottom: 56px; align-items: start;
     }
     .pain-left { position: sticky; top: 88px; }
     .pain-headline {
-      font-size: clamp(36px, 4.6vw, 58px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2.5px; line-height: 1.07;
+      font-size: clamp(34px, 4.2vw, 54px); font-weight: 900;
+      color: var(--ink); letter-spacing: -2.5px; line-height: 1.06;
     }
-    .pain-text { font-size: clamp(15px, 1.15vw, 16.5px); color: var(--ink2); line-height: 1.84; }
-    .pain-text p + p { margin-top: 20px; }
-    .pain-callout { font-size: clamp(16px, 1.3vw, 18px); font-weight: 700; color: var(--ink); }
+    .pain-text { font-size: 15.5px; color: var(--ink2); line-height: 1.84; }
+    .pain-text p + p { margin-top: 18px; }
+    .pain-callout { font-size: 16px; font-weight: 700; color: var(--ink); }
     .pain-callout-major {
-      font-size: clamp(18px, 1.8vw, 24px); font-weight: 900;
-      color: var(--ink); letter-spacing: -0.5px; line-height: 1.32;
-      padding: 20px 24px; background: var(--warm);
-      border-radius: 10px; border-left: 3px solid var(--blue);
-      margin-top: 24px;
+      font-size: clamp(17px, 1.6vw, 22px); font-weight: 800;
+      color: var(--ink); letter-spacing: -0.3px; line-height: 1.36;
+      padding: 22px 24px; background: var(--white);
+      border-radius: 12px; border-left: 3px solid var(--accent);
+      margin-top: 22px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
     }
     .pull-quote {
-      font-size: clamp(17px, 1.6vw, 21px); font-weight: 600;
+      font-size: clamp(17px, 1.5vw, 20px); font-weight: 600;
       color: var(--ink2); line-height: 1.52; letter-spacing: -0.2px;
       padding: 28px 0 28px 28px; border-left: 2px solid var(--border2);
-      margin-bottom: 24px; font-style: italic;
+      margin-bottom: 20px; font-style: italic;
     }
-    .pain-closing { font-size: clamp(14.5px, 1.05vw, 16px); color: var(--ink3); line-height: 1.80; max-width: 620px; }
+    .pain-closing { font-size: 14.5px; color: var(--ink3); line-height: 1.80; max-width: 620px; }
 
     /* ══════════════════════════════════
-       SOLUTION
+       IMPACT STATEMENT
     ══════════════════════════════════ */
-    #oplossing { background: var(--white); padding: 88px 64px; border-top: 1px solid var(--border); }
-    .sol-inner { max-width: 1040px; margin: 0 auto; }
-
-    .sol-intro { max-width: 700px; margin-bottom: 60px; }
-    .sol-title {
-      font-size: clamp(28px, 3.4vw, 46px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 22px;
+    #impact {
+      background: var(--white);
+      padding: 100px 52px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
-    .sol-intro-text { display: flex; flex-direction: column; gap: 12px; }
-    .sol-intro-text p { font-size: 16px; color: var(--ink2); line-height: 1.80; }
-
-    .sol-body { display: grid; grid-template-columns: 1fr 300px; gap: 80px; align-items: start; }
-
-    .sol-features-lead {
-      font-size: 10.5px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--blue);
-      display: block; margin-bottom: 20px;
+    .impact-inner { max-width: 780px; margin: 0 auto; }
+    .impact-text {
+      font-size: clamp(28px, 4vw, 48px); font-weight: 900;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.12;
     }
-
-    .sol-list { display: flex; flex-direction: column; }
-    .sol-item {
-      display: flex; gap: 18px; align-items: flex-start;
-      padding: 18px 14px; margin: 0 -14px;
-      border-bottom: 1px solid var(--border); border-radius: 10px;
-      transition: background 0.18s;
-    }
-    .sol-item:last-child { border-bottom: none; }
-    .sol-item:hover { background: var(--warm); }
-
-    .sol-item-num {
-      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-      color: var(--border2); flex-shrink: 0; margin-top: 3px; min-width: 20px;
-    }
-    .sol-item-key .sol-item-num { color: var(--blue); }
-    .sol-item-title { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.30; margin-bottom: 5px; }
-    .sol-item-key .sol-item-title { font-weight: 800; }
-    .sol-item-desc { font-size: 13px; color: var(--ink3); line-height: 1.62; }
-
-    .sol-closing {
-      position: sticky; top: 88px;
-      background: var(--warm); border: 1px solid var(--border);
-      border-radius: 16px; padding: 32px 28px;
-    }
-    .sol-closing-lead {
-      font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px;
-      text-transform: uppercase; color: var(--ink3); margin-bottom: 14px; display: block;
-    }
-    .sol-closing-quote {
-      font-size: 17px; font-weight: 800; color: var(--ink);
-      line-height: 1.44; letter-spacing: -0.3px;
-      border-left: 3px solid var(--blue); padding-left: 16px;
-      margin-bottom: 20px; font-style: normal;
-    }
-    .sol-closing-text { font-size: 13px; color: var(--ink3); line-height: 1.74; }
+    .impact-text em { font-style: normal; color: var(--accent); }
 
     /* ══════════════════════════════════
        ABOUT
     ══════════════════════════════════ */
     #over {
-      background: var(--warm); padding: 80px 64px;
-      border-top: 1px solid var(--border);
+      background: var(--warm); padding: 80px 52px;
     }
     .over-inner {
       max-width: 1040px; margin: 0 auto;
-      display: grid; grid-template-columns: 240px 1fr;
-      gap: 72px; align-items: start;
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 64px; align-items: start;
     }
-    .over-foto-wrap { position: relative; }
     .over-foto {
-      width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center 5%;
-      border-radius: 16px; display: block;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.10);
-    }
-    .over-foto-accent {
-      position: absolute; top: 28px; left: -12px;
-      width: 3px; height: 44px; background: var(--blue); border-radius: 2px;
+      width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: center 5%;
+      border-radius: 14px; display: block;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
     }
     .over-naam {
-      font-size: clamp(30px, 3vw, 44px); font-weight: 900;
-      color: var(--ink); letter-spacing: -1.5px; line-height: 1.06; margin-bottom: 20px;
+      font-size: clamp(26px, 2.6vw, 38px); font-weight: 900;
+      color: var(--ink); letter-spacing: -1.2px; line-height: 1.06; margin-bottom: 16px;
     }
     .over-tagline {
-      font-size: clamp(15px, 1.2vw, 16.5px); font-weight: 600;
-      color: var(--ink2); line-height: 1.68;
-      border-left: 3px solid var(--blue); padding-left: 20px;
-      margin-bottom: 32px; font-style: italic;
+      font-size: 15.5px; font-weight: 500;
+      color: var(--ink2); line-height: 1.72;
+      border-left: 3px solid var(--accent); padding-left: 18px;
+      margin-bottom: 24px;
     }
-    .over-bio { font-size: clamp(14px, 1.05vw, 15.5px); color: var(--ink3); line-height: 1.84; }
-    .over-bio p + p { margin-top: 18px; }
+    .over-bio { font-size: 14.5px; color: var(--ink3); line-height: 1.84; }
     .over-bio strong { color: var(--ink2); font-weight: 600; }
-    .over-divider { width: 36px; height: 2px; background: var(--border); margin: 40px 0; }
-    .over-facts { display: flex; gap: 44px; flex-wrap: wrap; }
-    .over-fact-num { font-size: 26px; font-weight: 900; color: var(--ink); letter-spacing: -1px; line-height: 1; }
+    .over-facts {
+      display: flex; gap: 36px; flex-wrap: wrap;
+      margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border);
+    }
+    .over-fact-num { font-size: 22px; font-weight: 900; color: var(--ink); letter-spacing: -0.5px; line-height: 1; }
     .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 4px; }
+
+    /* ══════════════════════════════════
+       SOLUTION — Sticky Scroll Narrative
+    ══════════════════════════════════ */
+    #oplossing {
+      background: var(--white); padding: 88px 52px;
+      border-top: 1px solid var(--border);
+    }
+    .sol-inner { max-width: 1100px; margin: 0 auto; }
+
+    .sol-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* Left: sticky panel */
+    .sol-sticky {
+      position: sticky;
+      top: 100px;
+      padding-right: 24px;
+    }
+    .sol-title {
+      font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 20px;
+    }
+    .sol-intro-text {
+      font-size: 15.5px; color: var(--ink2); line-height: 1.80; margin-bottom: 32px;
+    }
+    .sol-progress {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .sol-pip {
+      height: 3px; border-radius: 2px; background: var(--border);
+      transition: background 0.4s, transform 0.4s;
+    }
+    .sol-pip.active { background: var(--accent); transform: scaleX(1.02); }
+
+    /* Right: scrolling feature cards */
+    .sol-features {
+      display: flex; flex-direction: column; gap: 24px;
+      padding: 20px 0 40px;
+    }
+    .sol-card {
+      padding: 32px 28px;
+      border-radius: 14px;
+      background: var(--warm);
+      border: 1px solid var(--border);
+      opacity: 0.4;
+      transform: translateY(8px);
+      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .sol-card.active {
+      opacity: 1;
+      transform: translateY(0);
+      border-color: var(--accent);
+      background: var(--white);
+      box-shadow: 0 8px 32px rgba(46,125,114,0.08);
+    }
+    .sol-card-num {
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .sol-card h3 {
+      font-size: 18px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.3px; margin-bottom: 8px; line-height: 1.28;
+    }
+    .sol-card p {
+      font-size: 14px; color: var(--ink3); line-height: 1.64;
+    }
+
+    /* Featured card — Google backend */
+    .sol-card.sol-featured {
+      background: var(--night);
+      border-color: var(--accent2);
+    }
+    .sol-card.sol-featured.active {
+      background: var(--night);
+      border-color: var(--accent);
+      box-shadow: 0 12px 48px rgba(46,125,114,0.18);
+    }
+    .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
+    .sol-card.sol-featured h3 { color: #fff; font-size: 20px; }
+    .sol-card.sol-featured p { color: rgba(255,255,255,0.5); }
+    .sol-card.sol-featured .sol-card-badge {
+      display: inline-block;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--accent3);
+      background: rgba(70,165,148,0.12);
+      padding: 4px 10px; border-radius: 6px;
+      margin-top: 12px;
+    }
 
     /* ══════════════════════════════════
        CTA
     ══════════════════════════════════ */
     #cta {
-      background: var(--night2); padding: 88px 64px;
+      background: var(--night2); padding: 100px 52px;
       text-align: center; position: relative; overflow: hidden;
     }
     #cta::before {
@@ -362,10 +403,10 @@
     }
     .cta-inner { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
     .cta-headline {
-      font-size: clamp(36px, 5vw, 60px); font-weight: 900;
+      font-size: clamp(34px, 4.5vw, 56px); font-weight: 900;
       color: #fff; letter-spacing: -2.5px; line-height: 1.05; margin-bottom: 18px;
     }
-    .cta-sub { font-size: 16.5px; color: rgba(255,255,255,0.42); line-height: 1.72; margin-bottom: 44px; }
+    .cta-sub { font-size: 16px; color: rgba(255,255,255,0.40); line-height: 1.72; margin-bottom: 44px; }
     .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .cta-note { margin-top: 22px; font-size: 12.5px; color: rgba(255,255,255,0.14); }
 
@@ -382,25 +423,29 @@
        RESPONSIVE
     ══════════════════════════════════ */
     @media (max-width: 1060px) {
-      .sol-body { grid-template-columns: 1fr; gap: 48px; }
-      .sol-closing { position: relative; top: 0; }
-      .over-inner { grid-template-columns: 1fr; gap: 56px; }
-      .over-foto-wrap { max-width: 220px; }
-      .over-foto-accent { display: none; }
+      .sol-container { grid-template-columns: 1fr; gap: 48px; }
+      .sol-sticky { position: relative; top: 0; }
+      .sol-progress { display: none; }
+      .over-inner { grid-template-columns: 1fr; gap: 40px; }
+      .over-foto { max-width: 180px; }
       .pain-top { grid-template-columns: 1fr; gap: 48px; }
       .pain-left { position: relative; top: 0; }
     }
     @media (max-width: 768px) {
       nav { padding: 0 24px; height: 60px; }
-      #hero { padding: 100px 28px 88px; }
+      #hero { padding: 110px 24px 88px; }
       .hero-h1 { letter-spacing: -2.5px; }
-      #trust, #pijnpunten, #oplossing, #over, #cta { padding-left: 24px; padding-right: 24px; padding-top: 64px; padding-bottom: 64px; }
-      .trust-grid { grid-template-columns: 1fr; }
+      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta {
+        padding-left: 24px; padding-right: 24px;
+        padding-top: 64px; padding-bottom: 64px;
+      }
+      .real-grid { grid-template-columns: 1fr; }
       .hero-ctas { flex-direction: column; align-items: center; }
       .btn-primary, .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
+      .sol-card.sol-featured h3 { font-size: 18px; }
     }
     @media (max-width: 520px) {
-      #trust, #pijnpunten, #oplossing, #over, #cta { padding-left: 20px; padding-right: 20px; }
+      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta { padding-left: 20px; padding-right: 20px; }
       .cta-buttons { flex-direction: column; align-items: center; }
       .cta-buttons .btn-primary, .cta-buttons .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
       footer { padding: 24px 20px; }
@@ -447,28 +492,24 @@
   </div>
 </section>
 
-<!-- ══ TRUST ══ -->
-<section id="trust">
-  <div class="trust-inner">
-    <div class="trust-header fade-up">
-      <span class="eyebrow">De realiteit</span>
-      <h2 class="trust-title">Waarom online zichtbaarheid<br>geen bijzaak meer is</h2>
-    </div>
-    <div class="trust-grid" id="trustGrid">
+<!-- ══ REALITEIT ══ -->
+<section id="realiteit">
+  <div class="real-inner">
+    <div class="real-grid">
 
-      <div class="trust-card fade-up" data-delay="0">
-        <p class="trust-stat" data-count="40" data-suffix="%">40%</p>
-        <p class="trust-claim">Van de lokale bedrijven heeft een site die niet mobiel-geoptimaliseerd is — en mist klanten.</p>
+      <div class="real-card fade-up" data-delay="0">
+        <p class="real-num" data-count="85" data-suffix="%">0%</p>
+        <p class="real-claim">van alle zoekopdrachten loopt via Google</p>
       </div>
 
-      <div class="trust-card fade-up" data-delay="80">
-        <p class="trust-stat" data-count="85" data-suffix="%">85%</p>
-        <p class="trust-claim">Van alle zoekopdrachten loopt via Google. Wie daar niet zichtbaar is, bestaat niet.</p>
+      <div class="real-card fade-up" data-delay="100">
+        <p class="real-num">&lt;1<em>sec</em></p>
+        <p class="real-claim">bepaalt of een bezoeker je vertrouwt</p>
       </div>
 
-      <div class="trust-card fade-up" data-delay="160">
-        <p class="trust-stat-word">Onzicht<em>baar</em></p>
-        <p class="trust-claim">Geen technische Google-structuur betekent: klanten vinden jou niet, ook al zoeken ze actief.</p>
+      <div class="real-card fade-up" data-delay="200">
+        <p class="real-num">2<em>/5</em></p>
+        <p class="real-claim">websites niet mobiel geoptimaliseerd</p>
       </div>
 
     </div>
@@ -502,87 +543,13 @@
   </div>
 </section>
 
-<!-- ══ SOLUTION ══ -->
-<section id="oplossing">
-  <div class="sol-inner">
-
-    <!-- Intro -->
-    <div class="sol-intro">
-      <span class="eyebrow fade-up">Wat ik voor je doe</span>
-      <h2 class="sol-title fade-up" data-delay="60">Zo zorgt FlowEdge dat jouw<br>online aanwezigheid wél werkt.</h2>
-      <div class="sol-intro-text fade-up" data-delay="130">
-        <p>Wat je nodig hebt is geen "mooie website". Je hebt een website nodig die vertrouwen opwekt, zichtbaar is en daadwerkelijk klanten oplevert.</p>
-        <p>Dat is precies waar FlowEdge op is gebouwd. Ik zorg ervoor dat jouw online aanwezigheid klopt — van eerste indruk tot vindbaarheid op Google.</p>
-      </div>
-    </div>
-
-    <!-- Body -->
-    <div class="sol-body">
-
-      <!-- Feature list -->
-      <div class="sol-features-wrap">
-        <span class="sol-features-lead fade-up">Dat betekent:</span>
-        <div class="sol-list">
-
-          <div class="sol-item fade-up" data-delay="40">
-            <span class="sol-item-num">01</span>
-            <div class="sol-item-content">
-              <div class="sol-item-title">Een strakke, moderne website</div>
-              <div class="sol-item-desc">Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</div>
-            </div>
-          </div>
-
-          <div class="sol-item fade-up" data-delay="100">
-            <span class="sol-item-num">02</span>
-            <div class="sol-item-content">
-              <div class="sol-item-title">Volledig geoptimaliseerd voor mobiel</div>
-              <div class="sol-item-desc">Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</div>
-            </div>
-          </div>
-
-          <div class="sol-item fade-up" data-delay="160">
-            <span class="sol-item-num">03</span>
-            <div class="sol-item-content">
-              <div class="sol-item-title">Technisch ingericht op het Google-ecosysteem</div>
-              <div class="sol-item-desc">Schema.org, lokale SEO, structured data. Google begrijpt wie je bent en toont je actief aan klanten die nu zoeken.</div>
-            </div>
-          </div>
-
-          <div class="sol-item sol-item-key fade-up" data-delay="220">
-            <span class="sol-item-num">04</span>
-            <div class="sol-item-content">
-              <div class="sol-item-title">Lokale vindbaarheid op Google</div>
-              <div class="sol-item-desc">Zodat mensen jou vinden op het moment dat ze actief zoeken naar jouw dienst in jouw regio.</div>
-            </div>
-          </div>
-
-          <div class="sol-item fade-up" data-delay="280">
-            <span class="sol-item-num">05</span>
-            <div class="sol-item-content">
-              <div class="sol-item-title">Snelle laadtijden en technisch sterk opgebouwd</div>
-              <div class="sol-item-desc">Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</div>
-            </div>
-          </div>
-
-          <div class="sol-item sol-item-key fade-up" data-delay="340">
-            <span class="sol-item-num">06</span>
-            <div class="sol-item-content">
-              <div class="sol-item-title">Een website die 24/7 voor je werkt</div>
-              <div class="sol-item-desc">Bezoekers omzetten in aanvragen — dat is het enige doel. Reviews geïntegreerd, conversie gericht.</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Sticky closing copy -->
-      <div class="sol-closing fade-up" data-delay="200">
-        <span class="sol-closing-lead">Alles is gericht op één doel:</span>
-        <blockquote class="sol-closing-quote">ervoor zorgen dat mensen die jouw website bezoeken, ook daadwerkelijk contact met je opnemen.</blockquote>
-        <p class="sol-closing-text">Geen onnodige complexiteit. Geen dingen die je niet nodig hebt. Gewoon een sterke online basis die doet wat het moet doen: klanten aantrekken en je bedrijf laten groeien.</p>
-      </div>
-
-    </div>
+<!-- ══ IMPACT STATEMENT ══ -->
+<section id="impact">
+  <div class="impact-inner">
+    <p class="impact-text fade-up">
+      Een goede website is geen luxe.<br>
+      Het is je <em>belangrijkste</em> eerste indruk.
+    </p>
   </div>
 </section>
 
@@ -590,25 +557,92 @@
 <section id="over">
   <div class="over-inner">
     <div class="over-foto-wrap fade-up">
-      <div class="over-foto-accent" aria-hidden="true"></div>
       <img src="foto-sky.png" alt="Sky Lemos — oprichter FlowEdge" class="over-foto" loading="lazy">
     </div>
-    <div class="over-text fade-up" data-delay="120">
+    <div class="over-text fade-up" data-delay="100">
       <span class="eyebrow">Over mij</span>
       <h2 class="over-naam">Sky Lemos</h2>
-      <p class="over-tagline">Ik help kleine bedrijven om online de indruk te maken die ze offline allang geven. Geen dure bureaus, geen ingewikkeld gedoe — gewoon een strakke website die voor je werkt.</p>
+      <p class="over-tagline">Ik help kleine bedrijven om online de indruk te maken die ze offline allang geven.</p>
       <div class="over-bio">
-        <p>Geboren in Amsterdam en van jongs af aan gefascineerd door technologie. Computers, systemen en alles wat zich achter de schermen afspeelt, trokken mij altijd al aan. Naast die technische basis ben ik altijd ondernemend geweest — ik zag al vroeg kansen waar anderen ze lieten liggen.</p>
-        <p>Ik zag steeds opnieuw hetzelfde probleem: goede bedrijven die klanten mislopen. Niet omdat ze niet goed zijn in wat ze doen, maar omdat hun online uitstraling dat niet laat zien. Een website die niet overtuigt. Slechte vindbaarheid. Geen sterke eerste indruk.</p>
-        <p><strong>Dat is waar FlowEdge het verschil maakt.</strong> Wat voor mij begon met het helpen van mensen in mijn omgeving is uitgegroeid tot een duidelijke missie: ondernemers helpen om hun online aanwezigheid naar een niveau te brengen dat wél klanten aantrekt en groei mogelijk maakt.</p>
+        <p>Ik zag steeds opnieuw hetzelfde probleem: goede bedrijven die klanten mislopen. Niet omdat ze niet goed zijn in wat ze doen, maar omdat hun online uitstraling dat niet laat zien.</p>
+        <p><strong>Dat is waar FlowEdge het verschil maakt.</strong> Geen dure bureaus, geen ingewikkeld gedoe — gewoon een strakke website die voor je werkt.</p>
       </div>
-      <div class="over-divider"></div>
       <div class="over-facts">
         <div><div class="over-fact-num">7–10</div><div class="over-fact-label">dagen doorlooptijd</div></div>
         <div><div class="over-fact-num">100%</div><div class="over-fact-label">focus op vakmensen</div></div>
         <div><div class="over-fact-num">NL</div><div class="over-fact-label">heel Nederland</div></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ══ SOLUTION — Sticky Scroll Narrative ══ -->
+<section id="oplossing">
+  <div class="sol-inner">
+
+    <div class="sol-container">
+
+      <!-- Left: Sticky panel -->
+      <div class="sol-sticky">
+        <span class="eyebrow fade-up">Wat ik voor je doe</span>
+        <h2 class="sol-title fade-up" data-delay="60">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
+        <p class="sol-intro-text fade-up" data-delay="120">Wat je nodig hebt is geen "mooie website". Je hebt een website nodig die vertrouwen opwekt, zichtbaar is en daadwerkelijk klanten oplevert.</p>
+
+        <!-- Progress indicator -->
+        <div class="sol-progress fade-up" data-delay="180">
+          <div class="sol-pip active" data-pip="1"></div>
+          <div class="sol-pip" data-pip="2"></div>
+          <div class="sol-pip" data-pip="3"></div>
+          <div class="sol-pip" data-pip="4"></div>
+          <div class="sol-pip" data-pip="5"></div>
+          <div class="sol-pip" data-pip="6"></div>
+        </div>
+      </div>
+
+      <!-- Right: Scrolling feature cards -->
+      <div class="sol-features">
+
+        <div class="sol-card active" data-feature="1">
+          <div class="sol-card-num">01 — Design</div>
+          <h3>Een strakke, moderne website</h3>
+          <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
+        </div>
+
+        <div class="sol-card" data-feature="2">
+          <div class="sol-card-num">02 — Mobiel</div>
+          <h3>Volledig geoptimaliseerd voor mobiel</h3>
+          <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
+        </div>
+
+        <div class="sol-card sol-featured" data-feature="3">
+          <div class="sol-card-num">03 — Google</div>
+          <h3>Technisch ingericht op het Google-ecosysteem</h3>
+          <p>Schema.org, lokale SEO, structured data. Google begrijpt wie je bent en toont je actief aan klanten die nu zoeken.</p>
+          <span class="sol-card-badge">Kern van het systeem</span>
+        </div>
+
+        <div class="sol-card" data-feature="4">
+          <div class="sol-card-num">04 — Snelheid</div>
+          <h3>Snelle laadtijden en technisch sterk</h3>
+          <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
+        </div>
+
+        <div class="sol-card" data-feature="5">
+          <div class="sol-card-num">05 — Lokaal</div>
+          <h3>Lokale vindbaarheid op Google</h3>
+          <p>Zodat mensen jou vinden op het moment dat ze actief zoeken naar jouw dienst in jouw regio.</p>
+        </div>
+
+        <div class="sol-card" data-feature="6">
+          <div class="sol-card-num">06 — Reviews</div>
+          <h3>Een website die 24/7 voor je werkt</h3>
+          <p>Bezoekers omzetten in aanvragen — dat is het enige doel. Reviews geïntegreerd, conversie gericht.</p>
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 </section>
 
@@ -634,7 +668,7 @@
 
 <!-- Footer -->
 <footer>
-  <p>© 2026 FlowEdge &nbsp;·&nbsp; <a href="mailto:info@flowedge.nl">info@flowedge.nl</a></p>
+  <p>&copy; 2026 FlowEdge &nbsp;&middot;&nbsp; <a href="mailto:info@flowedge.nl">info@flowedge.nl</a></p>
 </footer>
 
 <script>
@@ -689,20 +723,7 @@
     document.querySelectorAll('.fade-up').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Spotlight border — trust grid ── */
-  (function () {
-    var grid = document.getElementById('trustGrid');
-    if (!grid) return;
-    grid.addEventListener('mousemove', function (e) {
-      grid.querySelectorAll('.trust-card').forEach(function (c) {
-        var r = c.getBoundingClientRect();
-        c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        c.style.setProperty('--my', (e.clientY - r.top) + 'px');
-      });
-    });
-  })();
-
-  /* ── Odometer counter ── */
+  /* ── Odometer counter — realiteit stats ── */
   (function () {
     function countUp(el, target, suffix, dur) {
       var start = null;
@@ -725,6 +746,25 @@
       });
     }, { threshold: 0.6 });
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
+  })();
+
+  /* ── Solution — sticky scroll narrative ── */
+  (function () {
+    var cards = document.querySelectorAll('.sol-card');
+    var pips = document.querySelectorAll('.sol-pip');
+    if (!cards.length) return;
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          var num = e.target.dataset.feature;
+          cards.forEach(function (c) { c.classList.toggle('active', c.dataset.feature === num); });
+          pips.forEach(function (p) { p.classList.toggle('active', p.dataset.pip === num); });
+        }
+      });
+    }, { threshold: 0.5, rootMargin: '-10% 0px -30% 0px' });
+
+    cards.forEach(function (card) { obs.observe(card); });
   })();
 </script>
 
