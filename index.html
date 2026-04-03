@@ -130,10 +130,12 @@
       position: relative; overflow: hidden;
     }
     #hero::before {
-      content: ''; position: absolute;
-      top: -5%; left: 50%; transform: translateX(-50%);
-      width: 960px; height: 560px;
-      background: radial-gradient(ellipse at 50% 35%, rgba(29,78,216,0.16) 0%, transparent 68%);
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 900px 580px at 50% 26%, rgba(29,78,216,0.26) 0%, rgba(29,78,216,0.04) 55%, transparent 72%),
+        linear-gradient(rgba(255,255,255,0.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.024) 1px, transparent 1px);
+      background-size: auto, 72px 72px, 72px 72px;
       pointer-events: none;
     }
 
@@ -156,8 +158,8 @@
 
     .hero-sub {
       font-size: clamp(16px, 1.3vw, 18.5px);
-      color: rgba(255,255,255,0.46);
-      line-height: 1.74; max-width: 440px; margin: 0 auto 52px;
+      color: rgba(255,255,255,0.60);
+      line-height: 1.74; max-width: 440px; margin: 0 auto 48px;
     }
 
     .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
@@ -166,9 +168,9 @@
     /* ══════════════════════════════════
        TRUST
     ══════════════════════════════════ */
-    #trust { background: var(--warm); padding: 112px 64px; }
+    #trust { background: var(--warm); padding: 80px 64px; }
     .trust-inner { max-width: 1040px; margin: 0 auto; }
-    .trust-header { margin-bottom: 52px; }
+    .trust-header { margin-bottom: 40px; }
     .trust-title {
       font-size: clamp(22px, 2.4vw, 30px); font-weight: 800;
       color: var(--ink); letter-spacing: -0.9px; line-height: 1.18; max-width: 520px;
@@ -178,10 +180,10 @@
       display: grid; grid-template-columns: repeat(3,1fr);
       gap: 1px; background: var(--border);
       border-radius: 20px; overflow: hidden;
-      box-shadow: 0 2px 24px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.07);
     }
     .trust-card {
-      background: var(--white); padding: 44px 36px;
+      background: var(--white); padding: 36px 32px;
       position: relative; overflow: hidden; cursor: default;
     }
     .trust-card::before {
@@ -211,13 +213,13 @@
        PROBLEM
     ══════════════════════════════════ */
     #pijnpunten {
-      background: var(--white); padding: 112px 64px;
+      background: var(--white); padding: 80px 64px;
       border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
     }
     .pain-inner { max-width: 1040px; margin: 0 auto; }
     .pain-top {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 88px; margin-bottom: 72px; align-items: start;
+      gap: 64px; margin-bottom: 52px; align-items: start;
     }
     .pain-left { position: sticky; top: 88px; }
     .pain-headline {
@@ -242,79 +244,79 @@
     /* ══════════════════════════════════
        SOLUTION
     ══════════════════════════════════ */
-    #oplossing { background: var(--night); padding: 120px 64px; }
+    #oplossing { background: var(--white); padding: 80px 64px; border-top: 1px solid var(--border); }
     .sol-inner { max-width: 1040px; margin: 0 auto; }
-    .sol-header { margin-bottom: 72px; max-width: 580px; }
+    .sol-header { margin-bottom: 48px; max-width: 580px; }
     .sol-title {
-      font-size: clamp(30px, 3.8vw, 50px); font-weight: 900;
-      color: #fff; letter-spacing: -2px; line-height: 1.06;
+      font-size: clamp(28px, 3.4vw, 46px); font-weight: 900;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.06;
     }
 
     /* Spotlight card grid */
     .sol-grid {
       display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 1px; background: rgba(255,255,255,0.06);
+      gap: 1px; background: var(--border);
       border-radius: 20px; overflow: hidden;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.06);
     }
     .sol-card {
-      background: rgba(255,255,255,0.025); padding: 40px 32px;
+      background: var(--warm); padding: 32px 28px;
       position: relative; overflow: hidden; cursor: default;
       transition: background 0.28s;
     }
     .sol-card::before {
       content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle 200px at var(--mx,50%) var(--my,50%), rgba(29,78,216,0.10), transparent);
+      background: radial-gradient(circle 200px at var(--mx,50%) var(--my,50%), rgba(29,78,216,0.07), transparent);
       opacity: 0; transition: opacity 0.3s; pointer-events: none;
     }
-    .sol-card:hover { background: rgba(255,255,255,0.045); }
+    .sol-card:hover { background: #EFF3FF; }
     .sol-card:hover::before { opacity: 1; }
-    .sol-card.featured { background: rgba(29,78,216,0.07); }
-    .sol-card.featured:hover { background: rgba(29,78,216,0.11); }
+    .sol-card.featured { background: #EAF0FF; }
+    .sol-card.featured:hover { background: #E1EAFF; }
     .sol-card.featured::before {
-      background: radial-gradient(circle 200px at var(--mx,50%) var(--my,50%), rgba(29,78,216,0.14), transparent);
+      background: radial-gradient(circle 200px at var(--mx,50%) var(--my,50%), rgba(29,78,216,0.10), transparent);
     }
 
     .sol-card-num {
       font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: rgba(255,255,255,0.18);
-      margin-bottom: 24px; display: block;
+      text-transform: uppercase; color: var(--border2);
+      margin-bottom: 18px; display: block;
     }
     .sol-card.featured .sol-card-num { color: var(--blue); }
 
     .sol-card-icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: rgba(255,255,255,0.06);
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--white); border: 1px solid var(--border);
       display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.44); margin-bottom: 20px;
+      color: var(--ink3); margin-bottom: 14px;
     }
-    .sol-card.featured .sol-card-icon { background: rgba(29,78,216,0.22); color: #7BA9FF; }
+    .sol-card.featured .sol-card-icon { background: rgba(29,78,216,0.10); color: var(--blue); border-color: rgba(29,78,216,0.22); }
 
     .sol-card-title {
-      font-size: 15.5px; font-weight: 700; color: rgba(255,255,255,0.72);
-      letter-spacing: -0.2px; line-height: 1.32; margin-bottom: 10px;
+      font-size: 14.5px; font-weight: 700; color: var(--ink);
+      letter-spacing: -0.2px; line-height: 1.32; margin-bottom: 8px;
     }
-    .sol-card.featured .sol-card-title { color: #fff; }
-    .sol-card-desc { font-size: 13.5px; color: rgba(255,255,255,0.34); line-height: 1.64; }
-    .sol-card.featured .sol-card-desc { color: rgba(255,255,255,0.50); }
+    .sol-card-desc { font-size: 13px; color: var(--ink3); line-height: 1.64; }
+    .sol-card.featured .sol-card-desc { color: var(--ink2); }
 
-    .sol-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .sol-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
     .sol-tag {
       font-size: 10.5px; font-weight: 600; padding: 3px 9px;
-      border-radius: 5px; background: rgba(29,78,216,0.16);
-      color: rgba(100,152,255,0.85); border: 1px solid rgba(29,78,216,0.24);
+      border-radius: 5px; background: rgba(29,78,216,0.09);
+      color: var(--blue); border: 1px solid rgba(29,78,216,0.18);
     }
 
     /* ══════════════════════════════════
        ABOUT
     ══════════════════════════════════ */
     #over {
-      background: var(--white); padding: 112px 64px;
+      background: var(--warm); padding: 80px 64px;
       border-top: 1px solid var(--border);
     }
     .over-inner {
       max-width: 1040px; margin: 0 auto;
-      display: grid; grid-template-columns: 264px 1fr;
-      gap: 96px; align-items: start;
+      display: grid; grid-template-columns: 240px 1fr;
+      gap: 72px; align-items: start;
     }
     .over-foto-wrap { position: relative; }
     .over-foto {
@@ -348,7 +350,7 @@
        CTA
     ══════════════════════════════════ */
     #cta {
-      background: var(--night2); padding: 120px 64px;
+      background: var(--night2); padding: 88px 64px;
       text-align: center; position: relative; overflow: hidden;
     }
     #cta::before {
@@ -391,7 +393,7 @@
       nav { padding: 0 24px; height: 60px; }
       #hero { padding: 100px 28px 88px; }
       .hero-h1 { letter-spacing: -2.5px; }
-      #trust, #pijnpunten, #oplossing, #over, #cta { padding-left: 24px; padding-right: 24px; padding-top: 80px; padding-bottom: 80px; }
+      #trust, #pijnpunten, #oplossing, #over, #cta { padding-left: 24px; padding-right: 24px; padding-top: 64px; padding-bottom: 64px; }
       .trust-grid { grid-template-columns: 1fr; }
       .sol-grid { grid-template-columns: 1fr; }
       .hero-ctas { flex-direction: column; align-items: center; }
@@ -509,7 +511,7 @@
 <section id="oplossing">
   <div class="sol-inner">
     <div class="sol-header fade-up">
-      <span class="eyebrow eyebrow-light">Wat ik voor je doe</span>
+      <span class="eyebrow">Wat ik voor je doe</span>
       <h2 class="sol-title">Zo zorgt FlowEdge dat jouw<br>online aanwezigheid wél werkt.</h2>
     </div>
 
