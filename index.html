@@ -262,8 +262,8 @@
     }
     .over-inner {
       max-width: 1040px; margin: 0 auto;
-      display: grid; grid-template-columns: 200px 1fr;
-      gap: 64px; align-items: start;
+      display: grid; grid-template-columns: 260px 1fr;
+      gap: 64px; align-items: center;
     }
     .over-foto {
       width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: center 5%;
@@ -308,7 +308,7 @@
     /* Scroll container for the depth animation */
     .sol-scene {
       position: relative;
-      height: 260vh;
+      height: 180vh;
     }
     .sol-grid {
       position: sticky;
@@ -318,20 +318,6 @@
       gap: 48px;
       align-items: start;
     }
-
-    /* Frozen: collapse scroll, static layout */
-    .sol-scene.sol-frozen { height: auto; }
-    .sol-frozen .sol-grid { position: relative; top: 0; }
-    .sol-frozen .sol-stack {
-      height: auto; perspective: none;
-    }
-    .sol-frozen .sol-card {
-      position: relative;
-      opacity: 1 !important;
-      transform: none !important;
-      margin-bottom: 10px;
-    }
-    .sol-frozen .sol-card:last-child { margin-bottom: 0; }
 
     /* Left column */
     .sol-intro-text {
@@ -381,9 +367,9 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.03);
       opacity: 0;
       transform: translateY(30px) scale(0.97);
-      transition: opacity 0.55s cubic-bezier(0.25,1,0.5,1),
-                  transform 0.55s cubic-bezier(0.25,1,0.5,1),
-                  box-shadow 0.55s cubic-bezier(0.25,1,0.5,1);
+      transition: opacity 0.35s cubic-bezier(0.25,1,0.5,1),
+                  transform 0.35s cubic-bezier(0.25,1,0.5,1),
+                  box-shadow 0.35s cubic-bezier(0.25,1,0.5,1);
       will-change: transform, opacity;
     }
     .sol-card-num {
@@ -458,11 +444,6 @@
       font-size: clamp(24px, 3.4vw, 42px); font-weight: 900;
       color: var(--ink); letter-spacing: -1.8px; line-height: 1.14;
       max-width: 700px; margin: 0 auto;
-      opacity: 0; transform: translateY(14px);
-      transition: opacity 0.6s cubic-bezier(0.25,1,0.5,1), transform 0.6s cubic-bezier(0.25,1,0.5,1);
-    }
-    .sol-conclusion-text.visible {
-      opacity: 1; transform: translateY(0);
     }
 
     /* ══════════════════════════════════
@@ -510,10 +491,9 @@
       }
       .sol-card[data-depth] { opacity: 1; transform: none; }
       .sol-card.sol-featured[data-depth="active"] { transform: none; }
-      .sol-conclusion-text { opacity: 1; transform: none; }
       .sol-progress { display: none; }
       .over-inner { grid-template-columns: 1fr; gap: 40px; }
-      .over-foto { max-width: 180px; }
+      .over-foto { max-width: 240px; }
       .pain-top { grid-template-columns: 1fr; gap: 48px; }
       .pain-left { position: relative; top: 0; }
     }
@@ -727,7 +707,7 @@
 
     <!-- Conclusion -->
     <div class="sol-conclusion">
-      <p class="sol-conclusion-text" id="solConclusion">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
+      <p class="sol-conclusion-text fade-up">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
     </div>
 
   </div>
@@ -840,39 +820,19 @@
     var scene = document.getElementById('solScene');
     var cards = document.querySelectorAll('#solStack .sol-card');
     var pips = document.querySelectorAll('.sol-pip');
-    var conclusion = document.getElementById('solConclusion');
     if (!scene || !cards.length) return;
 
     var totalCards = cards.length;
     var lastActive = -1;
-    var frozen = false;
-
-    function freeze() {
-      frozen = true;
-      scene.classList.add('sol-frozen');
-      cards.forEach(function (c) {
-        c.removeAttribute('data-depth');
-      });
-      pips.forEach(function (p) { p.classList.add('active'); });
-      if (conclusion) conclusion.classList.add('visible');
-    }
 
     function update() {
-      if (frozen) return;
-
       var rect = scene.getBoundingClientRect();
       var sceneH = scene.offsetHeight;
       var scrolled = -rect.top;
       var progress = Math.max(0, Math.min(1, scrolled / (sceneH - window.innerHeight)));
 
-      var cardProgress = progress * (totalCards + 0.5);
-      var activeIndex = Math.min(Math.floor(cardProgress), totalCards - 1);
-
-      // Freeze once all cards shown and scrolled past
-      if (activeIndex >= totalCards - 1 && progress > 0.88) {
-        freeze();
-        return;
-      }
+      // Evenly distribute cards across scroll progress
+      var activeIndex = Math.min(Math.floor(progress * totalCards), totalCards - 1);
 
       if (activeIndex !== lastActive) {
         lastActive = activeIndex;
