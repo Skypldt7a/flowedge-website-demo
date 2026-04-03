@@ -129,17 +129,26 @@
       padding: 120px 52px 108px;
       position: relative; overflow: hidden;
     }
+    #heroMesh {
+      position: absolute; inset: 0; z-index: 0;
+      width: 100%; height: 100%; pointer-events: none;
+    }
     #hero::before {
-      content: ''; position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0; z-index: 1;
       background:
-        radial-gradient(ellipse 900px 580px at 50% 26%, rgba(46,125,114,0.26) 0%, rgba(46,125,114,0.04) 55%, transparent 72%),
-        linear-gradient(rgba(255,255,255,0.024) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.024) 1px, transparent 1px);
-      background-size: auto, 72px 72px, 72px 72px;
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 72px 72px, 72px 72px;
+      pointer-events: none;
+    }
+    /* Vignette — soften grid edges */
+    #hero::after {
+      content: ''; position: absolute; inset: 0; z-index: 2;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(12,26,22,0.55) 100%);
       pointer-events: none;
     }
 
-    .hero-inner { position: relative; z-index: 1; max-width: 780px; }
+    .hero-inner { position: relative; z-index: 3; max-width: 780px; }
 
     .hero-tag {
       display: inline-flex; align-items: center; gap: 9px;
@@ -183,7 +192,7 @@
       box-shadow: 0 4px 32px rgba(0,0,0,0.07);
     }
     .trust-card {
-      background: var(--white); padding: 36px 32px;
+      background: var(--white); padding: 44px 36px;
       position: relative; overflow: hidden; cursor: default;
     }
     .trust-card::before {
@@ -193,22 +202,16 @@
     }
     .trust-card:hover::before { opacity: 1; }
 
-    .trust-num {
-      font-size: 10px; font-weight: 700; color: var(--blue);
-      letter-spacing: 1.4px; margin-bottom: 24px; display: block;
-      text-transform: uppercase; opacity: 0.7;
-    }
     .trust-stat {
-      font-size: clamp(48px, 5.5vw, 70px); font-weight: 900;
-      color: var(--ink); letter-spacing: -3.5px; line-height: 1; margin-bottom: 18px;
+      font-size: clamp(62px, 7.5vw, 92px); font-weight: 900;
+      color: var(--ink); letter-spacing: -4px; line-height: 1; margin-bottom: 16px;
     }
     .trust-stat-word {
-      font-size: clamp(26px, 2.8vw, 38px); font-weight: 900;
-      color: var(--ink); letter-spacing: -1.5px; line-height: 1.12; margin-bottom: 18px;
+      font-size: clamp(32px, 3.8vw, 52px); font-weight: 900;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.08; margin-bottom: 16px;
     }
     .trust-stat-word em { color: var(--blue); font-style: normal; }
-    .trust-claim { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.4; margin-bottom: 10px; }
-    .trust-desc { font-size: 13px; color: var(--ink3); line-height: 1.64; }
+    .trust-claim { font-size: 13.5px; font-weight: 500; color: var(--ink3); line-height: 1.52; }
 
     /* ══════════════════════════════════
        PROBLEM
@@ -275,10 +278,21 @@
     }
     .sol-card:hover { background: #EDF4F3; }
     .sol-card:hover::before { opacity: 1; }
-    .sol-card.featured { background: #E8F4F2; border-top: 2px solid var(--blue); }
+    /* Featured (card 05 — Local) */
+    .sol-card.featured { background: #E8F4F2; }
     .sol-card.featured:hover { background: #DFF0EE; }
     .sol-card.featured::before {
-      background: radial-gradient(circle 200px at var(--mx,50%) var(--my,50%), rgba(46,125,114,0.10), transparent);
+      background: radial-gradient(circle 200px at var(--mx,50%) var(--my,50%), rgba(46,125,114,0.12), transparent);
+    }
+
+    /* Sol-hero (card 03 — Google — DARK standout) */
+    .sol-card.sol-hero {
+      background: var(--night);
+      box-shadow: inset 0 3px 0 var(--blue);
+    }
+    .sol-card.sol-hero:hover { background: #122320; }
+    .sol-card.sol-hero::before {
+      background: radial-gradient(circle 220px at var(--mx,50%) var(--my,50%), rgba(46,125,114,0.20), transparent);
     }
 
     .sol-card-num {
@@ -287,6 +301,7 @@
       margin-bottom: 18px; display: block;
     }
     .sol-card.featured .sol-card-num { color: var(--blue); }
+    .sol-card.sol-hero .sol-card-num { color: rgba(80,180,166,0.75); }
 
     .sol-card-icon {
       width: 40px; height: 40px; border-radius: 10px;
@@ -295,19 +310,27 @@
       color: var(--ink3); margin-bottom: 14px;
     }
     .sol-card.featured .sol-card-icon { background: rgba(46,125,114,0.10); color: var(--blue); border-color: rgba(46,125,114,0.22); }
+    .sol-card.sol-hero .sol-card-icon { background: rgba(46,125,114,0.16); color: rgba(80,180,166,0.9); border-color: rgba(46,125,114,0.30); }
 
     .sol-card-title {
       font-size: 14.5px; font-weight: 700; color: var(--ink);
       letter-spacing: -0.2px; line-height: 1.32; margin-bottom: 8px;
     }
+    .sol-card.sol-hero .sol-card-title { color: #fff; font-size: 15px; }
     .sol-card-desc { font-size: 13px; color: var(--ink3); line-height: 1.64; }
     .sol-card.featured .sol-card-desc { color: var(--ink2); }
+    .sol-card.sol-hero .sol-card-desc { color: rgba(255,255,255,0.46); }
 
     .sol-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
     .sol-tag {
       font-size: 10.5px; font-weight: 600; padding: 3px 9px;
       border-radius: 5px; background: rgba(46,125,114,0.10);
       color: var(--blue); border: 1px solid rgba(46,125,114,0.22);
+    }
+    .sol-card.sol-hero .sol-tag {
+      background: rgba(46,125,114,0.18);
+      color: rgba(80,180,166,0.9);
+      border-color: rgba(46,125,114,0.35);
     }
 
     /* ══════════════════════════════════
@@ -424,6 +447,7 @@
 
 <!-- ══ HERO ══ -->
 <section id="hero">
+  <canvas id="heroMesh" aria-hidden="true"></canvas>
   <div class="hero-inner">
     <span class="hero-tag fade-up">
       <span class="hero-tag-dot" aria-hidden="true"></span>
@@ -460,24 +484,18 @@
     <div class="trust-grid" id="trustGrid">
 
       <div class="trust-card fade-up" data-delay="0">
-        <span class="trust-num">01</span>
         <p class="trust-stat" data-count="40" data-suffix="%">40%</p>
-        <p class="trust-claim">Google gebruikt primair de mobiele versie van je website voor indexering</p>
-        <p class="trust-desc">Twee van de vijf kleine bedrijven hebben een site die niet goed geoptimaliseerd is voor mobiel.</p>
+        <p class="trust-claim">Van de lokale bedrijven heeft een site die niet mobiel-geoptimaliseerd is — en mist klanten.</p>
       </div>
 
       <div class="trust-card fade-up" data-delay="80">
-        <span class="trust-num">02</span>
         <p class="trust-stat" data-count="85" data-suffix="%">85%</p>
-        <p class="trust-claim">Van alle online zoekopdrachten loopt via Google</p>
-        <p class="trust-desc">Als je daar niet te vinden bent, gaan klanten naar iemand anders die dat wel is.</p>
+        <p class="trust-claim">Van alle zoekopdrachten loopt via Google. Wie daar niet zichtbaar is, bestaat niet.</p>
       </div>
 
       <div class="trust-card fade-up" data-delay="160">
-        <span class="trust-num">03</span>
         <p class="trust-stat-word">Onzicht<em>baar</em></p>
-        <p class="trust-claim">Google begrijpt niet wie je bent, waar je werkt of wat je doet</p>
-        <p class="trust-desc">Zonder de juiste structuur in de achterkant blijf je onzichtbaar voor klanten die nu zoeken.</p>
+        <p class="trust-claim">Geen technische Google-structuur betekent: klanten vinden jou niet, ook al zoeken ze actief.</p>
       </div>
 
     </div>
@@ -541,8 +559,8 @@
         <div class="sol-card-desc">Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</div>
       </div>
 
-      <!-- 03 — Google (FEATURED) -->
-      <div class="sol-card featured fade-up" data-delay="120">
+      <!-- 03 — Google (HERO — dark standout) -->
+      <div class="sol-card sol-hero fade-up" data-delay="120">
         <span class="sol-card-num">03 — Kernfocus</span>
         <div class="sol-card-icon" aria-hidden="true">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -647,6 +665,43 @@
 </footer>
 
 <script>
+  /* ── Mesh gradient — hero canvas ── */
+  (function () {
+    var canvas = document.getElementById('heroMesh');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+    var blobs = [
+      { x: 0.22, y: 0.28, vx:  0.00016, vy:  0.00011, r: 0.42, color: 'rgba(46,125,114,0.22)' },
+      { x: 0.75, y: 0.58, vx: -0.00020, vy:  0.00014, r: 0.36, color: 'rgba(30,95,88,0.15)'   },
+      { x: 0.50, y: 0.82, vx:  0.00013, vy: -0.00018, r: 0.30, color: 'rgba(70,165,148,0.12)' },
+      { x: 0.10, y: 0.70, vx:  0.00018, vy: -0.00012, r: 0.26, color: 'rgba(46,125,114,0.10)' }
+    ];
+    function resize() {
+      canvas.width  = canvas.offsetWidth  * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    function draw() {
+      var w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      blobs.forEach(function (b) {
+        b.x += b.vx; b.y += b.vy;
+        if (b.x < -0.1 || b.x > 1.1) b.vx *= -1;
+        if (b.y < -0.1 || b.y > 1.1) b.vy *= -1;
+        var grd = ctx.createRadialGradient(b.x * w, b.y * h, 0, b.x * w, b.y * h, b.r * Math.max(w, h));
+        grd.addColorStop(0, b.color);
+        grd.addColorStop(1, 'transparent');
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.fillStyle = grd; ctx.fillRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'source-over';
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
   /* ── Scroll fade-up ── */
   (function () {
     var obs = new IntersectionObserver(function (entries) {
@@ -679,7 +734,7 @@
     var grid = document.getElementById('solGrid');
     if (!grid) return;
     grid.addEventListener('mousemove', function (e) {
-      grid.querySelectorAll('.sol-card').forEach(function (c) {
+      grid.querySelectorAll('.sol-card, .sol-hero').forEach(function (c) {
         var r = c.getBoundingClientRect();
         c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
         c.style.setProperty('--my', (e.clientY - r.top) + 'px');
