@@ -322,8 +322,8 @@
     }
     .sol-scene-inner {
       position: sticky;
-      top: 0;
-      height: 100vh;
+      top: 64px;
+      height: calc(100vh - 64px);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 64px;
@@ -331,7 +331,6 @@
       padding: 0 52px;
       max-width: 1100px;
       margin: 0 auto;
-      overflow: hidden;
     }
 
     /* Left: sticky label */
@@ -366,7 +365,7 @@
     }
     .sol-card {
       position: absolute;
-      left: 0; right: 0; top: 0;
+      left: 0; right: 0; top: 50%;
       padding: 36px 32px;
       border-radius: 16px;
       background: var(--warm);
@@ -374,7 +373,7 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.04);
       /* Initial: hidden below */
       opacity: 0;
-      transform: translateY(40px) scale(0.96);
+      transform: translateY(-50%) translateY(40px) scale(0.96);
       transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1),
                   transform 0.6s cubic-bezier(0.22,1,0.36,1),
                   box-shadow 0.6s cubic-bezier(0.22,1,0.36,1);
@@ -395,7 +394,7 @@
     /* Depth states — applied by JS */
     .sol-card[data-depth="active"] {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(-50%) scale(1);
       z-index: 4;
       background: var(--white);
       border-color: var(--accent);
@@ -403,17 +402,17 @@
     }
     .sol-card[data-depth="1"] {
       opacity: 0.5;
-      transform: translateY(-16px) scale(0.95);
+      transform: translateY(-50%) translateY(-16px) scale(0.95);
       z-index: 3;
     }
     .sol-card[data-depth="2"] {
       opacity: 0.25;
-      transform: translateY(-28px) scale(0.90);
+      transform: translateY(-50%) translateY(-28px) scale(0.90);
       z-index: 2;
     }
     .sol-card[data-depth="3"] {
       opacity: 0.1;
-      transform: translateY(-36px) scale(0.86);
+      transform: translateY(-50%) translateY(-36px) scale(0.86);
       z-index: 1;
     }
 
@@ -426,7 +425,7 @@
     .sol-card.sol-featured[data-depth="active"] {
       background: var(--night);
       border-color: var(--accent);
-      transform: translateY(0) scale(1.02);
+      transform: translateY(-50%) scale(1.02);
       box-shadow: 0 20px 64px rgba(46,125,114,0.22), 0 0 0 1px rgba(70,165,148,0.15);
     }
     .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
@@ -447,10 +446,10 @@
     /* Conclusion — fades in at end of scroll */
     .sol-conclusion-wrap {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 100vh;
+      inset: 0;
       display: flex; align-items: center; justify-content: center;
       pointer-events: none;
+      grid-column: 1 / -1;
     }
     .sol-conclusion-text {
       font-size: clamp(26px, 3.8vw, 46px); font-weight: 900;
@@ -509,13 +508,14 @@
         position: relative; height: auto; perspective: none;
       }
       .sol-card {
-        position: relative; opacity: 1;
+        position: relative; top: auto; opacity: 1;
         transform: none; margin-bottom: 20px;
       }
       .sol-card[data-depth] { opacity: 1; transform: none; }
       .sol-card.sol-featured[data-depth="active"] { transform: none; }
       .sol-conclusion-wrap {
-        position: relative; height: auto; padding: 64px 0;
+        position: relative; inset: auto;
+        padding: 64px 0;
       }
       .sol-conclusion-text { opacity: 1; transform: none; }
       .sol-progress { display: none; }
@@ -745,11 +745,11 @@
 
       </div>
 
-    </div>
+      <!-- Conclusion overlay -->
+      <div class="sol-conclusion-wrap">
+        <p class="sol-conclusion-text" id="solConclusion">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
+      </div>
 
-    <!-- Conclusion overlay -->
-    <div class="sol-conclusion-wrap">
-      <p class="sol-conclusion-text" id="solConclusion">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
     </div>
   </div>
 
