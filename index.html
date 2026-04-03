@@ -174,7 +174,7 @@
     ══════════════════════════════════ */
     #realiteit {
       background: var(--white);
-      padding: 72px 52px;
+      padding: 56px 52px;
       border-bottom: 1px solid var(--border);
     }
     .real-inner { max-width: 1040px; margin: 0 auto; }
@@ -185,7 +185,7 @@
       box-shadow: 0 2px 24px rgba(0,0,0,0.05);
     }
     .real-card {
-      background: var(--white); padding: 48px 36px;
+      background: var(--white); padding: 38px 36px;
       text-align: center;
     }
     .real-num {
@@ -290,7 +290,7 @@
     .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 4px; }
 
     /* ══════════════════════════════════
-       SOLUTION — Cinematic Scroll Depth
+       SOLUTION — Vertical Reveal
     ══════════════════════════════════ */
     #oplossing {
       background: var(--white);
@@ -298,28 +298,26 @@
       position: relative;
     }
     .sol-intro-section {
-      padding: 52px 52px 0;
+      padding: 48px 52px 0;
       max-width: 1100px; margin: 0 auto;
     }
     .sol-intro-copy {
       max-width: 640px; margin-bottom: 0;
     }
-    .sol-intro-text p:last-child { margin-bottom: 0; }
     .sol-title {
       font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 24px;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 20px;
     }
     .sol-intro-text {
       font-size: 15.5px; color: var(--ink2); line-height: 1.84;
     }
-    .sol-intro-text p + p { margin-top: 14px; }
+    .sol-intro-text p + p { margin-top: 12px; }
     .sol-intro-text strong { color: var(--ink); font-weight: 700; }
 
     /* Scroll-driven scene */
     .sol-scene {
       position: relative;
-      height: 250vh;
-      transition: height 0.6s cubic-bezier(0.22,1,0.36,1);
+      height: 200vh;
     }
     .sol-scene-inner {
       position: sticky;
@@ -327,14 +325,14 @@
       height: calc(100vh - 64px);
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 64px;
+      gap: 48px;
       align-items: center;
       padding: 0 52px;
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    /* ── Frozen state — after animation completes ── */
+    /* ── Frozen state ── */
     .sol-scene.sol-frozen {
       height: auto;
     }
@@ -342,157 +340,103 @@
       position: relative;
       top: 0;
       height: auto;
-      align-items: start;
-      padding-top: 48px;
-      padding-bottom: 48px;
-    }
-    .sol-frozen .sol-stack {
-      height: auto;
-      perspective: none;
-    }
-    .sol-frozen .sol-card {
-      position: relative;
-      top: auto;
-      opacity: 1 !important;
-      transform: none !important;
-      margin-bottom: 16px;
-    }
-    .sol-frozen .sol-card:last-child { margin-bottom: 0; }
-    .sol-frozen .sol-conclusion-wrap {
-      position: relative;
-      inset: auto;
-      grid-column: 1 / -1;
-      padding: 40px 0 0;
-    }
-    .sol-frozen .sol-conclusion-text {
-      opacity: 1;
-      transform: translateY(0);
+      padding-top: 40px;
+      padding-bottom: 16px;
     }
 
-    /* Left: sticky label */
+    /* Left: system label */
     .sol-sticky-label {
-      padding-right: 24px;
+      padding-right: 16px;
     }
     .sol-sticky-eyebrow {
       font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
     }
     .sol-sticky-title {
       font-size: clamp(24px, 2.6vw, 36px); font-weight: 800;
-      color: var(--ink); letter-spacing: -1.5px; line-height: 1.10; margin-bottom: 20px;
+      color: var(--ink); letter-spacing: -1.5px; line-height: 1.10; margin-bottom: 16px;
     }
     .sol-sticky-sub {
-      font-size: 14.5px; color: var(--ink3); line-height: 1.72;
+      font-size: 14px; color: var(--ink3); line-height: 1.72;
     }
     .sol-progress {
-      display: flex; gap: 8px; margin-top: 28px;
+      display: flex; gap: 8px; margin-top: 24px;
     }
     .sol-pip {
       flex: 1; height: 3px; border-radius: 2px; background: var(--border);
-      transition: background 0.5s;
+      transition: background 0.4s;
     }
     .sol-pip.active { background: var(--accent); }
 
-    /* Right: card stack canvas */
+    /* Right: vertical card list */
     .sol-stack {
-      position: relative;
-      height: 420px;
-      perspective: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
     .sol-card {
-      position: absolute;
-      left: 0; right: 0; top: 50%;
-      padding: 36px 32px;
-      border-radius: 16px;
+      padding: 22px 24px;
+      border-radius: 14px;
       background: var(--warm);
       border: 1px solid var(--border);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-      /* Initial: hidden below */
+      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
       opacity: 0;
-      transform: translateY(-50%) translateY(40px) scale(0.96);
-      transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1),
-                  transform 0.6s cubic-bezier(0.22,1,0.36,1),
-                  box-shadow 0.6s cubic-bezier(0.22,1,0.36,1);
+      transform: translateY(20px);
+      transition: opacity 0.5s cubic-bezier(0.25,1,0.5,1),
+                  transform 0.5s cubic-bezier(0.25,1,0.5,1);
       will-change: transform, opacity;
+    }
+    .sol-card[data-visible] {
+      opacity: 1;
+      transform: translateY(0);
     }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
-      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;
     }
     .sol-card h3 {
-      font-size: 18px; font-weight: 800; color: var(--ink);
-      letter-spacing: -0.3px; margin-bottom: 8px; line-height: 1.28;
+      font-size: 16px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.3px; margin-bottom: 4px; line-height: 1.30;
     }
     .sol-card p {
-      font-size: 14px; color: var(--ink3); line-height: 1.64;
-    }
-
-    /* Depth states — applied by JS */
-    .sol-card[data-depth="active"] {
-      opacity: 1;
-      transform: translateY(-50%) scale(1);
-      z-index: 4;
-      background: var(--white);
-      border-color: var(--accent);
-      box-shadow: 0 12px 40px rgba(46,125,114,0.10);
-    }
-    .sol-card[data-depth="1"] {
-      opacity: 0.5;
-      transform: translateY(-50%) translateY(-16px) scale(0.95);
-      z-index: 3;
-    }
-    .sol-card[data-depth="2"] {
-      opacity: 0.25;
-      transform: translateY(-50%) translateY(-28px) scale(0.90);
-      z-index: 2;
-    }
-    .sol-card[data-depth="3"] {
-      opacity: 0.1;
-      transform: translateY(-50%) translateY(-36px) scale(0.86);
-      z-index: 1;
+      font-size: 13.5px; color: var(--ink3); line-height: 1.58;
     }
 
     /* Featured card — Google */
     .sol-card.sol-featured {
       background: var(--night);
       border-color: var(--accent2);
-      padding: 40px 36px;
+      padding: 24px 28px;
     }
-    .sol-card.sol-featured[data-depth="active"] {
-      background: var(--night);
-      border-color: var(--accent);
-      transform: translateY(-50%) scale(1.02);
-      box-shadow: 0 20px 64px rgba(46,125,114,0.22), 0 0 0 1px rgba(70,165,148,0.15);
+    .sol-card.sol-featured[data-visible] {
+      box-shadow: 0 8px 32px rgba(46,125,114,0.14), 0 0 0 1px rgba(70,165,148,0.10);
     }
     .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
     .sol-card.sol-featured h3 {
-      color: #fff; font-size: clamp(20px, 2.2vw, 26px);
-      letter-spacing: -0.6px; margin-bottom: 12px;
+      color: #fff; font-size: clamp(17px, 1.8vw, 20px);
+      letter-spacing: -0.4px; margin-bottom: 6px;
     }
-    .sol-card.sol-featured p { color: rgba(255,255,255,0.50); font-size: 14.5px; line-height: 1.72; }
+    .sol-card.sol-featured p { color: rgba(255,255,255,0.48); font-size: 13.5px; line-height: 1.64; }
     .sol-card.sol-featured .sol-card-badge {
       display: inline-block;
       font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
       text-transform: uppercase; color: var(--accent3);
       background: rgba(70,165,148,0.12);
-      padding: 5px 12px; border-radius: 6px;
-      margin-top: 16px;
+      padding: 4px 10px; border-radius: 5px;
+      margin-top: 10px;
     }
 
-    /* Conclusion — fades in at end of scroll */
-    .sol-conclusion-wrap {
-      position: absolute;
-      inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      pointer-events: none;
-      grid-column: 1 / -1;
+    /* Conclusion — below the scene */
+    .sol-conclusion-section {
+      padding: 40px 52px 48px;
+      text-align: center;
     }
     .sol-conclusion-text {
-      font-size: clamp(26px, 3.8vw, 46px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.14;
-      text-align: center; max-width: 700px;
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+      font-size: clamp(24px, 3.4vw, 42px); font-weight: 900;
+      color: var(--ink); letter-spacing: -1.8px; line-height: 1.14;
+      max-width: 700px; margin: 0 auto;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.6s cubic-bezier(0.25,1,0.5,1), transform 0.6s cubic-bezier(0.25,1,0.5,1);
     }
     .sol-conclusion-text.visible {
       opacity: 1; transform: translateY(0);
@@ -502,7 +446,7 @@
        CTA
     ══════════════════════════════════ */
     #cta {
-      background: var(--night2); padding: 100px 52px;
+      background: var(--night2); padding: 64px 52px;
       text-align: center; position: relative; overflow: hidden;
     }
     #cta::before {
@@ -538,22 +482,14 @@
       .sol-scene-inner {
         position: relative; top: 0;
         height: auto; grid-template-columns: 1fr;
-        gap: 40px; padding: 64px 52px;
-      }
-      .sol-stack {
-        position: relative; height: auto; perspective: none;
+        gap: 32px; padding: 48px 52px;
       }
       .sol-card {
-        position: relative; top: auto; opacity: 1;
-        transform: none; margin-bottom: 20px;
+        opacity: 1; transform: none;
       }
-      .sol-card[data-depth] { opacity: 1; transform: none; }
-      .sol-card.sol-featured[data-depth="active"] { transform: none; }
-      .sol-conclusion-wrap {
-        position: relative; inset: auto;
-        padding: 64px 0;
-      }
+      .sol-card[data-visible] { transform: none; }
       .sol-conclusion-text { opacity: 1; transform: none; }
+      .sol-conclusion-section { padding: 32px 52px 40px; }
       .sol-progress { display: none; }
       .over-inner { grid-template-columns: 1fr; gap: 40px; }
       .over-foto { max-width: 180px; }
@@ -753,7 +689,7 @@
       <!-- Right: depth stack -->
       <div class="sol-stack" id="solStack">
 
-        <div class="sol-card" data-feature="1" data-depth="active">
+        <div class="sol-card" data-feature="1">
           <div class="sol-card-num">01 — Design</div>
           <h3>Een strakke, moderne website</h3>
           <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
@@ -780,12 +716,12 @@
 
       </div>
 
-      <!-- Conclusion overlay -->
-      <div class="sol-conclusion-wrap">
-        <p class="sol-conclusion-text" id="solConclusion">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
-      </div>
-
     </div>
+  </div>
+
+  <!-- Conclusion — below the scene -->
+  <div class="sol-conclusion-section">
+    <p class="sol-conclusion-text" id="solConclusion">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
   </div>
 
 </section>
@@ -892,7 +828,7 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Solution — scroll-driven depth stack (one-shot freeze) ── */
+  /* ── Solution — vertical reveal (one-shot) ── */
   (function () {
     var scene = document.getElementById('solScene');
     var cards = document.querySelectorAll('#solStack .sol-card');
@@ -901,16 +837,13 @@
     if (!scene || !cards.length) return;
 
     var totalCards = cards.length;
-    var lastActive = -1;
+    var revealed = 0;
     var frozen = false;
 
     function freeze() {
       frozen = true;
       scene.classList.add('sol-frozen');
-      cards.forEach(function (c) {
-        c.setAttribute('data-depth', 'active');
-        c.style.opacity = '';
-      });
+      cards.forEach(function (c) { c.setAttribute('data-visible', ''); });
       pips.forEach(function (p) { p.classList.add('active'); });
       conclusion.classList.add('visible');
     }
@@ -923,41 +856,25 @@
       var scrolled = -rect.top;
       var progress = Math.max(0, Math.min(1, scrolled / (sceneH - window.innerHeight)));
 
-      var cardProgress = progress * (totalCards + 0.5);
-      var activeIndex = Math.min(Math.floor(cardProgress), totalCards - 1);
+      // Map progress to card index (evenly distributed)
+      var cardIndex = Math.min(Math.floor(progress * (totalCards + 1)), totalCards);
 
-      // Freeze once all cards revealed and scrolled far enough
-      if (activeIndex >= totalCards - 1 && progress > 0.88) {
+      // Reveal cards progressively — never un-reveal
+      if (cardIndex > revealed) {
+        for (var i = revealed; i < cardIndex; i++) {
+          cards[i].setAttribute('data-visible', '');
+        }
+        revealed = cardIndex;
+
+        pips.forEach(function (p, j) {
+          p.classList.toggle('active', j < revealed);
+        });
+      }
+
+      // All cards revealed + scrolled past → freeze
+      if (revealed >= totalCards && progress > 0.85) {
         freeze();
         return;
-      }
-
-      if (activeIndex !== lastActive) {
-        lastActive = activeIndex;
-
-        cards.forEach(function (c, i) {
-          var depth = activeIndex - i;
-          if (i === activeIndex) {
-            c.setAttribute('data-depth', 'active');
-          } else if (depth > 0 && depth <= 3) {
-            c.setAttribute('data-depth', String(depth));
-          } else if (i > activeIndex) {
-            c.removeAttribute('data-depth');
-          } else {
-            c.setAttribute('data-depth', '3');
-          }
-        });
-
-        pips.forEach(function (p, i) {
-          p.classList.toggle('active', i <= activeIndex);
-        });
-      }
-
-      // Show conclusion near the end
-      if (progress > 0.82) {
-        conclusion.classList.add('visible');
-      } else {
-        conclusion.classList.remove('visible');
       }
 
       requestAnimationFrame(update);
