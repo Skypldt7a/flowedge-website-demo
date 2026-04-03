@@ -92,7 +92,7 @@
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .nav-logo { font-size: 27px; font-weight: 800; color: #fff; letter-spacing: -0.8px; text-decoration: none; }
+    .nav-logo { font-size: 34px; font-weight: 800; color: #fff; letter-spacing: -1px; text-decoration: none; }
     .nav-logo em { font-style: normal; color: var(--accent); }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 8px;
@@ -298,12 +298,13 @@
       position: relative;
     }
     .sol-intro-section {
-      padding: 88px 52px 0;
+      padding: 52px 52px 0;
       max-width: 1100px; margin: 0 auto;
     }
     .sol-intro-copy {
       max-width: 640px; margin-bottom: 0;
     }
+    .sol-intro-text p:last-child { margin-bottom: 0; }
     .sol-title {
       font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
       color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 24px;
@@ -317,8 +318,8 @@
     /* Scroll-driven scene */
     .sol-scene {
       position: relative;
-      /* Height = viewport heights for 4 segments + extra for conclusion */
-      height: 380vh;
+      height: 250vh;
+      transition: height 0.6s cubic-bezier(0.22,1,0.36,1);
     }
     .sol-scene-inner {
       position: sticky;
@@ -331,6 +332,41 @@
       padding: 0 52px;
       max-width: 1100px;
       margin: 0 auto;
+    }
+
+    /* ── Frozen state — after animation completes ── */
+    .sol-scene.sol-frozen {
+      height: auto;
+    }
+    .sol-frozen .sol-scene-inner {
+      position: relative;
+      top: 0;
+      height: auto;
+      align-items: start;
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+    .sol-frozen .sol-stack {
+      height: auto;
+      perspective: none;
+    }
+    .sol-frozen .sol-card {
+      position: relative;
+      top: auto;
+      opacity: 1 !important;
+      transform: none !important;
+      margin-bottom: 16px;
+    }
+    .sol-frozen .sol-card:last-child { margin-bottom: 0; }
+    .sol-frozen .sol-conclusion-wrap {
+      position: relative;
+      inset: auto;
+      grid-column: 1 / -1;
+      padding: 40px 0 0;
+    }
+    .sol-frozen .sol-conclusion-text {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Left: sticky label */
@@ -693,7 +729,6 @@
         <p>Mensen zoeken jouw dienst — elke dag. Maar als je niet goed te vinden bent op Google, komen ze niet bij jou uit. En als ze je wél vinden, bepaalt je website of ze blijven of vertrekken.</p>
         <p>Helaas is dit bij de meeste kleine bedrijven die regionaal hun werk doen iets waar men al te vaak tegenaan loopt.</p>
         <p>Dat is precies waar FlowEdge op is gebouwd. Ik zorg ervoor dat jouw online aanwezigheid klopt — zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
-        <p><strong>Dat betekent:</strong></p>
       </div>
     </div>
   </div>
@@ -857,7 +892,7 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Solution — scroll-driven depth stack ── */
+  /* ── Solution — scroll-driven depth stack (one-shot freeze) ── */
   (function () {
     var scene = document.getElementById('solScene');
     var cards = document.querySelectorAll('#solStack .sol-card');
@@ -865,21 +900,39 @@
     var conclusion = document.getElementById('solConclusion');
     if (!scene || !cards.length) return;
 
-    var totalCards = cards.length; // 4
+    var totalCards = cards.length;
     var lastActive = -1;
+    var frozen = false;
+
+    function freeze() {
+      frozen = true;
+      scene.classList.add('sol-frozen');
+      cards.forEach(function (c) {
+        c.setAttribute('data-depth', 'active');
+        c.style.opacity = '';
+      });
+      pips.forEach(function (p) { p.classList.add('active'); });
+      conclusion.classList.add('visible');
+    }
 
     function update() {
+      if (frozen) return;
+
       var rect = scene.getBoundingClientRect();
       var sceneH = scene.offsetHeight;
       var scrolled = -rect.top;
       var progress = Math.max(0, Math.min(1, scrolled / (sceneH - window.innerHeight)));
 
-      // 4 segments: 0-0.22, 0.22-0.44, 0.44-0.66, 0.66-0.88, then 0.88-1 = conclusion
       var cardProgress = progress * (totalCards + 0.5);
       var activeIndex = Math.min(Math.floor(cardProgress), totalCards - 1);
 
-      // Only update DOM when active card changes
-      if (activeIndex !== lastActive && progress < 0.88) {
+      // Freeze once all cards revealed and scrolled far enough
+      if (activeIndex >= totalCards - 1 && progress > 0.88) {
+        freeze();
+        return;
+      }
+
+      if (activeIndex !== lastActive) {
         lastActive = activeIndex;
 
         cards.forEach(function (c, i) {
@@ -900,16 +953,11 @@
         });
       }
 
-      // Conclusion fade-in at end
-      if (progress > 0.85) {
+      // Show conclusion near the end
+      if (progress > 0.82) {
         conclusion.classList.add('visible');
-        // Fade out stack
-        cards.forEach(function (c) {
-          c.style.opacity = Math.max(0, 1 - (progress - 0.85) * 6).toString();
-        });
       } else {
         conclusion.classList.remove('visible');
-        cards.forEach(function (c) { c.style.opacity = ''; });
       }
 
       requestAnimationFrame(update);
