@@ -290,12 +290,12 @@
     .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 4px; }
 
     /* ══════════════════════════════════
-       SOLUTION — Cinematic Scroll
+       SOLUTION
     ══════════════════════════════════ */
     #oplossing {
       background: var(--white);
       border-top: 1px solid var(--border);
-      padding: 48px 52px 0;
+      padding: 48px 52px 56px;
     }
     .sol-inner { max-width: 1100px; margin: 0 auto; }
 
@@ -305,24 +305,19 @@
       color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 20px;
     }
 
-    /* Scroll container — 5 segments: 4 cards + conclusion */
-    .sol-scene {
-      position: relative;
-      height: 380vh;
-    }
+    /* Two-column grid */
     .sol-grid {
-      position: sticky;
-      top: 64px;
-      height: calc(100vh - 64px);
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 48px;
-      align-items: center;
-      overflow: visible;
+      align-items: start;
     }
 
-    /* Left column */
-    .sol-left { padding-right: 8px; }
+    /* Left column — sticky */
+    .sol-left {
+      position: sticky;
+      top: 88px;
+    }
     .sol-intro-text {
       font-size: 15.5px; color: var(--ink2); line-height: 1.84;
     }
@@ -350,40 +345,40 @@
     }
     .sol-pip {
       flex: 1; height: 3px; border-radius: 2px; background: var(--border);
-      transition: background 0.4s;
+      transition: background 0.5s;
     }
     .sol-pip.active { background: var(--accent); }
 
-    /* Right column: depth canvas */
-    .sol-right {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
+    /* Right column — vertical card list */
     .sol-stack {
-      position: relative;
-      width: 100%;
-      height: 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
     .sol-card {
-      position: absolute;
-      left: 0; right: 0; top: 0;
-      padding: 28px 32px;
-      border-radius: 18px;
-      background: rgb(246,247,246);
-      border: 1px solid rgb(226,232,230);
+      padding: 26px 28px;
+      border-radius: 16px;
+      background: var(--warm);
+      border: 1px solid var(--border);
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
       opacity: 0;
-      transform: translateY(60px) scale(0.94);
-      will-change: transform, opacity;
+      transform: translateY(24px) scale(0.98);
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .sol-card.revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
-      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;
     }
     .sol-card h3 {
-      font-size: 18px; font-weight: 800; color: var(--ink);
-      letter-spacing: -0.4px; margin-bottom: 6px; line-height: 1.28;
+      font-size: 17px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.3px; margin-bottom: 4px; line-height: 1.28;
     }
     .sol-card p {
       font-size: 14px; color: var(--ink3); line-height: 1.64;
@@ -392,39 +387,37 @@
     /* Featured card — Google */
     .sol-card.sol-featured {
       background: var(--night);
-      border-color: rgb(31,94,89);
-      padding: 30px 34px;
+      border-color: var(--accent2);
+      padding: 28px 30px;
+    }
+    .sol-card.sol-featured.revealed {
+      border-color: var(--accent);
+      box-shadow: 0 12px 40px rgba(46,125,114,0.14), 0 0 0 1px rgba(70,165,148,0.08);
     }
     .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
     .sol-card.sol-featured h3 {
-      color: #fff; font-size: clamp(18px, 2vw, 22px);
-      letter-spacing: -0.5px; margin-bottom: 8px;
+      color: #fff; font-size: clamp(17px, 1.8vw, 20px);
+      letter-spacing: -0.4px; margin-bottom: 6px;
     }
-    .sol-card.sol-featured p { color: rgba(255,255,255,0.52); font-size: 14.5px; line-height: 1.72; }
+    .sol-card.sol-featured p { color: rgba(255,255,255,0.50); font-size: 14px; line-height: 1.68; }
     .sol-card.sol-featured .sol-card-badge {
       display: inline-block;
       font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
       text-transform: uppercase; color: var(--accent3);
       background: rgba(70,165,148,0.12);
       padding: 5px 12px; border-radius: 6px;
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
-    /* Conclusion overlay — inside sticky grid */
-    .sol-conclusion-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      opacity: 0;
+    /* Conclusion */
+    .sol-conclusion {
+      padding: 48px 0 0;
+      text-align: center;
     }
     .sol-conclusion-text {
-      font-size: clamp(26px, 3.8vw, 46px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.14;
-      text-align: center; max-width: 700px;
-      transform: translateY(20px);
+      font-size: clamp(24px, 3.4vw, 42px); font-weight: 900;
+      color: var(--ink); letter-spacing: -1.8px; line-height: 1.14;
+      max-width: 700px; margin: 0 auto;
     }
 
     /* ══════════════════════════════════
@@ -463,21 +456,9 @@
        RESPONSIVE
     ══════════════════════════════════ */
     @media (max-width: 1060px) {
-      .sol-scene { height: auto; }
-      .sol-grid {
-        position: relative; top: 0; height: auto;
-        grid-template-columns: 1fr; gap: 32px;
-      }
-      .sol-stack { height: auto; }
-      .sol-card {
-        position: relative; opacity: 1 !important;
-        transform: none !important; margin-bottom: 12px;
-      }
-      .sol-conclusion-overlay {
-        position: relative; inset: auto; opacity: 1 !important;
-        padding: 48px 0 0; grid-column: 1 / -1;
-      }
-      .sol-conclusion-text { opacity: 1; transform: none; }
+      .sol-grid { grid-template-columns: 1fr; gap: 32px; }
+      .sol-left { position: relative; top: 0; }
+      .sol-card { opacity: 1; transform: none; }
       .sol-progress { display: none; }
       .over-inner { grid-template-columns: 1fr; gap: 40px; }
       .over-foto { max-width: 240px; }
@@ -641,62 +622,56 @@
       <h2 class="sol-title fade-up" data-delay="60">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
     </div>
 
-    <!-- Scroll-driven depth stack -->
-    <div class="sol-scene" id="solScene">
-      <div class="sol-grid">
+    <div class="sol-grid">
 
-        <div class="sol-left">
-          <div class="sol-intro-text fade-up" data-delay="120">
-            <p>Je hebt geen klantenprobleem. Je hebt een zichtbaarheids- en overtuigingsprobleem.</p>
-            <p>Mensen zoeken jouw dienst — elke dag. Maar als je niet goed te vinden bent op Google, komen ze niet bij jou uit. En als ze je wél vinden, bepaalt je website of ze blijven of vertrekken.</p>
-            <p>Helaas is dit bij de meeste kleine bedrijven die regionaal hun werk doen iets waar men al te vaak tegenaan loopt.</p>
-            <p>Dat is precies waar FlowEdge op is gebouwd. Ik zorg ervoor dat jouw online aanwezigheid klopt — zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
-          </div>
-          <div class="sol-system-label fade-up" data-delay="180">
-            <p class="sol-system-eyebrow">Het systeem</p>
-            <h3 class="sol-system-title">Vier pijlers.<br>Eén doel.</h3>
-            <p class="sol-system-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
-            <div class="sol-progress">
-              <div class="sol-pip" data-pip="1"></div>
-              <div class="sol-pip" data-pip="2"></div>
-              <div class="sol-pip" data-pip="3"></div>
-              <div class="sol-pip" data-pip="4"></div>
-            </div>
+      <div class="sol-left">
+        <div class="sol-intro-text fade-up" data-delay="120">
+          <p>Je hebt geen klantenprobleem. Je hebt een zichtbaarheids- en overtuigingsprobleem.</p>
+          <p>Mensen zoeken jouw dienst — elke dag. Maar als je niet goed te vinden bent op Google, komen ze niet bij jou uit. En als ze je wél vinden, bepaalt je website of ze blijven of vertrekken.</p>
+          <p>Helaas is dit bij de meeste kleine bedrijven die regionaal hun werk doen iets waar men al te vaak tegenaan loopt.</p>
+          <p>Dat is precies waar FlowEdge op is gebouwd. Ik zorg ervoor dat jouw online aanwezigheid klopt — zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
+        </div>
+        <div class="sol-system-label fade-up" data-delay="180">
+          <p class="sol-system-eyebrow">Het systeem</p>
+          <h3 class="sol-system-title">Vier pijlers.<br>Eén doel.</h3>
+          <p class="sol-system-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
+          <div class="sol-progress">
+            <div class="sol-pip" data-pip="1"></div>
+            <div class="sol-pip" data-pip="2"></div>
+            <div class="sol-pip" data-pip="3"></div>
+            <div class="sol-pip" data-pip="4"></div>
           </div>
         </div>
-
-        <div class="sol-right">
-          <div class="sol-stack" id="solStack">
-            <div class="sol-card">
-              <div class="sol-card-num">01 — Design</div>
-              <h3>Een strakke, moderne website</h3>
-              <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
-            </div>
-            <div class="sol-card">
-              <div class="sol-card-num">02 — Mobiel</div>
-              <h3>Volledig geoptimaliseerd voor mobiel</h3>
-              <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
-            </div>
-            <div class="sol-card">
-              <div class="sol-card-num">03 — Snelheid</div>
-              <h3>Snelle laadtijden en een soepele ervaring</h3>
-              <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
-            </div>
-            <div class="sol-card sol-featured">
-              <div class="sol-card-num">04 — Google</div>
-              <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
-              <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
-              <span class="sol-card-badge">Kern van het systeem</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Conclusion overlay -->
-        <div class="sol-conclusion-overlay" id="solConclusion">
-          <p class="sol-conclusion-text">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
-        </div>
-
       </div>
+
+      <div class="sol-stack" id="solStack">
+        <div class="sol-card">
+          <div class="sol-card-num">01 — Design</div>
+          <h3>Een strakke, moderne website</h3>
+          <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
+        </div>
+        <div class="sol-card">
+          <div class="sol-card-num">02 — Mobiel</div>
+          <h3>Volledig geoptimaliseerd voor mobiel</h3>
+          <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
+        </div>
+        <div class="sol-card">
+          <div class="sol-card-num">03 — Snelheid</div>
+          <h3>Snelle laadtijden en een soepele ervaring</h3>
+          <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
+        </div>
+        <div class="sol-card sol-featured">
+          <div class="sol-card-num">04 — Google</div>
+          <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
+          <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
+          <span class="sol-card-badge">Kern van het systeem</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sol-conclusion">
+      <p class="sol-conclusion-text fade-up">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
     </div>
 
   </div>
@@ -804,112 +779,26 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Solution — cinematic scroll engine ── */
+  /* ── Solution — card reveal ── */
   (function () {
-    var scene = document.getElementById('solScene');
     var cards = document.querySelectorAll('#solStack .sol-card');
     var pips = document.querySelectorAll('.sol-pip');
-    var solLeft = document.querySelector('.sol-left');
-    var conclusionWrap = document.getElementById('solConclusion');
-    var conclusionText = conclusionWrap ? conclusionWrap.querySelector('.sol-conclusion-text') : null;
-    if (!scene || !cards.length) return;
+    if (!cards.length) return;
 
-    var N = cards.length;
-    var feat = [];
-    cards.forEach(function (c) { feat.push(c.classList.contains('sol-featured')); });
-
-    function lerp(a, b, t) { return a + (b - a) * t; }
-    function clamp(v) { return Math.max(0, Math.min(1, v)); }
-    function ease(t) { return t * t * (3 - 2 * t); } // smoothstep
-
-    function update() {
-      var rect = scene.getBoundingClientRect();
-      var scrolled = -rect.top;
-      var total = scene.offsetHeight - window.innerHeight;
-      var progress = Math.max(0, Math.min(1, scrolled / total));
-
-      // 5 zones: 4 cards (0–0.82) + conclusion (0.82–1.0)
-      var seg = (progress / 0.82) * N;
-
-      // Conclusion
-      var cRaw = Math.max(0, Math.min(1, (progress - 0.80) / 0.16));
-      var cT = ease(cRaw);
-      var stackMul = 1 - cT;
-
-      cards.forEach(function (c, i) {
-        var rel = seg - i;
-
-        // Active amount: sustained plateau with smooth ramps
-        var activeT = clamp(Math.min(rel / 0.35, (1.15 - rel) / 0.35));
-        activeT = ease(activeT);
-
-        // Core transforms
-        var opacity, y, scale;
-        if (rel < 0) {
-          opacity = 0; y = 60; scale = 0.94;
-        } else if (rel <= 1) {
-          var t = ease(clamp(rel / 0.45));
-          opacity = t;
-          y = lerp(60, 0, t);
-          scale = lerp(0.94, feat[i] ? 1.03 : 1.0, t);
-        } else {
-          var d = ease(clamp((rel - 1) / 3));
-          opacity = lerp(0.32, 0.02, d);
-          y = lerp(-8, -22, d);
-          scale = lerp(feat[i] ? 1.03 : 1.0, 0.88, d);
-        }
-        opacity *= stackMul;
-
-        c.style.opacity = opacity.toFixed(3);
-        c.style.transform = 'translateY(' + y.toFixed(1) + 'px) scale(' + scale.toFixed(4) + ')';
-        c.style.zIndex = rel >= 0 && rel <= 1.2 ? 10 : Math.max(1, 8 - Math.floor(Math.max(0, rel)));
-
-        // Continuous shadow — all values interpolated
-        if (feat[i]) {
-          var sY = lerp(2, 20, activeT);
-          var sB = lerp(12, 56, activeT);
-          var sA = lerp(0.06, 0.28, activeT);
-          c.style.boxShadow = '0 ' + sY.toFixed(1) + 'px ' + sB.toFixed(1) + 'px rgba(46,125,114,' + sA.toFixed(3) + ')';
-          // Border: accent2 → accent
-          var bR = Math.round(lerp(31, 46, activeT));
-          var bG = Math.round(lerp(94, 125, activeT));
-          var bB = Math.round(lerp(89, 114, activeT));
-          c.style.borderColor = 'rgb(' + bR + ',' + bG + ',' + bB + ')';
-        } else {
-          var sY = lerp(2, 24, activeT);
-          var sB = lerp(8, 64, activeT);
-          var sA = lerp(0.03, 0.10, activeT);
-          c.style.boxShadow = '0 ' + sY.toFixed(1) + 'px ' + sB.toFixed(1) + 'px rgba(0,0,0,' + sA.toFixed(3) + ')';
-          // Border: border → accent
-          var bR = Math.round(lerp(226, 46, activeT));
-          var bG = Math.round(lerp(232, 125, activeT));
-          var bB = Math.round(lerp(230, 114, activeT));
-          c.style.borderColor = 'rgb(' + bR + ',' + bG + ',' + bB + ')';
-          // Background: warm → white
-          var bgV = Math.round(lerp(246, 255, activeT));
-          c.style.background = 'rgb(' + bgV + ',' + Math.round(lerp(247, 255, activeT)) + ',' + bgV + ')';
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          var idx = Array.from(cards).indexOf(e.target);
+          for (var i = 0; i <= idx; i++) {
+            if (pips[i]) pips[i].classList.add('active');
+          }
+          obs.unobserve(e.target);
         }
       });
+    }, { threshold: 0.15, rootMargin: '0px 0px -48px 0px' });
 
-      // Pips
-      var activeIdx = Math.min(Math.floor(seg), N - 1);
-      pips.forEach(function (p, i) {
-        p.classList.toggle('active', i <= activeIdx && progress < 0.84);
-      });
-
-      // Conclusion + left column fade
-      if (conclusionWrap) {
-        conclusionWrap.style.opacity = cT.toFixed(3);
-        conclusionText.style.transform = 'translateY(' + lerp(24, 0, cT).toFixed(1) + 'px)';
-      }
-      if (solLeft) {
-        solLeft.style.opacity = lerp(1, 0.15, cT).toFixed(3);
-      }
-
-      requestAnimationFrame(update);
-    }
-
-    requestAnimationFrame(update);
+    cards.forEach(function (c) { obs.observe(c); });
   })();
 </script>
 
