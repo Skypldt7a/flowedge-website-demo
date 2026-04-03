@@ -92,7 +92,7 @@
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .nav-logo { font-size: 21px; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-decoration: none; }
+    .nav-logo { font-size: 27px; font-weight: 800; color: #fff; letter-spacing: -0.8px; text-decoration: none; }
     .nav-logo em { font-style: normal; color: var(--accent); }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 8px;
@@ -290,67 +290,95 @@
     .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 4px; }
 
     /* ══════════════════════════════════
-       SOLUTION — Sticky Scroll Narrative
+       SOLUTION — Cinematic Scroll Depth
     ══════════════════════════════════ */
     #oplossing {
-      background: var(--white); padding: 88px 52px;
+      background: var(--white);
       border-top: 1px solid var(--border);
+      position: relative;
     }
-    .sol-inner { max-width: 1100px; margin: 0 auto; }
-
-    .sol-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: start;
+    .sol-intro-section {
+      padding: 88px 52px 0;
+      max-width: 1100px; margin: 0 auto;
     }
-
-    /* Left: sticky panel */
-    .sol-sticky {
-      position: sticky;
-      top: 100px;
-      padding-right: 24px;
+    .sol-intro-copy {
+      max-width: 640px; margin-bottom: 0;
     }
     .sol-title {
       font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 20px;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 24px;
     }
     .sol-intro-text {
-      font-size: 15.5px; color: var(--ink2); line-height: 1.80; margin-bottom: 32px;
+      font-size: 15.5px; color: var(--ink2); line-height: 1.84;
+    }
+    .sol-intro-text p + p { margin-top: 14px; }
+    .sol-intro-text strong { color: var(--ink); font-weight: 700; }
+
+    /* Scroll-driven scene */
+    .sol-scene {
+      position: relative;
+      /* Height = viewport heights for 4 segments + extra for conclusion */
+      height: 380vh;
+    }
+    .sol-scene-inner {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      padding: 0 52px;
+      max-width: 1100px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    /* Left: sticky label */
+    .sol-sticky-label {
+      padding-right: 24px;
+    }
+    .sol-sticky-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+    }
+    .sol-sticky-title {
+      font-size: clamp(24px, 2.6vw, 36px); font-weight: 800;
+      color: var(--ink); letter-spacing: -1.5px; line-height: 1.10; margin-bottom: 20px;
+    }
+    .sol-sticky-sub {
+      font-size: 14.5px; color: var(--ink3); line-height: 1.72;
     }
     .sol-progress {
-      display: flex; flex-direction: column; gap: 6px;
+      display: flex; gap: 8px; margin-top: 28px;
     }
     .sol-pip {
-      height: 3px; border-radius: 2px; background: var(--border);
-      transition: background 0.4s, transform 0.4s;
+      flex: 1; height: 3px; border-radius: 2px; background: var(--border);
+      transition: background 0.5s;
     }
-    .sol-pip.active { background: var(--accent); transform: scaleX(1.02); }
+    .sol-pip.active { background: var(--accent); }
 
-    /* Right: scrolling feature cards */
-    .sol-features {
-      display: flex; flex-direction: column; gap: 28px;
-      padding: 20px 0 60px;
+    /* Right: card stack canvas */
+    .sol-stack {
+      position: relative;
+      height: 420px;
+      perspective: 800px;
     }
     .sol-card {
+      position: absolute;
+      left: 0; right: 0; top: 0;
       padding: 36px 32px;
       border-radius: 16px;
       background: var(--warm);
       border: 1px solid var(--border);
-      opacity: 0.3;
-      transform: translateY(12px);
-      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .sol-card.seen {
-      opacity: 0.55;
-      transform: translateY(0);
-    }
-    .sol-card.active {
-      opacity: 1;
-      transform: translateY(0);
-      border-color: var(--accent);
-      background: var(--white);
-      box-shadow: 0 8px 32px rgba(46,125,114,0.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      /* Initial: hidden below */
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+      transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.6s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.6s cubic-bezier(0.22,1,0.36,1);
+      will-change: transform, opacity;
     }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
@@ -364,25 +392,47 @@
       font-size: 14px; color: var(--ink3); line-height: 1.64;
     }
 
-    /* Featured card — Google backend */
+    /* Depth states — applied by JS */
+    .sol-card[data-depth="active"] {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      z-index: 4;
+      background: var(--white);
+      border-color: var(--accent);
+      box-shadow: 0 12px 40px rgba(46,125,114,0.10);
+    }
+    .sol-card[data-depth="1"] {
+      opacity: 0.5;
+      transform: translateY(-16px) scale(0.95);
+      z-index: 3;
+    }
+    .sol-card[data-depth="2"] {
+      opacity: 0.25;
+      transform: translateY(-28px) scale(0.90);
+      z-index: 2;
+    }
+    .sol-card[data-depth="3"] {
+      opacity: 0.1;
+      transform: translateY(-36px) scale(0.86);
+      z-index: 1;
+    }
+
+    /* Featured card — Google */
     .sol-card.sol-featured {
       background: var(--night);
       border-color: var(--accent2);
       padding: 40px 36px;
     }
-    .sol-card.sol-featured.seen {
-      opacity: 0.55;
-    }
-    .sol-card.sol-featured.active {
-      opacity: 1;
+    .sol-card.sol-featured[data-depth="active"] {
       background: var(--night);
       border-color: var(--accent);
-      box-shadow: 0 16px 56px rgba(46,125,114,0.20);
+      transform: translateY(0) scale(1.02);
+      box-shadow: 0 20px 64px rgba(46,125,114,0.22), 0 0 0 1px rgba(70,165,148,0.15);
     }
     .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
     .sol-card.sol-featured h3 {
-      color: #fff; font-size: clamp(20px, 2vw, 24px);
-      letter-spacing: -0.5px; margin-bottom: 12px;
+      color: #fff; font-size: clamp(20px, 2.2vw, 26px);
+      letter-spacing: -0.6px; margin-bottom: 12px;
     }
     .sol-card.sol-featured p { color: rgba(255,255,255,0.50); font-size: 14.5px; line-height: 1.72; }
     .sol-card.sol-featured .sol-card-badge {
@@ -394,17 +444,23 @@
       margin-top: 16px;
     }
 
-    /* Solution conclusion */
-    .sol-conclusion {
-      text-align: center;
-      padding: 80px 52px;
-      background: var(--warm);
-      border-top: 1px solid var(--border);
+    /* Conclusion — fades in at end of scroll */
+    .sol-conclusion-wrap {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
     }
-    .sol-conclusion-inner { max-width: 720px; margin: 0 auto; }
     .sol-conclusion-text {
       font-size: clamp(26px, 3.8vw, 46px); font-weight: 900;
       color: var(--ink); letter-spacing: -2px; line-height: 1.14;
+      text-align: center; max-width: 700px;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .sol-conclusion-text.visible {
+      opacity: 1; transform: translateY(0);
     }
 
     /* ══════════════════════════════════
@@ -443,8 +499,25 @@
        RESPONSIVE
     ══════════════════════════════════ */
     @media (max-width: 1060px) {
-      .sol-container { grid-template-columns: 1fr; gap: 48px; }
-      .sol-sticky { position: relative; top: 0; }
+      .sol-scene { height: auto; }
+      .sol-scene-inner {
+        position: relative; top: 0;
+        height: auto; grid-template-columns: 1fr;
+        gap: 40px; padding: 64px 52px;
+      }
+      .sol-stack {
+        position: relative; height: auto; perspective: none;
+      }
+      .sol-card {
+        position: relative; opacity: 1;
+        transform: none; margin-bottom: 20px;
+      }
+      .sol-card[data-depth] { opacity: 1; transform: none; }
+      .sol-card.sol-featured[data-depth="active"] { transform: none; }
+      .sol-conclusion-wrap {
+        position: relative; height: auto; padding: 64px 0;
+      }
+      .sol-conclusion-text { opacity: 1; transform: none; }
       .sol-progress { display: none; }
       .over-inner { grid-template-columns: 1fr; gap: 40px; }
       .over-foto { max-width: 180px; }
@@ -455,17 +528,21 @@
       nav { padding: 0 24px; height: 60px; }
       #hero { padding: 110px 24px 88px; }
       .hero-h1 { letter-spacing: -2.5px; }
-      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta, .sol-conclusion {
+      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta {
         padding-left: 24px; padding-right: 24px;
         padding-top: 64px; padding-bottom: 64px;
       }
+      .sol-intro-section { padding-left: 24px; padding-right: 24px; }
+      .sol-scene-inner { padding-left: 24px; padding-right: 24px; }
       .real-grid { grid-template-columns: 1fr; }
       .hero-ctas { flex-direction: column; align-items: center; }
       .btn-primary, .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
       .sol-card.sol-featured h3 { font-size: 18px; }
     }
     @media (max-width: 520px) {
-      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta, .sol-conclusion { padding-left: 20px; padding-right: 20px; }
+      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta { padding-left: 20px; padding-right: 20px; }
+      .sol-intro-section { padding-left: 20px; padding-right: 20px; }
+      .sol-scene-inner { padding-left: 20px; padding-right: 20px; }
       .cta-buttons { flex-direction: column; align-items: center; }
       .cta-buttons .btn-primary, .cta-buttons .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
       footer { padding: 24px 20px; }
@@ -603,20 +680,34 @@
   </div>
 </section>
 
-<!-- ══ SOLUTION — Sticky Scroll Narrative ══ -->
+<!-- ══ SOLUTION — Cinematic Scroll Depth ══ -->
 <section id="oplossing">
-  <div class="sol-inner">
 
-    <div class="sol-container">
+  <!-- Intro copy -->
+  <div class="sol-intro-section">
+    <div class="sol-intro-copy">
+      <span class="eyebrow fade-up">Wat ik voor je doe</span>
+      <h2 class="sol-title fade-up" data-delay="60">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
+      <div class="sol-intro-text fade-up" data-delay="120">
+        <p>Je hebt geen klantenprobleem. Je hebt een zichtbaarheids- en overtuigingsprobleem.</p>
+        <p>Mensen zoeken jouw dienst — elke dag. Maar als je niet goed te vinden bent op Google, komen ze niet bij jou uit. En als ze je wél vinden, bepaalt je website of ze blijven of vertrekken.</p>
+        <p>Helaas is dit bij de meeste kleine bedrijven die regionaal hun werk doen iets waar men al te vaak tegenaan loopt.</p>
+        <p>Dat is precies waar FlowEdge op is gebouwd. Ik zorg ervoor dat jouw online aanwezigheid klopt — zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
+        <p><strong>Dat betekent:</strong></p>
+      </div>
+    </div>
+  </div>
 
-      <!-- Left: Sticky panel -->
-      <div class="sol-sticky">
-        <span class="eyebrow fade-up">Wat ik voor je doe</span>
-        <h2 class="sol-title fade-up" data-delay="60">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
-        <p class="sol-intro-text fade-up" data-delay="120">Wat je nodig hebt is geen "mooie website". Je hebt een website nodig die vertrouwen opwekt, zichtbaar is en daadwerkelijk klanten oplevert.</p>
+  <!-- Scroll-driven scene -->
+  <div class="sol-scene" id="solScene">
+    <div class="sol-scene-inner">
 
-        <!-- Progress indicator -->
-        <div class="sol-progress fade-up" data-delay="180">
+      <!-- Left: sticky context -->
+      <div class="sol-sticky-label">
+        <p class="sol-sticky-eyebrow">Het systeem</p>
+        <h3 class="sol-sticky-title">Vier pijlers.<br>Eén doel.</h3>
+        <p class="sol-sticky-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
+        <div class="sol-progress">
           <div class="sol-pip active" data-pip="1"></div>
           <div class="sol-pip" data-pip="2"></div>
           <div class="sol-pip" data-pip="3"></div>
@@ -624,10 +715,10 @@
         </div>
       </div>
 
-      <!-- Right: Scrolling feature cards -->
-      <div class="sol-features">
+      <!-- Right: depth stack -->
+      <div class="sol-stack" id="solStack">
 
-        <div class="sol-card active" data-feature="1">
+        <div class="sol-card" data-feature="1" data-depth="active">
           <div class="sol-card-num">01 — Design</div>
           <h3>Een strakke, moderne website</h3>
           <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
@@ -656,14 +747,12 @@
 
     </div>
 
+    <!-- Conclusion overlay -->
+    <div class="sol-conclusion-wrap">
+      <p class="sol-conclusion-text" id="solConclusion">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
+    </div>
   </div>
-</section>
 
-<!-- ══ SOLUTION CONCLUSION ══ -->
-<section class="sol-conclusion">
-  <div class="sol-conclusion-inner">
-    <p class="sol-conclusion-text fade-up">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
-  </div>
 </section>
 
 <!-- ══ CTA ══ -->
@@ -768,38 +857,65 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Solution — sticky scroll narrative ── */
+  /* ── Solution — scroll-driven depth stack ── */
   (function () {
-    var cards = document.querySelectorAll('.sol-card');
+    var scene = document.getElementById('solScene');
+    var cards = document.querySelectorAll('#solStack .sol-card');
     var pips = document.querySelectorAll('.sol-pip');
-    if (!cards.length) return;
+    var conclusion = document.getElementById('solConclusion');
+    if (!scene || !cards.length) return;
 
-    var highestSeen = 0;
+    var totalCards = cards.length; // 4
+    var lastActive = -1;
 
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          var num = parseInt(e.target.dataset.feature);
+    function update() {
+      var rect = scene.getBoundingClientRect();
+      var sceneH = scene.offsetHeight;
+      var scrolled = -rect.top;
+      var progress = Math.max(0, Math.min(1, scrolled / (sceneH - window.innerHeight)));
 
-          // Track highest seen for "seen" state
-          if (num > highestSeen) highestSeen = num;
+      // 4 segments: 0-0.22, 0.22-0.44, 0.44-0.66, 0.66-0.88, then 0.88-1 = conclusion
+      var cardProgress = progress * (totalCards + 0.5);
+      var activeIndex = Math.min(Math.floor(cardProgress), totalCards - 1);
 
-          cards.forEach(function (c) {
-            var cn = parseInt(c.dataset.feature);
-            c.classList.remove('active');
-            if (cn <= highestSeen) c.classList.add('seen');
-            if (cn === num) { c.classList.add('active'); c.classList.remove('seen'); }
-          });
+      // Only update DOM when active card changes
+      if (activeIndex !== lastActive && progress < 0.88) {
+        lastActive = activeIndex;
 
-          pips.forEach(function (p) {
-            var pn = parseInt(p.dataset.pip);
-            p.classList.toggle('active', pn <= num);
-          });
-        }
-      });
-    }, { threshold: 0.5, rootMargin: '-10% 0px -30% 0px' });
+        cards.forEach(function (c, i) {
+          var depth = activeIndex - i;
+          if (i === activeIndex) {
+            c.setAttribute('data-depth', 'active');
+          } else if (depth > 0 && depth <= 3) {
+            c.setAttribute('data-depth', String(depth));
+          } else if (i > activeIndex) {
+            c.removeAttribute('data-depth');
+          } else {
+            c.setAttribute('data-depth', '3');
+          }
+        });
 
-    cards.forEach(function (card) { obs.observe(card); });
+        pips.forEach(function (p, i) {
+          p.classList.toggle('active', i <= activeIndex);
+        });
+      }
+
+      // Conclusion fade-in at end
+      if (progress > 0.85) {
+        conclusion.classList.add('visible');
+        // Fade out stack
+        cards.forEach(function (c) {
+          c.style.opacity = Math.max(0, 1 - (progress - 0.85) * 6).toString();
+        });
+      } else {
+        conclusion.classList.remove('visible');
+        cards.forEach(function (c) { c.style.opacity = ''; });
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    requestAnimationFrame(update);
   })();
 </script>
 
