@@ -251,87 +251,60 @@
     /* ══════════════════════════════════
        SOLUTION
     ══════════════════════════════════ */
-    #oplossing { background: var(--white); padding: 80px 64px; border-top: 1px solid var(--border); }
+    #oplossing { background: var(--white); padding: 88px 64px; border-top: 1px solid var(--border); }
     .sol-inner { max-width: 1040px; margin: 0 auto; }
-    .sol-header { margin-bottom: 48px; max-width: 580px; }
+
+    .sol-intro { max-width: 700px; margin-bottom: 60px; }
     .sol-title {
       font-size: clamp(28px, 3.4vw, 46px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.06;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 22px;
+    }
+    .sol-intro-text { display: flex; flex-direction: column; gap: 12px; }
+    .sol-intro-text p { font-size: 16px; color: var(--ink2); line-height: 1.80; }
+
+    .sol-body { display: grid; grid-template-columns: 1fr 300px; gap: 80px; align-items: start; }
+
+    .sol-features-lead {
+      font-size: 10.5px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--blue);
+      display: block; margin-bottom: 20px;
     }
 
-    /* Spotlight card grid */
-    .sol-grid {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 1px; background: var(--border);
-      border-radius: 20px; overflow: hidden;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.06);
+    .sol-list { display: flex; flex-direction: column; }
+    .sol-item {
+      display: flex; gap: 18px; align-items: flex-start;
+      padding: 18px 14px; margin: 0 -14px;
+      border-bottom: 1px solid var(--border); border-radius: 10px;
+      transition: background 0.18s;
     }
-    .sol-card {
-      background: var(--warm); padding: 32px 28px;
-      position: relative; overflow: hidden; cursor: default;
-      transition: background 0.28s;
-    }
-    .sol-card::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle 200px at var(--mx,50%) var(--my,50%), rgba(46,125,114,0.07), transparent);
-      opacity: 0; transition: opacity 0.3s; pointer-events: none;
-    }
-    .sol-card:hover { background: #EDF4F3; }
-    .sol-card:hover::before { opacity: 1; }
-    /* Featured (card 05 — Local) */
-    .sol-card.featured { background: #E8F4F2; }
-    .sol-card.featured:hover { background: #DFF0EE; }
-    .sol-card.featured::before {
-      background: radial-gradient(circle 200px at var(--mx,50%) var(--my,50%), rgba(46,125,114,0.12), transparent);
-    }
+    .sol-item:last-child { border-bottom: none; }
+    .sol-item:hover { background: var(--warm); }
 
-    /* Sol-hero (card 03 — Google — DARK standout) */
-    .sol-card.sol-hero {
-      background: var(--night);
-      box-shadow: inset 0 3px 0 var(--blue);
-    }
-    .sol-card.sol-hero:hover { background: #122320; }
-    .sol-card.sol-hero::before {
-      background: radial-gradient(circle 220px at var(--mx,50%) var(--my,50%), rgba(46,125,114,0.20), transparent);
-    }
-
-    .sol-card-num {
+    .sol-item-num {
       font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--border2);
-      margin-bottom: 18px; display: block;
+      color: var(--border2); flex-shrink: 0; margin-top: 3px; min-width: 20px;
     }
-    .sol-card.featured .sol-card-num { color: var(--blue); }
-    .sol-card.sol-hero .sol-card-num { color: rgba(80,180,166,0.75); }
+    .sol-item-key .sol-item-num { color: var(--blue); }
+    .sol-item-title { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.30; margin-bottom: 5px; }
+    .sol-item-key .sol-item-title { font-weight: 800; }
+    .sol-item-desc { font-size: 13px; color: var(--ink3); line-height: 1.62; }
 
-    .sol-card-icon {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: var(--white); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--ink3); margin-bottom: 14px;
+    .sol-closing {
+      position: sticky; top: 88px;
+      background: var(--warm); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px 28px;
     }
-    .sol-card.featured .sol-card-icon { background: rgba(46,125,114,0.10); color: var(--blue); border-color: rgba(46,125,114,0.22); }
-    .sol-card.sol-hero .sol-card-icon { background: rgba(46,125,114,0.16); color: rgba(80,180,166,0.9); border-color: rgba(46,125,114,0.30); }
-
-    .sol-card-title {
-      font-size: 14.5px; font-weight: 700; color: var(--ink);
-      letter-spacing: -0.2px; line-height: 1.32; margin-bottom: 8px;
+    .sol-closing-lead {
+      font-size: 10.5px; font-weight: 700; letter-spacing: 1.8px;
+      text-transform: uppercase; color: var(--ink3); margin-bottom: 14px; display: block;
     }
-    .sol-card.sol-hero .sol-card-title { color: #fff; font-size: 15px; }
-    .sol-card-desc { font-size: 13px; color: var(--ink3); line-height: 1.64; }
-    .sol-card.featured .sol-card-desc { color: var(--ink2); }
-    .sol-card.sol-hero .sol-card-desc { color: rgba(255,255,255,0.46); }
-
-    .sol-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-    .sol-tag {
-      font-size: 10.5px; font-weight: 600; padding: 3px 9px;
-      border-radius: 5px; background: rgba(46,125,114,0.10);
-      color: var(--blue); border: 1px solid rgba(46,125,114,0.22);
+    .sol-closing-quote {
+      font-size: 17px; font-weight: 800; color: var(--ink);
+      line-height: 1.44; letter-spacing: -0.3px;
+      border-left: 3px solid var(--blue); padding-left: 16px;
+      margin-bottom: 20px; font-style: normal;
     }
-    .sol-card.sol-hero .sol-tag {
-      background: rgba(46,125,114,0.18);
-      color: rgba(80,180,166,0.9);
-      border-color: rgba(46,125,114,0.35);
-    }
+    .sol-closing-text { font-size: 13px; color: var(--ink3); line-height: 1.74; }
 
     /* ══════════════════════════════════
        ABOUT
@@ -409,7 +382,8 @@
        RESPONSIVE
     ══════════════════════════════════ */
     @media (max-width: 1060px) {
-      .sol-grid { grid-template-columns: repeat(2,1fr); }
+      .sol-body { grid-template-columns: 1fr; gap: 48px; }
+      .sol-closing { position: relative; top: 0; }
       .over-inner { grid-template-columns: 1fr; gap: 56px; }
       .over-foto-wrap { max-width: 220px; }
       .over-foto-accent { display: none; }
@@ -422,7 +396,6 @@
       .hero-h1 { letter-spacing: -2.5px; }
       #trust, #pijnpunten, #oplossing, #over, #cta { padding-left: 24px; padding-right: 24px; padding-top: 64px; padding-bottom: 64px; }
       .trust-grid { grid-template-columns: 1fr; }
-      .sol-grid { grid-template-columns: 1fr; }
       .hero-ctas { flex-direction: column; align-items: center; }
       .btn-primary, .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
     }
@@ -532,81 +505,81 @@
 <!-- ══ SOLUTION ══ -->
 <section id="oplossing">
   <div class="sol-inner">
-    <div class="sol-header fade-up">
-      <span class="eyebrow">Wat ik voor je doe</span>
-      <h2 class="sol-title">Zo zorgt FlowEdge dat jouw<br>online aanwezigheid wél werkt.</h2>
+
+    <!-- Intro -->
+    <div class="sol-intro">
+      <span class="eyebrow fade-up">Wat ik voor je doe</span>
+      <h2 class="sol-title fade-up" data-delay="60">Zo zorgt FlowEdge dat jouw<br>online aanwezigheid wél werkt.</h2>
+      <div class="sol-intro-text fade-up" data-delay="130">
+        <p>Wat je nodig hebt is geen "mooie website". Je hebt een website nodig die vertrouwen opwekt, zichtbaar is en daadwerkelijk klanten oplevert.</p>
+        <p>Dat is precies waar FlowEdge op is gebouwd. Ik zorg ervoor dat jouw online aanwezigheid klopt — van eerste indruk tot vindbaarheid op Google.</p>
+      </div>
     </div>
 
-    <div class="sol-grid" id="solGrid">
+    <!-- Body -->
+    <div class="sol-body">
 
-      <!-- 01 — Vertrouwen -->
-      <div class="sol-card fade-up" data-delay="0">
-        <span class="sol-card-num">01</span>
-        <div class="sol-card-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-        </div>
-        <div class="sol-card-title">Een strakke, moderne website</div>
-        <div class="sol-card-desc">Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</div>
-      </div>
+      <!-- Feature list -->
+      <div class="sol-features-wrap">
+        <span class="sol-features-lead fade-up">Dat betekent:</span>
+        <div class="sol-list">
 
-      <!-- 02 — Mobiel -->
-      <div class="sol-card fade-up" data-delay="60">
-        <span class="sol-card-num">02</span>
-        <div class="sol-card-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-        </div>
-        <div class="sol-card-title">Volledig geoptimaliseerd voor mobiel</div>
-        <div class="sol-card-desc">Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</div>
-      </div>
+          <div class="sol-item fade-up" data-delay="40">
+            <span class="sol-item-num">01</span>
+            <div class="sol-item-content">
+              <div class="sol-item-title">Een strakke, moderne website</div>
+              <div class="sol-item-desc">Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</div>
+            </div>
+          </div>
 
-      <!-- 03 — Google (HERO — dark standout) -->
-      <div class="sol-card sol-hero fade-up" data-delay="120">
-        <span class="sol-card-num">03 — Kernfocus</span>
-        <div class="sol-card-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </div>
-        <div class="sol-card-title">Technisch ingericht op het Google-ecosysteem</div>
-        <div class="sol-card-desc">Schema.org, lokale SEO, structured data. Google begrijpt wie je bent en toont je actief aan klanten die nu zoeken.</div>
-        <div class="sol-tags">
-          <span class="sol-tag">Schema.org</span>
-          <span class="sol-tag">Google Business</span>
-          <span class="sol-tag">Local SEO</span>
-        </div>
-      </div>
+          <div class="sol-item fade-up" data-delay="100">
+            <span class="sol-item-num">02</span>
+            <div class="sol-item-content">
+              <div class="sol-item-title">Volledig geoptimaliseerd voor mobiel</div>
+              <div class="sol-item-desc">Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</div>
+            </div>
+          </div>
 
-      <!-- 04 — Snelheid -->
-      <div class="sol-card fade-up" data-delay="0">
-        <span class="sol-card-num">04</span>
-        <div class="sol-card-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-2 6.5h-4L9.5 12 7 16l6-2 1.5 4L22 8l-5-.5z"/></svg>
-        </div>
-        <div class="sol-card-title">Snelle laadtijden</div>
-        <div class="sol-card-desc">Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</div>
-      </div>
+          <div class="sol-item fade-up" data-delay="160">
+            <span class="sol-item-num">03</span>
+            <div class="sol-item-content">
+              <div class="sol-item-title">Technisch ingericht op het Google-ecosysteem</div>
+              <div class="sol-item-desc">Schema.org, lokale SEO, structured data. Google begrijpt wie je bent en toont je actief aan klanten die nu zoeken.</div>
+            </div>
+          </div>
 
-      <!-- 05 — Vindbaarheid (FEATURED) -->
-      <div class="sol-card featured fade-up" data-delay="60">
-        <span class="sol-card-num">05 — Kernfocus</span>
-        <div class="sol-card-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 5.333 8 14 8 14s8-8.667 8-14a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <div class="sol-card-title">Gevonden in jouw regio</div>
-        <div class="sol-card-desc">Mensen zoeken lokaal. Jij verschijnt bovenaan wanneer ze zoeken naar jouw dienst in jouw stad.</div>
-        <div class="sol-tags">
-          <span class="sol-tag">Lokale SEO</span>
-          <span class="sol-tag">Google Maps</span>
-          <span class="sol-tag">Regio targeting</span>
+          <div class="sol-item sol-item-key fade-up" data-delay="220">
+            <span class="sol-item-num">04</span>
+            <div class="sol-item-content">
+              <div class="sol-item-title">Lokale vindbaarheid op Google</div>
+              <div class="sol-item-desc">Zodat mensen jou vinden op het moment dat ze actief zoeken naar jouw dienst in jouw regio.</div>
+            </div>
+          </div>
+
+          <div class="sol-item fade-up" data-delay="280">
+            <span class="sol-item-num">05</span>
+            <div class="sol-item-content">
+              <div class="sol-item-title">Snelle laadtijden en technisch sterk opgebouwd</div>
+              <div class="sol-item-desc">Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</div>
+            </div>
+          </div>
+
+          <div class="sol-item sol-item-key fade-up" data-delay="340">
+            <span class="sol-item-num">06</span>
+            <div class="sol-item-content">
+              <div class="sol-item-title">Een website die 24/7 voor je werkt</div>
+              <div class="sol-item-desc">Bezoekers omzetten in aanvragen — dat is het enige doel. Reviews geïntegreerd, conversie gericht.</div>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <!-- 06 — Reviews -->
-      <div class="sol-card fade-up" data-delay="120">
-        <span class="sol-card-num">06</span>
-        <div class="sol-card-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
-        <div class="sol-card-title">Reviews die voor je werken</div>
-        <div class="sol-card-desc">Je hebt al het bewijs — jouw bestaande reviews worden live geïntegreerd zodat ze klanten overtuigen.</div>
+      <!-- Sticky closing copy -->
+      <div class="sol-closing fade-up" data-delay="200">
+        <span class="sol-closing-lead">Alles is gericht op één doel:</span>
+        <blockquote class="sol-closing-quote">ervoor zorgen dat mensen die jouw website bezoeken, ook daadwerkelijk contact met je opnemen.</blockquote>
+        <p class="sol-closing-text">Geen onnodige complexiteit. Geen dingen die je niet nodig hebt. Gewoon een sterke online basis die doet wat het moet doen: klanten aantrekken en je bedrijf laten groeien.</p>
       </div>
 
     </div>
@@ -722,19 +695,6 @@
     if (!grid) return;
     grid.addEventListener('mousemove', function (e) {
       grid.querySelectorAll('.trust-card').forEach(function (c) {
-        var r = c.getBoundingClientRect();
-        c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-        c.style.setProperty('--my', (e.clientY - r.top) + 'px');
-      });
-    });
-  })();
-
-  /* ── Spotlight border — solution grid ── */
-  (function () {
-    var grid = document.getElementById('solGrid');
-    if (!grid) return;
-    grid.addEventListener('mousemove', function (e) {
-      grid.querySelectorAll('.sol-card, .sol-hero').forEach(function (c) {
         var r = c.getBoundingClientRect();
         c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
         c.style.setProperty('--my', (e.clientY - r.top) + 'px');
