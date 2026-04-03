@@ -33,877 +33,614 @@
     /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── Tokens ── */
+    /* ── Global Tokens ── */
     :root {
-      --night:   #0C1A16;
-      --night2:  #081210;
-      --accent:  #2E7D72;
-      --accent2: #1F5E59;
-      --accent3: #46A594;
-      --warm:    #F6F7F6;
-      --white:   #FFFFFF;
-      --ink:     #0F1A17;
-      --ink2:    #3C4845;
-      --ink3:    #7A8A87;
-      --border:  #E2E8E6;
-      --border2: #C4CECC;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --fs-hero:  clamp(40px, 5.5vw, 56px);
+      --fs-h1:    clamp(28px, 3.5vw, 36px);
+      --fs-h2:    clamp(22px, 2.8vw, 28px);
+      --fs-body:  18px;
+      --fs-small: 14px;
+
+      --lh-tight:  1.1;
+      --lh-normal: 1.5;
+
+      --color-bg:     #ffffff;
+      --color-text:   #111111;
+      --color-muted:  #666666;
+      --color-line:   rgba(0,0,0,0.08);
+      --color-accent: #2E7D72;
     }
 
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--warm);
-      color: var(--ink);
-      line-height: 1.6;
+      font-family: var(--font-body);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: var(--lh-normal);
+      font-size: var(--fs-body);
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
 
-    /* ── Grain ── */
-    body::after {
-      content: '';
-      position: fixed; inset: 0;
-      z-index: 9000; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.022;
+    /* ── Layout ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    .narrow {
+      max-width: 680px;
     }
 
-    /* ── Fade-up ── */
-    .fade-up {
-      opacity: 0; transform: translateY(22px);
-      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
-    }
-    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    /* ── Section Spacing ── */
+    .section       { padding: 120px 0; }
+    .section-tight { padding: 80px 0; }
+    .section-hero  { padding: 160px 0 120px; }
 
-    /* ── Eyebrow ── */
-    .eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
-      display: block;
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: var(--color-line);
+      margin: 0;
     }
-    .eyebrow-light { color: rgba(70,165,148,0.85); }
 
-    /* ── Nav ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 64px; padding: 0 52px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(12,26,22,0.94);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+    /* ── Motion ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
-    .nav-logo { font-size: 34px; font-weight: 800; color: #fff; letter-spacing: -1px; text-decoration: none; }
-    .nav-logo em { font-style: normal; color: var(--accent); }
-    .nav-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--accent); color: #fff; text-decoration: none;
-      font-size: 13.5px; font-weight: 600; padding: 9px 20px;
-      border-radius: 8px; transition: background 0.2s, transform 0.15s;
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
-    .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
 
-    /* ── Buttons ── */
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 9px;
-      background: var(--accent); color: #fff; text-decoration: none;
-      font-size: 15px; font-weight: 700; padding: 14px 28px;
-      border-radius: 10px; transition: background 0.2s, transform 0.15s; white-space: nowrap;
+    /* ══════════════════════════════════
+       HEADER
+    ══════════════════════════════════ */
+    .header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--color-line);
     }
-    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 9px;
-      background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.68); text-decoration: none;
-      font-size: 15px; font-weight: 600; padding: 14px 24px;
-      border-radius: 10px; border: 1px solid rgba(255,255,255,0.11);
-      transition: background 0.2s, border-color 0.2s, color 0.2s; white-space: nowrap;
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .btn-ghost:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); color: #fff; }
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--color-text);
+    }
+    .logo span { color: var(--color-accent); }
+    .cta-link {
+      font-size: var(--fs-small);
+      font-weight: 500;
+      color: var(--color-muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--color-line);
+      padding-bottom: 2px;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+    .cta-link:hover {
+      color: var(--color-text);
+      border-color: var(--color-text);
+    }
 
     /* ══════════════════════════════════
        HERO
     ══════════════════════════════════ */
-    #hero {
-      min-height: 100vh;
-      background: var(--night);
-      display: flex; align-items: center; justify-content: center;
-      text-align: center;
-      padding: 140px 52px 120px;
-      position: relative; overflow: hidden;
+    .hero-text {
+      max-width: 640px;
     }
-    #heroMesh {
-      position: absolute; inset: 0; z-index: 0;
-      width: 100%; height: 100%; pointer-events: none;
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--color-muted);
     }
-    #hero::before {
-      content: ''; position: absolute; inset: 0; z-index: 1;
-      background:
-        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
-      background-size: 80px 80px;
-      pointer-events: none;
+    .hero h1 {
+      font-size: var(--fs-hero);
+      line-height: var(--lh-tight);
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin: 16px 0 24px;
     }
-    #hero::after {
-      content: ''; position: absolute; inset: 0; z-index: 2;
-      background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(12,26,22,0.6) 100%);
-      pointer-events: none;
-    }
-
-    .hero-inner { position: relative; z-index: 3; max-width: 820px; }
-
-    .hero-tag { display: none; }
-    .hero-tag-dot { display: none; }
-
-    .hero-h1 {
-      font-size: clamp(52px, 8.5vw, 112px);
-      font-weight: 900; color: #fff;
-      line-height: 0.98; letter-spacing: -4.5px; margin-bottom: 36px;
-    }
-    .hero-h1 em { font-style: normal; color: var(--accent3); }
-
     .hero-sub {
-      font-size: clamp(16px, 1.3vw, 18.5px);
-      color: rgba(255,255,255,0.44);
-      line-height: 1.76; max-width: 440px; margin: 0 auto 56px;
+      font-size: var(--fs-body);
+      color: var(--color-muted);
+      max-width: 520px;
+      line-height: 1.6;
+    }
+    .hero-cta {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-text);
+      color: var(--color-bg);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      color: var(--color-text);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 14px 24px;
+      border: 1px solid var(--color-line);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: border-color 0.3s ease;
+    }
+    .btn-secondary:hover { border-color: var(--color-text); }
+    .subtle {
+      font-size: 13px;
+      color: var(--color-muted);
     }
 
-    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-    .hero-note { font-size: 12.5px; color: rgba(255,255,255,0.15); }
-
-    /* ══════════════════════════════════
-       REALITEIT — compact stat blocks
-    ══════════════════════════════════ */
-    #realiteit {
-      background: var(--white);
-      padding: 56px 52px;
-      border-bottom: 1px solid var(--border);
+    /* ── Proof Strip ── */
+    .proof-strip {
+      display: flex;
+      gap: 48px;
+      margin-top: 80px;
+      border-top: 1px solid var(--color-line);
+      padding-top: 32px;
     }
-    .real-inner { max-width: 1040px; margin: 0 auto; }
-    .real-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1px; background: var(--border);
-      border-radius: 18px; overflow: hidden;
-      box-shadow: 0 2px 24px rgba(0,0,0,0.05);
+    .proof-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
-    .real-card {
-      background: var(--white); padding: 38px 36px;
-      text-align: center;
+    .proof-number {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -1px;
     }
-    .real-num {
-      font-size: clamp(48px, 6vw, 72px); font-weight: 900;
-      color: var(--ink); letter-spacing: -3px; line-height: 1;
-      margin-bottom: 12px;
-    }
-    .real-num em {
-      font-style: normal; font-size: 0.6em;
-      color: var(--ink3); letter-spacing: -1px;
-    }
-    .real-claim {
-      font-size: 14px; font-weight: 500; color: var(--ink3);
-      line-height: 1.5; max-width: 220px; margin: 0 auto;
+    .proof-label {
+      font-size: var(--fs-small);
+      color: var(--color-muted);
     }
 
     /* ══════════════════════════════════
        PROBLEM
     ══════════════════════════════════ */
-    #pijnpunten {
-      background: var(--warm); padding: 88px 52px;
+    .problem h2 {
+      font-size: var(--fs-h1);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: var(--lh-tight);
+      margin-bottom: 32px;
     }
-    .pain-inner { max-width: 1040px; margin: 0 auto; }
-    .pain-top {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 72px; margin-bottom: 56px; align-items: start;
+    .problem p {
+      color: var(--color-muted);
+      line-height: 1.7;
     }
-    .pain-left { position: sticky; top: 88px; }
-    .pain-headline {
-      font-size: clamp(34px, 4.2vw, 54px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2.5px; line-height: 1.06;
+    .problem p + p { margin-top: 16px; }
+    .highlight-line {
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+      margin: 64px 0 0;
+      color: var(--color-text);
     }
-    .pain-text { font-size: 15.5px; color: var(--ink2); line-height: 1.84; }
-    .pain-text p + p { margin-top: 18px; }
-    .pain-callout { font-size: 16px; font-weight: 700; color: var(--ink); }
-    .pain-callout-major {
-      font-size: clamp(17px, 1.6vw, 22px); font-weight: 800;
-      color: var(--ink); letter-spacing: -0.3px; line-height: 1.36;
-      padding: 22px 24px; background: var(--white);
-      border-radius: 12px; border-left: 3px solid var(--accent);
-      margin-top: 22px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
-    }
-    .pull-quote {
-      font-size: clamp(17px, 1.5vw, 20px); font-weight: 600;
-      color: var(--ink2); line-height: 1.52; letter-spacing: -0.2px;
-      padding: 28px 0 28px 28px; border-left: 2px solid var(--border2);
-      margin-bottom: 20px; font-style: italic;
-    }
-    .pain-closing { font-size: 14.5px; color: var(--ink3); line-height: 1.80; max-width: 620px; }
 
     /* ══════════════════════════════════
-       IMPACT STATEMENT
+       FOUNDER
     ══════════════════════════════════ */
-    #impact {
-      background: var(--white);
-      padding: 100px 52px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .impact-inner { max-width: 780px; margin: 0 auto; }
-    .impact-text {
-      font-size: clamp(28px, 4vw, 48px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.12;
-    }
-    .impact-text em { font-style: normal; color: var(--accent); }
-
-    /* ══════════════════════════════════
-       ABOUT
-    ══════════════════════════════════ */
-    #over {
-      background: var(--warm); padding: 80px 52px;
-    }
-    .over-inner {
-      max-width: 1040px; margin: 0 auto;
-      display: grid; grid-template-columns: 200px 1fr;
-      gap: 64px; align-items: start;
-    }
-    .over-foto {
-      width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: center 5%;
-      border-radius: 14px; display: block;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
-    }
-    .over-naam {
-      font-size: clamp(26px, 2.6vw, 38px); font-weight: 900;
-      color: var(--ink); letter-spacing: -1.2px; line-height: 1.06; margin-bottom: 16px;
-    }
-    .over-tagline {
-      font-size: 15.5px; font-weight: 500;
-      color: var(--ink2); line-height: 1.72;
-      border-left: 3px solid var(--accent); padding-left: 18px;
-      margin-bottom: 24px;
-    }
-    .over-bio { font-size: 14.5px; color: var(--ink3); line-height: 1.84; }
-    .over-bio strong { color: var(--ink2); font-weight: 600; }
-    .over-facts {
-      display: flex; gap: 36px; flex-wrap: wrap;
-      margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border);
-    }
-    .over-fact-num { font-size: 22px; font-weight: 900; color: var(--ink); letter-spacing: -0.5px; line-height: 1; }
-    .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 4px; }
-
-    /* ══════════════════════════════════
-       SOLUTION — Depth Stack in Grid
-    ══════════════════════════════════ */
-    #oplossing {
-      background: var(--white);
-      border-top: 1px solid var(--border);
-      padding: 48px 52px 0;
-    }
-    .sol-inner { max-width: 1100px; margin: 0 auto; }
-
-    .sol-header { max-width: 640px; margin-bottom: 28px; }
-    .sol-title {
-      font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 20px;
-    }
-
-    /* Scroll container for the depth animation */
-    .sol-scene {
-      position: relative;
-      height: 260vh;
-    }
-    .sol-grid {
-      position: sticky;
-      top: 64px;
+    .founder {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: start;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: center;
     }
-
-    /* Frozen: collapse scroll, static layout */
-    .sol-scene.sol-frozen { height: auto; }
-    .sol-frozen .sol-grid { position: relative; top: 0; }
-    .sol-frozen .sol-stack {
-      height: auto; perspective: none;
+    .founder-image img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      object-position: center 5%;
+      border-radius: 12px;
+      display: block;
     }
-    .sol-frozen .sol-card {
-      position: relative;
-      opacity: 1 !important;
-      transform: none !important;
-      margin-bottom: 10px;
+    .founder-text h2 {
+      font-size: var(--fs-h1);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: var(--lh-tight);
+      margin-bottom: 20px;
     }
-    .sol-frozen .sol-card:last-child { margin-bottom: 0; }
-
-    /* Left column */
-    .sol-intro-text {
-      font-size: 15.5px; color: var(--ink2); line-height: 1.84;
+    .founder-text p {
+      color: var(--color-muted);
+      line-height: 1.7;
     }
-    .sol-intro-text p + p { margin-top: 12px; }
-    .sol-intro-text strong { color: var(--ink); font-weight: 700; }
-
-    .sol-system-label {
-      margin-top: 28px;
+    .founder-text p + p { margin-top: 14px; }
+    .founder-meta {
+      margin-top: 32px;
       padding-top: 24px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--color-line);
+      font-size: var(--fs-small);
+      color: var(--color-muted);
+      display: flex;
+      gap: 32px;
     }
-    .sol-system-eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    .founder-meta span {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
-    .sol-system-title {
-      font-size: clamp(24px, 2.6vw, 36px); font-weight: 800;
-      color: var(--ink); letter-spacing: -1.5px; line-height: 1.10; margin-bottom: 14px;
-    }
-    .sol-system-sub {
-      font-size: 14px; color: var(--ink3); line-height: 1.72;
-    }
-    .sol-progress {
-      display: flex; gap: 8px; margin-top: 20px;
-    }
-    .sol-pip {
-      flex: 1; height: 3px; border-radius: 2px; background: var(--border);
-      transition: background 0.4s;
-    }
-    .sol-pip.active { background: var(--accent); }
-
-    /* Right column: depth stack */
-    .sol-stack {
-      position: relative;
-      height: 140px;
-      perspective: 800px;
-    }
-    .sol-card {
-      position: absolute;
-      left: 0; right: 0; top: 0;
-      padding: 20px 22px;
-      border-radius: 14px;
-      background: var(--warm);
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
-      opacity: 0;
-      transform: translateY(30px) scale(0.97);
-      transition: opacity 0.55s cubic-bezier(0.25,1,0.5,1),
-                  transform 0.55s cubic-bezier(0.25,1,0.5,1),
-                  box-shadow 0.55s cubic-bezier(0.25,1,0.5,1);
-      will-change: transform, opacity;
-    }
-    .sol-card-num {
-      font-size: 11px; font-weight: 700; color: var(--accent);
-      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px;
-    }
-    .sol-card h3 {
-      font-size: 16px; font-weight: 800; color: var(--ink);
-      letter-spacing: -0.3px; margin-bottom: 3px; line-height: 1.30;
-    }
-    .sol-card p {
-      font-size: 13.5px; color: var(--ink3); line-height: 1.58;
-    }
-
-    /* Depth states */
-    .sol-card[data-depth="active"] {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      z-index: 4;
-      background: var(--white);
-      border-color: var(--accent);
-      box-shadow: 0 8px 28px rgba(46,125,114,0.08);
-    }
-    .sol-card[data-depth="1"] {
-      opacity: 0.40;
-      transform: translateY(-14px) scale(0.96);
-      z-index: 3;
-    }
-    .sol-card[data-depth="2"] {
-      opacity: 0.18;
-      transform: translateY(-24px) scale(0.92);
-      z-index: 2;
-    }
-    .sol-card[data-depth="3"] {
-      opacity: 0.06;
-      transform: translateY(-32px) scale(0.88);
-      z-index: 1;
-    }
-
-    /* Featured card — Google */
-    .sol-card.sol-featured {
-      background: var(--night);
-      border-color: var(--accent2);
-      padding: 22px 24px;
-    }
-    .sol-card.sol-featured[data-depth="active"] {
-      background: var(--night);
-      border-color: var(--accent);
-      box-shadow: 0 12px 40px rgba(46,125,114,0.18), 0 0 0 1px rgba(70,165,148,0.10);
-    }
-    .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
-    .sol-card.sol-featured h3 {
-      color: #fff; font-size: clamp(16px, 1.8vw, 19px);
-      letter-spacing: -0.4px; margin-bottom: 5px;
-    }
-    .sol-card.sol-featured p { color: rgba(255,255,255,0.48); font-size: 13.5px; line-height: 1.64; }
-    .sol-card.sol-featured .sol-card-badge {
-      display: inline-block;
-      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--accent3);
-      background: rgba(70,165,148,0.12);
-      padding: 4px 10px; border-radius: 5px;
-      margin-top: 8px;
-    }
-
-    /* Conclusion */
-    .sol-conclusion {
-      padding: 36px 0 44px;
-      text-align: center;
-    }
-    .sol-conclusion-text {
-      font-size: clamp(24px, 3.4vw, 42px); font-weight: 900;
-      color: var(--ink); letter-spacing: -1.8px; line-height: 1.14;
-      max-width: 700px; margin: 0 auto;
-      opacity: 0; transform: translateY(14px);
-      transition: opacity 0.6s cubic-bezier(0.25,1,0.5,1), transform 0.6s cubic-bezier(0.25,1,0.5,1);
-    }
-    .sol-conclusion-text.visible {
-      opacity: 1; transform: translateY(0);
+    .founder-meta strong {
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--color-text);
     }
 
     /* ══════════════════════════════════
-       CTA
+       CORE STATEMENT
     ══════════════════════════════════ */
-    #cta {
-      background: var(--night2); padding: 64px 52px;
-      text-align: center; position: relative; overflow: hidden;
+    .core-statement {
+      padding: 100px 0;
     }
-    #cta::before {
-      content: ''; position: absolute;
-      top: -60px; left: 50%; transform: translateX(-50%);
-      width: 800px; height: 420px;
-      background: radial-gradient(ellipse, rgba(46,125,114,0.13) 0%, transparent 65%);
-      pointer-events: none;
+    .core-line {
+      font-size: clamp(30px, 4.5vw, 42px);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -2px;
+      max-width: 800px;
     }
-    .cta-inner { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
-    .cta-headline {
-      font-size: clamp(34px, 4.5vw, 56px); font-weight: 900;
-      color: #fff; letter-spacing: -2.5px; line-height: 1.05; margin-bottom: 18px;
-    }
-    .cta-sub { font-size: 16px; color: rgba(255,255,255,0.40); line-height: 1.72; margin-bottom: 44px; }
-    .cta-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .cta-note { margin-top: 22px; font-size: 12.5px; color: rgba(255,255,255,0.14); }
 
-    /* ── Footer ── */
-    footer {
-      background: var(--night2); padding: 28px 52px;
-      text-align: center; font-size: 12.5px; color: rgba(255,255,255,0.17);
-      border-top: 1px solid rgba(255,255,255,0.04);
+    /* ══════════════════════════════════
+       SYSTEM — Four Pillars
+    ══════════════════════════════════ */
+    .system-intro h2 {
+      font-size: var(--fs-h1);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: var(--lh-tight);
     }
-    footer a { color: rgba(255,255,255,0.28); text-decoration: none; transition: color 0.2s; }
-    footer a:hover { color: rgba(255,255,255,0.50); }
+    .system-intro p {
+      margin-top: 16px;
+      color: var(--color-muted);
+      max-width: 520px;
+    }
+    .system-steps {
+      display: grid;
+      gap: 0;
+      margin-top: 64px;
+    }
+    .step {
+      padding: 36px 0;
+      border-top: 1px solid var(--color-line);
+      display: grid;
+      grid-template-columns: 60px 200px 1fr;
+      gap: 16px;
+      align-items: baseline;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .step:last-child {
+      border-bottom: 1px solid var(--color-line);
+    }
+    .step-number {
+      font-size: var(--fs-small);
+      font-weight: 600;
+      color: var(--color-muted);
+    }
+    .step h3 {
+      font-size: var(--fs-body);
+      font-weight: 700;
+    }
+    .step p {
+      font-size: var(--fs-small);
+      color: var(--color-muted);
+      line-height: 1.5;
+    }
+    .system-result {
+      margin-top: 80px;
+      font-size: clamp(24px, 3.5vw, 32px);
+      font-weight: 800;
+      line-height: 1.3;
+      letter-spacing: -1px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .system-result.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ══════════════════════════════════
+       FINAL CTA
+    ══════════════════════════════════ */
+    .final-cta {
+      text-align: center;
+    }
+    .final-cta h2 {
+      font-size: var(--fs-h1);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      line-height: var(--lh-tight);
+      margin-bottom: 16px;
+    }
+    .final-cta p {
+      color: var(--color-muted);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .cta-row {
+      margin-top: 32px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .cta-note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--color-muted);
+      opacity: 0.6;
+    }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--color-line);
+      font-size: 13px;
+      color: var(--color-muted);
+    }
+    footer a {
+      color: var(--color-muted);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    footer a:hover { color: var(--color-text); }
 
     /* ══════════════════════════════════
        RESPONSIVE
     ══════════════════════════════════ */
-    @media (max-width: 1060px) {
-      .sol-scene { height: auto; }
-      .sol-grid { position: relative; top: 0; grid-template-columns: 1fr; gap: 32px; }
-      .sol-stack { height: auto; perspective: none; }
-      .sol-card {
-        position: relative; opacity: 1;
-        transform: none; margin-bottom: 10px;
-      }
-      .sol-card[data-depth] { opacity: 1; transform: none; }
-      .sol-card.sol-featured[data-depth="active"] { transform: none; }
-      .sol-conclusion-text { opacity: 1; transform: none; }
-      .sol-progress { display: none; }
-      .over-inner { grid-template-columns: 1fr; gap: 40px; }
-      .over-foto { max-width: 180px; }
-      .pain-top { grid-template-columns: 1fr; gap: 48px; }
-      .pain-left { position: relative; top: 0; }
-    }
     @media (max-width: 768px) {
-      nav { padding: 0 24px; height: 60px; }
-      #hero { padding: 110px 24px 88px; }
-      .hero-h1 { letter-spacing: -2.5px; }
-      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta {
-        padding-left: 24px; padding-right: 24px;
-        padding-top: 64px; padding-bottom: 64px;
+      .section       { padding: 80px 0; }
+      .section-tight { padding: 56px 0; }
+      .section-hero  { padding: 120px 0 80px; }
+      .core-statement { padding: 72px 0; }
+      .container { padding: 0 24px; }
+      .proof-strip { flex-direction: column; gap: 24px; }
+      .founder { grid-template-columns: 1fr; gap: 40px; }
+      .founder-image img { max-width: 200px; }
+      .step {
+        grid-template-columns: 48px 1fr;
+        gap: 8px;
       }
-      .real-grid { grid-template-columns: 1fr; }
-      .hero-ctas { flex-direction: column; align-items: center; }
-      .btn-primary, .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
-      .sol-card.sol-featured h3 { font-size: 18px; }
+      .step p {
+        grid-column: 2;
+      }
+      .hero-cta { flex-direction: column; align-items: flex-start; }
+      .cta-row { flex-direction: column; align-items: center; }
+      .cta-row .btn-primary,
+      .cta-row .btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
+      .founder-meta { flex-wrap: wrap; }
     }
     @media (max-width: 520px) {
-      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta { padding-left: 20px; padding-right: 20px; }
-      .cta-buttons { flex-direction: column; align-items: center; }
-      .cta-buttons .btn-primary, .cta-buttons .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
-      footer { padding: 24px 20px; }
+      .container { padding: 0 20px; }
     }
   </style>
 </head>
 <body>
 
-<!-- Nav -->
-<nav>
-  <a href="/" class="nav-logo">Flow<em>Edge</em></a>
-  <a href="https://wa.me/31XXXXXXXXX" class="nav-cta" target="_blank" rel="noopener">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
-    Stuur een bericht
-  </a>
-</nav>
+<!-- ══ HEADER ══ -->
+<header class="header">
+  <div class="container header-inner">
+    <div class="logo">Flow<span>Edge</span></div>
+    <a href="https://wa.me/31XXXXXXXXX" class="cta-link" target="_blank" rel="noopener">Plan een gesprek</a>
+  </div>
+</header>
 
 <!-- ══ HERO ══ -->
-<section id="hero">
-  <canvas id="heroMesh" aria-hidden="true"></canvas>
-  <div class="hero-inner">
-    <span class="hero-tag fade-up">
-      <span class="hero-tag-dot" aria-hidden="true"></span>
-      Websites voor vakmensen
-    </span>
-    <h1 class="hero-h1 fade-up" data-delay="80">
-      Veel bedrijven zijn beter dan hun online aanwezigheid <em>laat zien.</em>
-    </h1>
-    <p class="hero-sub fade-up" data-delay="200">
-      Ik zorg dat die eerste indruk wél klopt — en klanten aantrekt in plaats van afstoot.
-    </p>
-    <div class="hero-ctas fade-up" data-delay="340">
-      <a href="https://wa.me/31XXXXXXXXX" class="btn-primary" target="_blank" rel="noopener">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
-        WhatsApp mij
-      </a>
-      <a href="tel:+31XXXXXXXXX" class="btn-ghost">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.8 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        Bel mij
-      </a>
+<section class="section-hero">
+  <div class="container hero">
+    <div class="hero-text">
+      <div class="eyebrow reveal">Websites voor vakmensen</div>
+      <h1 class="reveal">Je bedrijf is beter<br>dan je online uitstraling.</h1>
+      <p class="hero-sub reveal">Ik help vakmensen zichtbaar worden, vertrouwen winnen en gekozen worden.</p>
+      <div class="hero-cta reveal">
+        <a href="https://wa.me/31XXXXXXXXX" class="btn-primary" target="_blank" rel="noopener">Plan een gesprek</a>
+        <span class="subtle">Vrijblijvend &middot; 20 min</span>
+      </div>
     </div>
-    <p class="hero-note fade-up" data-delay="440">Geen verplichtingen — gewoon een eerlijk gesprek.</p>
-  </div>
-</section>
 
-<!-- ══ REALITEIT ══ -->
-<section id="realiteit">
-  <div class="real-inner">
-    <div class="real-grid">
-
-      <div class="real-card fade-up" data-delay="0">
-        <p class="real-num" data-count="85" data-suffix="%">0%</p>
-        <p class="real-claim">van alle zoekopdrachten loopt via Google</p>
+    <div class="proof-strip reveal">
+      <div class="proof-item">
+        <span class="proof-number">85%</span>
+        <span class="proof-label">zoekt via Google</span>
       </div>
-
-      <div class="real-card fade-up" data-delay="100">
-        <p class="real-num">&lt;1<em>sec</em></p>
-        <p class="real-claim">bepaalt of een bezoeker je vertrouwt</p>
+      <div class="proof-item">
+        <span class="proof-number">&lt;1 sec</span>
+        <span class="proof-label">voor eerste indruk</span>
       </div>
-
-      <div class="real-card fade-up" data-delay="200">
-        <p class="real-num">2<em>/5</em></p>
-        <p class="real-claim">websites niet mobiel geoptimaliseerd</p>
+      <div class="proof-item">
+        <span class="proof-number">2/5</span>
+        <span class="proof-label">niet mobiel geoptimaliseerd</span>
       </div>
-
     </div>
   </div>
 </section>
+
+<div class="divider container"></div>
 
 <!-- ══ PROBLEM ══ -->
-<section id="pijnpunten">
-  <div class="pain-inner">
-    <div class="pain-top">
-      <div class="pain-left fade-up">
-        <span class="eyebrow">Herken je dit?</span>
-        <h2 class="pain-headline">Je verliest klanten<br>zonder dat je het<br>doorhebt.</h2>
-      </div>
-      <div class="pain-right fade-up" data-delay="120">
-        <div class="pain-text">
-          <p>Je bent goed in wat je doet.</p>
-          <p>Je levert strak werk, klanten zijn tevreden en via via komt er altijd wel iets binnen.</p>
-          <p class="pain-callout">Maar online… werkt het anders.</p>
-          <p>Mensen zoeken jouw dienst — elke dag. En meer dan 85% doet dat via Google.</p>
-          <p>Maar als je daar niet goed te vinden bent, besta je voor hen simpelweg niet.</p>
-          <p>En dat begint al bij de basis.</p>
-          <p>Google gebruikt primair de mobiele versie van je website voor indexering en ranking.</p>
-          <p class="pain-callout-major">Daarnaast is bij 9 van de 10 lokale bedrijven de technische basis van de website niet goed ingericht voor een koppeling met Google. Zonder de juiste structuur in de achterkant van je website kan Google simpelweg niet begrijpen wie je bent, waar je werkt of wat je doet.</p>
-          <p>Daardoor word je niet getoond aan mensen die letterlijk in jouw omgeving zoeken naar jouw dienst.</p>
-          <p>En zelfs als je wél in beeld komt, gaat het daar vaak mis.</p>
-          <p>Als iemand je website opent, beslist diegene binnen een paar seconden of hij blijft of weggaat. Als je website geen vertrouwen uitstraalt, ben je die bezoeker kwijt voordat het gesprek begint.</p>
-        </div>
-      </div>
+<section class="section">
+  <div class="container narrow problem">
+    <h2 class="reveal">Je verliest klanten<br>zonder het te zien.</h2>
+    <div class="reveal">
+      <p>Je bent goed in wat je doet. Klanten zijn tevreden en via via komt er altijd wel iets binnen.</p>
+      <p>Maar online werkt het anders. Mensen zoeken jouw dienst — elke dag. En meer dan 85% doet dat via Google. Als je daar niet goed te vinden bent, besta je voor hen simpelweg niet.</p>
+      <p>En als ze je wél vinden, beslist een bezoeker binnen een paar seconden of hij blijft of weggaat. Als je website geen vertrouwen uitstraalt, ben je die klant kwijt voordat het gesprek begint.</p>
     </div>
-    <blockquote class="pull-quote fade-up">
-      Dus aan de ene kant word je niet gevonden — en aan de andere kant overtuig je niet.
-    </blockquote>
-    <p class="pain-closing fade-up">En dat kost je klanten. Elke dag opnieuw.</p>
+    <p class="highlight-line reveal">Dus aan de ene kant word je niet gevonden — en aan de andere kant overtuig je niet.</p>
   </div>
 </section>
 
-<!-- ══ IMPACT STATEMENT ══ -->
-<section id="impact">
-  <div class="impact-inner">
-    <p class="impact-text fade-up">
-      Een goede website is geen luxe.<br>
-      Het is je <em>belangrijkste</em> eerste indruk.
-    </p>
-  </div>
-</section>
+<div class="divider container"></div>
 
-<!-- ══ ABOUT ══ -->
-<section id="over">
-  <div class="over-inner">
-    <div class="over-foto-wrap fade-up">
-      <img src="foto-sky.png" alt="Sky Lemos — oprichter FlowEdge" class="over-foto" loading="lazy">
+<!-- ══ FOUNDER ══ -->
+<section class="section-tight">
+  <div class="container founder">
+    <div class="founder-image reveal">
+      <img src="foto-sky.png" alt="Sky Lemos — oprichter FlowEdge" loading="lazy">
     </div>
-    <div class="over-text fade-up" data-delay="100">
-      <span class="eyebrow">Wie ik ben</span>
-      <h2 class="over-naam">Sky Lemos</h2>
-      <p class="over-tagline">Geboren in Amsterdam en van jongs af aan gefascineerd door technologie.</p>
-      <div class="over-bio">
-        <p>Computers, systemen en alles wat zich achter de schermen afspeelt, trokken mij altijd al aan. Naast die technische basis ben ik altijd ondernemend geweest. Ik zag al vroeg kansen waar anderen ze lieten liggen.</p>
-        <p>Ik zag steeds opnieuw hetzelfde probleem: goede bedrijven die klanten mislopen. Niet omdat ze niet goed zijn in wat ze doen, maar omdat hun online uitstraling dat niet laat zien. Een website die niet overtuigt. Slechte vindbaarheid. Geen sterke eerste indruk.</p>
-        <p>En in een wereld waarin alles online begint, kost dat simpelweg omzet.</p>
-        <p>Je website is de eerste indruk. Als die niet strak, snel en professioneel is, ben je die klant al kwijt voordat het gesprek begint. En als je daarnaast niet goed zichtbaar bent op Google, besta je simpelweg niet voor een groot deel van je markt.</p>
-        <p><strong>Dat is waar FlowEdge het verschil maakt.</strong></p>
-        <p>Wat voor mij begon met het helpen van mensen in mijn omgeving — zoals het bouwen en hosten van websites — is uitgegroeid tot een duidelijke missie: ondernemers helpen om hun online aanwezigheid naar een niveau te brengen dat wél klanten aantrekt en groei mogelijk maakt.</p>
+    <div class="founder-text">
+      <h2 class="reveal">Ik bouw websites die werken.</h2>
+      <div class="reveal">
+        <p>Ik zag steeds opnieuw hetzelfde probleem: goede bedrijven die klanten mislopen. Niet omdat ze niet goed zijn in wat ze doen, maar omdat hun online uitstraling dat niet laat zien.</p>
+        <p>Dat is waar FlowEdge het verschil maakt. Ik zorg ervoor dat jouw online aanwezigheid klopt — zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
       </div>
-      <div class="over-facts">
-        <div><div class="over-fact-num">7–10</div><div class="over-fact-label">dagen doorlooptijd</div></div>
-        <div><div class="over-fact-num">100%</div><div class="over-fact-label">focus op vakmensen</div></div>
-        <div><div class="over-fact-num">NL</div><div class="over-fact-label">heel Nederland</div></div>
+      <div class="founder-meta reveal">
+        <span><strong>7–10</strong> dagen doorlooptijd</span>
+        <span><strong>100%</strong> focus op vakmensen</span>
+        <span><strong>NL</strong> heel Nederland</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ SOLUTION ══ -->
-<section id="oplossing">
-  <div class="sol-inner">
+<div class="divider container"></div>
 
-    <!-- Header -->
-    <div class="sol-header">
-      <span class="eyebrow fade-up">Wat ik voor je doe</span>
-      <h2 class="sol-title fade-up" data-delay="60">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
+<!-- ══ CORE STATEMENT ══ -->
+<section class="core-statement">
+  <div class="container">
+    <h2 class="core-line reveal">Je hebt geen klantenprobleem.<br>Je hebt een zichtbaarheids-<br>en overtuigingsprobleem.</h2>
+  </div>
+</section>
+
+<div class="divider container"></div>
+
+<!-- ══ SYSTEM — Four Pillars ══ -->
+<section class="section system">
+  <div class="container">
+
+    <div class="system-intro reveal">
+      <h2>Vier pijlers. Eén doel.</h2>
+      <p>Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
     </div>
 
-    <!-- Scroll-driven depth stack -->
-    <div class="sol-scene" id="solScene">
-      <div class="sol-grid">
-
-        <div class="sol-left">
-          <div class="sol-intro-text fade-up" data-delay="120">
-            <p>Je hebt geen klantenprobleem. Je hebt een zichtbaarheids- en overtuigingsprobleem.</p>
-            <p>Mensen zoeken jouw dienst — elke dag. Maar als je niet goed te vinden bent op Google, komen ze niet bij jou uit. En als ze je wél vinden, bepaalt je website of ze blijven of vertrekken.</p>
-            <p>Helaas is dit bij de meeste kleine bedrijven die regionaal hun werk doen iets waar men al te vaak tegenaan loopt.</p>
-            <p>Dat is precies waar FlowEdge op is gebouwd. Ik zorg ervoor dat jouw online aanwezigheid klopt — zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
-          </div>
-          <div class="sol-system-label fade-up" data-delay="180">
-            <p class="sol-system-eyebrow">Het systeem</p>
-            <h3 class="sol-system-title">Vier pijlers.<br>Eén doel.</h3>
-            <p class="sol-system-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
-            <div class="sol-progress">
-              <div class="sol-pip" data-pip="1"></div>
-              <div class="sol-pip" data-pip="2"></div>
-              <div class="sol-pip" data-pip="3"></div>
-              <div class="sol-pip" data-pip="4"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="sol-stack" id="solStack">
-          <div class="sol-card">
-            <div class="sol-card-num">01 — Design</div>
-            <h3>Een strakke, moderne website</h3>
-            <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
-          </div>
-          <div class="sol-card">
-            <div class="sol-card-num">02 — Mobiel</div>
-            <h3>Volledig geoptimaliseerd voor mobiel</h3>
-            <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
-          </div>
-          <div class="sol-card">
-            <div class="sol-card-num">03 — Snelheid</div>
-            <h3>Snelle laadtijden en een soepele ervaring</h3>
-            <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
-          </div>
-          <div class="sol-card sol-featured">
-            <div class="sol-card-num">04 — Google</div>
-            <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
-            <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
-            <span class="sol-card-badge">Kern van het systeem</span>
-          </div>
-        </div>
-
+    <div class="system-steps" id="systemSteps">
+      <div class="step">
+        <span class="step-number">01</span>
+        <h3>Design</h3>
+        <p>Een strakke, moderne website die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">02</span>
+        <h3>Mobiel</h3>
+        <p>Volledig geoptimaliseerd voor elk scherm. Meer dan de helft van je bezoekers zit op mobiel.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">03</span>
+        <h3>Snelheid</h3>
+        <p>Snelle laadtijden op elk apparaat. Een trage website kost direct aanvragen.</p>
+      </div>
+      <div class="step">
+        <span class="step-number">04</span>
+        <h3>Google</h3>
+        <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen.</p>
       </div>
     </div>
 
-    <!-- Conclusion -->
-    <div class="sol-conclusion">
-      <p class="sol-conclusion-text" id="solConclusion">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
-    </div>
+    <p class="system-result" id="systemResult">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
 
   </div>
 </section>
 
-<!-- ══ CTA ══ -->
-<section id="cta">
-  <div class="cta-inner">
-    <span class="eyebrow eyebrow-light fade-up">Klaar om te beginnen?</span>
-    <h2 class="cta-headline fade-up" data-delay="60">Klaar om hier<br>werk van te maken?</h2>
-    <p class="cta-sub fade-up" data-delay="140">Plan een kort gesprek van 20 minuten. Dan laat ik je precies zien waar jij nu klanten misloopt — en hoe we dat oplossen.</p>
-    <div class="cta-buttons fade-up" data-delay="220">
+<div class="divider container"></div>
+
+<!-- ══ FINAL CTA ══ -->
+<section class="section final-cta">
+  <div class="container narrow">
+    <h2 class="reveal">Klaar om zichtbaar te worden?</h2>
+    <p class="reveal">In 20 minuten krijg je helderheid over je huidige situatie — en wat er beter kan.</p>
+    <div class="cta-row reveal">
       <a href="https://wa.me/31XXXXXXXXX" class="btn-primary" target="_blank" rel="noopener">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
-        WhatsApp mij
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
+        WhatsApp
       </a>
-      <a href="tel:+31XXXXXXXXX" class="btn-ghost">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.8 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <a href="tel:+31XXXXXXXXX" class="btn-secondary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.8 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         Bel mij
       </a>
     </div>
-    <p class="cta-note fade-up" data-delay="300">Geen verplichtingen. Gewoon duidelijkheid over wat er beter kan.</p>
+    <p class="cta-note reveal">Geen verplichtingen. Gewoon duidelijkheid.</p>
   </div>
 </section>
 
-<!-- Footer -->
+<!-- ══ FOOTER ══ -->
 <footer>
-  <p>&copy; 2026 FlowEdge &nbsp;&middot;&nbsp; <a href="mailto:info@flowedge.nl">info@flowedge.nl</a></p>
+  <div class="container">
+    <p>&copy; 2026 FlowEdge &nbsp;&middot;&nbsp; <a href="mailto:info@flowedge.nl">info@flowedge.nl</a></p>
+  </div>
 </footer>
 
 <script>
-  /* ── Mesh gradient — hero canvas ── */
-  (function () {
-    var canvas = document.getElementById('heroMesh');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var dpr = window.devicePixelRatio || 1;
-    var blobs = [
-      { x: 0.22, y: 0.28, vx:  0.00016, vy:  0.00011, r: 0.42, color: 'rgba(46,125,114,0.22)' },
-      { x: 0.75, y: 0.58, vx: -0.00020, vy:  0.00014, r: 0.36, color: 'rgba(30,95,88,0.15)'   },
-      { x: 0.50, y: 0.82, vx:  0.00013, vy: -0.00018, r: 0.30, color: 'rgba(70,165,148,0.12)' },
-      { x: 0.10, y: 0.70, vx:  0.00018, vy: -0.00012, r: 0.26, color: 'rgba(46,125,114,0.10)' }
-    ];
-    function resize() {
-      canvas.width  = canvas.offsetWidth  * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-    function draw() {
-      var w = canvas.width, h = canvas.height;
-      ctx.clearRect(0, 0, w, h);
-      blobs.forEach(function (b) {
-        b.x += b.vx; b.y += b.vy;
-        if (b.x < -0.1 || b.x > 1.1) b.vx *= -1;
-        if (b.y < -0.1 || b.y > 1.1) b.vy *= -1;
-        var grd = ctx.createRadialGradient(b.x * w, b.y * h, 0, b.x * w, b.y * h, b.r * Math.max(w, h));
-        grd.addColorStop(0, b.color);
-        grd.addColorStop(1, 'transparent');
-        ctx.globalCompositeOperation = 'lighter';
-        ctx.fillStyle = grd; ctx.fillRect(0, 0, w, h);
-        ctx.globalCompositeOperation = 'source-over';
-      });
-      requestAnimationFrame(draw);
-    }
-    draw();
-  })();
-
-  /* ── Scroll fade-up ── */
+  /* ── Scroll reveal ── */
   (function () {
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
-          var delay = Number(e.target.dataset.delay) || 0;
-          setTimeout(function () { e.target.classList.add('visible'); }, delay);
+          e.target.classList.add('visible');
           obs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
-    document.querySelectorAll('.fade-up').forEach(function (el) { obs.observe(el); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Odometer counter — realiteit stats ── */
+  /* ── System steps — staggered scroll reveal ── */
   (function () {
-    function countUp(el, target, suffix, dur) {
-      var start = null;
-      function tick(ts) {
-        if (!start) start = ts;
-        var p = Math.min((ts - start) / dur, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(target * eased) + suffix;
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    }
+    var steps = document.querySelectorAll('#systemSteps .step');
+    var result = document.getElementById('systemResult');
+    if (!steps.length) return;
+
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
-          var el = e.target;
-          countUp(el, parseInt(el.dataset.count), el.dataset.suffix || '', 1400);
-          obs.unobserve(el);
+          var index = Array.from(steps).indexOf(e.target);
+          setTimeout(function () {
+            e.target.classList.add('visible');
+          }, index * 120);
+          obs.unobserve(e.target);
+
+          // Show result after last step
+          if (index === steps.length - 1) {
+            setTimeout(function () {
+              result.classList.add('visible');
+            }, (index + 1) * 120 + 300);
+          }
         }
       });
-    }, { threshold: 0.6 });
-    document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
-  })();
-
-  /* ── Solution — scroll-driven depth stack ── */
-  (function () {
-    var scene = document.getElementById('solScene');
-    var cards = document.querySelectorAll('#solStack .sol-card');
-    var pips = document.querySelectorAll('.sol-pip');
-    var conclusion = document.getElementById('solConclusion');
-    if (!scene || !cards.length) return;
-
-    var totalCards = cards.length;
-    var lastActive = -1;
-    var frozen = false;
-
-    function freeze() {
-      frozen = true;
-      scene.classList.add('sol-frozen');
-      cards.forEach(function (c) {
-        c.removeAttribute('data-depth');
-      });
-      pips.forEach(function (p) { p.classList.add('active'); });
-      if (conclusion) conclusion.classList.add('visible');
-    }
-
-    function update() {
-      if (frozen) return;
-
-      var rect = scene.getBoundingClientRect();
-      var sceneH = scene.offsetHeight;
-      var scrolled = -rect.top;
-      var progress = Math.max(0, Math.min(1, scrolled / (sceneH - window.innerHeight)));
-
-      var cardProgress = progress * (totalCards + 0.5);
-      var activeIndex = Math.min(Math.floor(cardProgress), totalCards - 1);
-
-      // Freeze once all cards shown and scrolled past
-      if (activeIndex >= totalCards - 1 && progress > 0.88) {
-        freeze();
-        return;
-      }
-
-      if (activeIndex !== lastActive) {
-        lastActive = activeIndex;
-
-        cards.forEach(function (c, i) {
-          var depth = activeIndex - i;
-          if (i === activeIndex) {
-            c.setAttribute('data-depth', 'active');
-          } else if (depth > 0 && depth <= 3) {
-            c.setAttribute('data-depth', String(depth));
-          } else if (i > activeIndex) {
-            c.removeAttribute('data-depth');
-          } else {
-            c.setAttribute('data-depth', '3');
-          }
-        });
-
-        pips.forEach(function (p, i) {
-          p.classList.toggle('active', i <= activeIndex);
-        });
-      }
-
-      requestAnimationFrame(update);
-    }
-
-    requestAnimationFrame(update);
+    }, { threshold: 0.2 });
+    steps.forEach(function (s) { obs.observe(s); });
   })();
 </script>
 
