@@ -92,7 +92,7 @@
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .nav-logo { font-size: 17px; font-weight: 800; color: #fff; letter-spacing: -0.3px; text-decoration: none; }
+    .nav-logo { font-size: 21px; font-weight: 800; color: #fff; letter-spacing: -0.5px; text-decoration: none; }
     .nav-logo em { font-style: normal; color: var(--accent); }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 8px;
@@ -150,13 +150,8 @@
 
     .hero-inner { position: relative; z-index: 3; max-width: 820px; }
 
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: 9px;
-      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
-      text-transform: uppercase; color: rgba(70,165,148,0.85);
-      margin-bottom: 44px;
-    }
-    .hero-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .hero-tag { display: none; }
+    .hero-tag-dot { display: none; }
 
     .hero-h1 {
       font-size: clamp(52px, 8.5vw, 112px);
@@ -334,17 +329,21 @@
 
     /* Right: scrolling feature cards */
     .sol-features {
-      display: flex; flex-direction: column; gap: 24px;
-      padding: 20px 0 40px;
+      display: flex; flex-direction: column; gap: 28px;
+      padding: 20px 0 60px;
     }
     .sol-card {
-      padding: 32px 28px;
-      border-radius: 14px;
+      padding: 36px 32px;
+      border-radius: 16px;
       background: var(--warm);
       border: 1px solid var(--border);
-      opacity: 0.4;
-      transform: translateY(8px);
-      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity: 0.3;
+      transform: translateY(12px);
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .sol-card.seen {
+      opacity: 0.55;
+      transform: translateY(0);
     }
     .sol-card.active {
       opacity: 1;
@@ -369,22 +368,43 @@
     .sol-card.sol-featured {
       background: var(--night);
       border-color: var(--accent2);
+      padding: 40px 36px;
+    }
+    .sol-card.sol-featured.seen {
+      opacity: 0.55;
     }
     .sol-card.sol-featured.active {
+      opacity: 1;
       background: var(--night);
       border-color: var(--accent);
-      box-shadow: 0 12px 48px rgba(46,125,114,0.18);
+      box-shadow: 0 16px 56px rgba(46,125,114,0.20);
     }
     .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
-    .sol-card.sol-featured h3 { color: #fff; font-size: 20px; }
-    .sol-card.sol-featured p { color: rgba(255,255,255,0.5); }
+    .sol-card.sol-featured h3 {
+      color: #fff; font-size: clamp(20px, 2vw, 24px);
+      letter-spacing: -0.5px; margin-bottom: 12px;
+    }
+    .sol-card.sol-featured p { color: rgba(255,255,255,0.50); font-size: 14.5px; line-height: 1.72; }
     .sol-card.sol-featured .sol-card-badge {
       display: inline-block;
       font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
       text-transform: uppercase; color: var(--accent3);
       background: rgba(70,165,148,0.12);
-      padding: 4px 10px; border-radius: 6px;
-      margin-top: 12px;
+      padding: 5px 12px; border-radius: 6px;
+      margin-top: 16px;
+    }
+
+    /* Solution conclusion */
+    .sol-conclusion {
+      text-align: center;
+      padding: 80px 52px;
+      background: var(--warm);
+      border-top: 1px solid var(--border);
+    }
+    .sol-conclusion-inner { max-width: 720px; margin: 0 auto; }
+    .sol-conclusion-text {
+      font-size: clamp(26px, 3.8vw, 46px); font-weight: 900;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.14;
     }
 
     /* ══════════════════════════════════
@@ -435,7 +455,7 @@
       nav { padding: 0 24px; height: 60px; }
       #hero { padding: 110px 24px 88px; }
       .hero-h1 { letter-spacing: -2.5px; }
-      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta {
+      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta, .sol-conclusion {
         padding-left: 24px; padding-right: 24px;
         padding-top: 64px; padding-bottom: 64px;
       }
@@ -445,7 +465,7 @@
       .sol-card.sol-featured h3 { font-size: 18px; }
     }
     @media (max-width: 520px) {
-      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta { padding-left: 20px; padding-right: 20px; }
+      #realiteit, #pijnpunten, #impact, #oplossing, #over, #cta, .sol-conclusion { padding-left: 20px; padding-right: 20px; }
       .cta-buttons { flex-direction: column; align-items: center; }
       .cta-buttons .btn-primary, .cta-buttons .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
       footer { padding: 24px 20px; }
@@ -472,8 +492,7 @@
       Websites voor vakmensen
     </span>
     <h1 class="hero-h1 fade-up" data-delay="80">
-      Veel bedrijven zijn beter<br>
-      dan hun website <em>laat zien.</em>
+      Veel bedrijven zijn beter dan hun online aanwezigheid <em>laat zien.</em>
     </h1>
     <p class="hero-sub fade-up" data-delay="200">
       Ik zorg dat die eerste indruk wél klopt — en klanten aantrekt in plaats van afstoot.
@@ -526,20 +545,24 @@
       </div>
       <div class="pain-right fade-up" data-delay="120">
         <div class="pain-text">
-          <p>Je bent goed in wat je doet. Je levert strak werk, klanten zijn tevreden en via via komt er altijd wel iets binnen.</p>
-          <p class="pain-callout">Maar online… voelt het anders.</p>
-          <p>Mensen zoeken jouw dienst elke dag. Maar als je niet goed te vinden bent op Google, komen ze simpelweg niet bij jou uit.</p>
-          <p>En zelfs als ze je wél vinden, gaat het daar vaak mis.</p>
-          <p>Je website laat niet zien hoe goed je echt bent. Hij oogt verouderd, werkt niet lekker op mobiel of geeft simpelweg niet het vertrouwen dat je in het echt wél uitstraalt.</p>
-          <p>Bezoekers beslissen binnen een paar seconden of ze blijven of weggaan. Als die eerste indruk niet klopt, ben je ze kwijt voordat ze contact opnemen.</p>
-          <p class="pain-callout-major">Aan de ene kant word je niet gevonden — en aan de andere kant overtuig je niet wanneer iemand je wél vindt. En dat kost je klanten.</p>
+          <p>Je bent goed in wat je doet.</p>
+          <p>Je levert strak werk, klanten zijn tevreden en via via komt er altijd wel iets binnen.</p>
+          <p class="pain-callout">Maar online… werkt het anders.</p>
+          <p>Mensen zoeken jouw dienst — elke dag. En meer dan 85% doet dat via Google.</p>
+          <p>Maar als je daar niet goed te vinden bent, besta je voor hen simpelweg niet.</p>
+          <p>En dat begint al bij de basis.</p>
+          <p>Google gebruikt primair de mobiele versie van je website voor indexering en ranking.</p>
+          <p class="pain-callout-major">Daarnaast is bij 9 van de 10 lokale bedrijven de technische basis van de website niet goed ingericht voor een koppeling met Google. Zonder de juiste structuur in de achterkant van je website kan Google simpelweg niet begrijpen wie je bent, waar je werkt of wat je doet.</p>
+          <p>Daardoor word je niet getoond aan mensen die letterlijk in jouw omgeving zoeken naar jouw dienst.</p>
+          <p>En zelfs als je wél in beeld komt, gaat het daar vaak mis.</p>
+          <p>Als iemand je website opent, beslist diegene binnen een paar seconden of hij blijft of weggaat. Als je website geen vertrouwen uitstraalt, ben je die bezoeker kwijt voordat het gesprek begint.</p>
         </div>
       </div>
     </div>
     <blockquote class="pull-quote fade-up">
-      En ondertussen weet je dat er veel meer uit te halen valt — maar je hebt geen idee waar je moet beginnen, of hoe je het goed aanpakt.
+      Dus aan de ene kant word je niet gevonden — en aan de andere kant overtuig je niet.
     </blockquote>
-    <p class="pain-closing fade-up">Dat is precies waar het voor veel kleine bedrijven misgaat. Niet omdat ze niet goed zijn in wat ze doen, maar omdat hun online aanwezigheid dat simpelweg niet laat zien.</p>
+    <p class="pain-closing fade-up">En dat kost je klanten. Elke dag opnieuw.</p>
   </div>
 </section>
 
@@ -560,12 +583,16 @@
       <img src="foto-sky.png" alt="Sky Lemos — oprichter FlowEdge" class="over-foto" loading="lazy">
     </div>
     <div class="over-text fade-up" data-delay="100">
-      <span class="eyebrow">Over mij</span>
+      <span class="eyebrow">Wie ik ben</span>
       <h2 class="over-naam">Sky Lemos</h2>
-      <p class="over-tagline">Ik help kleine bedrijven om online de indruk te maken die ze offline allang geven.</p>
+      <p class="over-tagline">Geboren in Amsterdam en van jongs af aan gefascineerd door technologie.</p>
       <div class="over-bio">
-        <p>Ik zag steeds opnieuw hetzelfde probleem: goede bedrijven die klanten mislopen. Niet omdat ze niet goed zijn in wat ze doen, maar omdat hun online uitstraling dat niet laat zien.</p>
-        <p><strong>Dat is waar FlowEdge het verschil maakt.</strong> Geen dure bureaus, geen ingewikkeld gedoe — gewoon een strakke website die voor je werkt.</p>
+        <p>Computers, systemen en alles wat zich achter de schermen afspeelt, trokken mij altijd al aan. Naast die technische basis ben ik altijd ondernemend geweest. Ik zag al vroeg kansen waar anderen ze lieten liggen.</p>
+        <p>Ik zag steeds opnieuw hetzelfde probleem: goede bedrijven die klanten mislopen. Niet omdat ze niet goed zijn in wat ze doen, maar omdat hun online uitstraling dat niet laat zien. Een website die niet overtuigt. Slechte vindbaarheid. Geen sterke eerste indruk.</p>
+        <p>En in een wereld waarin alles online begint, kost dat simpelweg omzet.</p>
+        <p>Je website is de eerste indruk. Als die niet strak, snel en professioneel is, ben je die klant al kwijt voordat het gesprek begint. En als je daarnaast niet goed zichtbaar bent op Google, besta je simpelweg niet voor een groot deel van je markt.</p>
+        <p><strong>Dat is waar FlowEdge het verschil maakt.</strong></p>
+        <p>Wat voor mij begon met het helpen van mensen in mijn omgeving — zoals het bouwen en hosten van websites — is uitgegroeid tot een duidelijke missie: ondernemers helpen om hun online aanwezigheid naar een niveau te brengen dat wél klanten aantrekt en groei mogelijk maakt.</p>
       </div>
       <div class="over-facts">
         <div><div class="over-fact-num">7–10</div><div class="over-fact-label">dagen doorlooptijd</div></div>
@@ -594,8 +621,6 @@
           <div class="sol-pip" data-pip="2"></div>
           <div class="sol-pip" data-pip="3"></div>
           <div class="sol-pip" data-pip="4"></div>
-          <div class="sol-pip" data-pip="5"></div>
-          <div class="sol-pip" data-pip="6"></div>
         </div>
       </div>
 
@@ -614,35 +639,30 @@
           <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
         </div>
 
-        <div class="sol-card sol-featured" data-feature="3">
-          <div class="sol-card-num">03 — Google</div>
-          <h3>Technisch ingericht op het Google-ecosysteem</h3>
-          <p>Schema.org, lokale SEO, structured data. Google begrijpt wie je bent en toont je actief aan klanten die nu zoeken.</p>
-          <span class="sol-card-badge">Kern van het systeem</span>
-        </div>
-
-        <div class="sol-card" data-feature="4">
-          <div class="sol-card-num">04 — Snelheid</div>
-          <h3>Snelle laadtijden en technisch sterk</h3>
+        <div class="sol-card" data-feature="3">
+          <div class="sol-card-num">03 — Snelheid</div>
+          <h3>Snelle laadtijden en een soepele ervaring</h3>
           <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
         </div>
 
-        <div class="sol-card" data-feature="5">
-          <div class="sol-card-num">05 — Lokaal</div>
-          <h3>Lokale vindbaarheid op Google</h3>
-          <p>Zodat mensen jou vinden op het moment dat ze actief zoeken naar jouw dienst in jouw regio.</p>
-        </div>
-
-        <div class="sol-card" data-feature="6">
-          <div class="sol-card-num">06 — Reviews</div>
-          <h3>Een website die 24/7 voor je werkt</h3>
-          <p>Bezoekers omzetten in aanvragen — dat is het enige doel. Reviews geïntegreerd, conversie gericht.</p>
+        <div class="sol-card sol-featured" data-feature="4">
+          <div class="sol-card-num">04 — Google</div>
+          <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
+          <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
+          <span class="sol-card-badge">Kern van het systeem</span>
         </div>
 
       </div>
 
     </div>
 
+  </div>
+</section>
+
+<!-- ══ SOLUTION CONCLUSION ══ -->
+<section class="sol-conclusion">
+  <div class="sol-conclusion-inner">
+    <p class="sol-conclusion-text fade-up">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
   </div>
 </section>
 
@@ -754,12 +774,27 @@
     var pips = document.querySelectorAll('.sol-pip');
     if (!cards.length) return;
 
+    var highestSeen = 0;
+
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) {
-          var num = e.target.dataset.feature;
-          cards.forEach(function (c) { c.classList.toggle('active', c.dataset.feature === num); });
-          pips.forEach(function (p) { p.classList.toggle('active', p.dataset.pip === num); });
+          var num = parseInt(e.target.dataset.feature);
+
+          // Track highest seen for "seen" state
+          if (num > highestSeen) highestSeen = num;
+
+          cards.forEach(function (c) {
+            var cn = parseInt(c.dataset.feature);
+            c.classList.remove('active');
+            if (cn <= highestSeen) c.classList.add('seen');
+            if (cn === num) { c.classList.add('active'); c.classList.remove('seen'); }
+          });
+
+          pips.forEach(function (p) {
+            var pn = parseInt(p.dataset.pip);
+            p.classList.toggle('active', pn <= num);
+          });
         }
       });
     }, { threshold: 0.5, rootMargin: '-10% 0px -30% 0px' });
