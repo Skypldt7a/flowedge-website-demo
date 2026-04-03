@@ -174,32 +174,32 @@
     ══════════════════════════════════ */
     #realiteit {
       background: var(--white);
-      padding: 44px 52px;
+      padding: 56px 52px;
       border-bottom: 1px solid var(--border);
     }
     .real-inner { max-width: 1040px; margin: 0 auto; }
     .real-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 1px; background: var(--border);
-      border-radius: 16px; overflow: hidden;
-      box-shadow: 0 1px 16px rgba(0,0,0,0.04);
+      border-radius: 18px; overflow: hidden;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.05);
     }
     .real-card {
-      background: var(--white); padding: 30px 32px;
+      background: var(--white); padding: 38px 36px;
       text-align: center;
     }
     .real-num {
-      font-size: clamp(36px, 5vw, 56px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1;
-      margin-bottom: 8px;
+      font-size: clamp(48px, 6vw, 72px); font-weight: 900;
+      color: var(--ink); letter-spacing: -3px; line-height: 1;
+      margin-bottom: 12px;
     }
     .real-num em {
       font-style: normal; font-size: 0.6em;
       color: var(--ink3); letter-spacing: -1px;
     }
     .real-claim {
-      font-size: 13px; font-weight: 500; color: var(--ink3);
-      line-height: 1.5; max-width: 200px; margin: 0 auto;
+      font-size: 14px; font-weight: 500; color: var(--ink3);
+      line-height: 1.5; max-width: 220px; margin: 0 auto;
     }
 
     /* ══════════════════════════════════
@@ -295,14 +295,14 @@
     #oplossing {
       background: var(--white);
       border-top: 1px solid var(--border);
-      padding: 44px 52px 48px;
+      padding: 48px 52px 56px;
     }
     .sol-inner { max-width: 1100px; margin: 0 auto; }
 
-    .sol-header { max-width: 640px; margin-bottom: 20px; }
+    .sol-header { max-width: 640px; margin-bottom: 28px; }
     .sol-title {
       font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 16px;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 20px;
     }
 
     /* Two-column grid */
@@ -321,12 +321,12 @@
     .sol-intro-text {
       font-size: 15.5px; color: var(--ink2); line-height: 1.84;
     }
-    .sol-intro-text p + p { margin-top: 10px; }
+    .sol-intro-text p + p { margin-top: 12px; }
     .sol-intro-text strong { color: var(--ink); font-weight: 700; }
 
     .sol-system-label {
-      margin-top: 24px;
-      padding-top: 20px;
+      margin-top: 28px;
+      padding-top: 24px;
       border-top: 1px solid var(--border);
     }
     .sol-system-eyebrow {
@@ -411,13 +411,13 @@
 
     /* Conclusion */
     .sol-conclusion {
-      padding: 44px 0 0;
+      padding: 48px 0 0;
       text-align: center;
     }
     .sol-conclusion-text {
-      font-size: clamp(26px, 3.8vw, 46px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.12;
-      max-width: 720px; margin: 0 auto;
+      font-size: clamp(24px, 3.4vw, 42px); font-weight: 900;
+      color: var(--ink); letter-spacing: -1.8px; line-height: 1.14;
+      max-width: 700px; margin: 0 auto;
     }
 
     /* ══════════════════════════════════
@@ -531,18 +531,18 @@
     <div class="real-grid">
 
       <div class="real-card fade-up" data-delay="0">
-        <p class="real-num">85<em>%</em></p>
-        <p class="real-claim">van online zoeken gebeurt via Google</p>
+        <p class="real-num" data-count="85" data-suffix="%">0%</p>
+        <p class="real-claim">van alle zoekopdrachten loopt via Google</p>
       </div>
 
-      <div class="real-card fade-up" data-delay="80">
+      <div class="real-card fade-up" data-delay="100">
         <p class="real-num">&lt;1<em>sec</em></p>
         <p class="real-claim">bepaalt of een bezoeker je vertrouwt</p>
       </div>
 
-      <div class="real-card fade-up" data-delay="160">
+      <div class="real-card fade-up" data-delay="200">
         <p class="real-num">2<em>/5</em></p>
-        <p class="real-claim">niet mobiel geoptimaliseerd</p>
+        <p class="real-claim">websites niet mobiel geoptimaliseerd</p>
       </div>
 
     </div>
@@ -627,7 +627,9 @@
       <div class="sol-left">
         <div class="sol-intro-text fade-up" data-delay="120">
           <p>Je hebt geen klantenprobleem. Je hebt een zichtbaarheids- en overtuigingsprobleem.</p>
-          <p>FlowEdge lost dat op met een systeem dat vier pijlers combineert — van design tot technische Google-koppeling. Zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
+          <p>Mensen zoeken jouw dienst — elke dag. Maar als je niet goed te vinden bent op Google, komen ze niet bij jou uit. En als ze je wél vinden, bepaalt je website of ze blijven of vertrekken.</p>
+          <p>Helaas is dit bij de meeste kleine bedrijven die regionaal hun werk doen iets waar men al te vaak tegenaan loopt.</p>
+          <p>Dat is precies waar FlowEdge op is gebouwd. Ik zorg ervoor dat jouw online aanwezigheid klopt — zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
         </div>
         <div class="sol-system-label fade-up" data-delay="180">
           <p class="sol-system-eyebrow">Het systeem</p>
@@ -750,6 +752,31 @@
       });
     }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
     document.querySelectorAll('.fade-up').forEach(function (el) { obs.observe(el); });
+  })();
+
+  /* ── Odometer counter — realiteit stats ── */
+  (function () {
+    function countUp(el, target, suffix, dur) {
+      var start = null;
+      function tick(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          var el = e.target;
+          countUp(el, parseInt(el.dataset.count), el.dataset.suffix || '', 1400);
+          obs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
   /* ── Solution — card reveal ── */
