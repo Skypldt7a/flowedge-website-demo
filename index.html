@@ -308,7 +308,7 @@
     /* Scroll container — 5 segments: 4 cards + conclusion */
     .sol-scene {
       position: relative;
-      height: 320vh;
+      height: 380vh;
     }
     .sol-grid {
       position: sticky;
@@ -357,54 +357,57 @@
     /* Right column: depth canvas */
     .sol-right {
       position: relative;
+      display: flex;
+      align-items: center;
     }
     .sol-stack {
       position: relative;
-      height: 180px;
+      width: 100%;
+      height: 200px;
     }
     .sol-card {
       position: absolute;
       left: 0; right: 0; top: 0;
-      padding: 22px 24px;
-      border-radius: 16px;
-      background: var(--warm);
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+      padding: 28px 32px;
+      border-radius: 18px;
+      background: rgb(246,247,246);
+      border: 1px solid rgb(226,232,230);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
       opacity: 0;
-      transform: translateY(40px) scale(0.96);
+      transform: translateY(60px) scale(0.94);
       will-change: transform, opacity;
     }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
-      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px;
     }
     .sol-card h3 {
-      font-size: 17px; font-weight: 800; color: var(--ink);
-      letter-spacing: -0.3px; margin-bottom: 4px; line-height: 1.30;
+      font-size: 18px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.4px; margin-bottom: 6px; line-height: 1.28;
     }
     .sol-card p {
-      font-size: 13.5px; color: var(--ink3); line-height: 1.62;
+      font-size: 14px; color: var(--ink3); line-height: 1.64;
     }
 
     /* Featured card — Google */
     .sol-card.sol-featured {
       background: var(--night);
-      border-color: var(--accent2);
-      padding: 24px 26px;
+      border-color: rgb(31,94,89);
+      padding: 30px 34px;
     }
     .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
     .sol-card.sol-featured h3 {
-      color: #fff; font-size: clamp(17px, 1.8vw, 20px);
-      letter-spacing: -0.5px; margin-bottom: 6px;
+      color: #fff; font-size: clamp(18px, 2vw, 22px);
+      letter-spacing: -0.5px; margin-bottom: 8px;
     }
-    .sol-card.sol-featured p { color: rgba(255,255,255,0.50); font-size: 14px; line-height: 1.68; }
+    .sol-card.sol-featured p { color: rgba(255,255,255,0.52); font-size: 14.5px; line-height: 1.72; }
     .sol-card.sol-featured .sol-card-badge {
       display: inline-block;
       font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
       text-transform: uppercase; color: var(--accent3);
       background: rgba(70,165,148,0.12);
       padding: 5px 12px; border-radius: 6px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     /* Conclusion overlay — inside sticky grid */
@@ -806,93 +809,101 @@
     var scene = document.getElementById('solScene');
     var cards = document.querySelectorAll('#solStack .sol-card');
     var pips = document.querySelectorAll('.sol-pip');
+    var solLeft = document.querySelector('.sol-left');
     var conclusionWrap = document.getElementById('solConclusion');
     var conclusionText = conclusionWrap ? conclusionWrap.querySelector('.sol-conclusion-text') : null;
     if (!scene || !cards.length) return;
 
-    var totalCards = cards.length;
-    var isFeatured = [];
-    cards.forEach(function (c) { isFeatured.push(c.classList.contains('sol-featured')); });
+    var N = cards.length;
+    var feat = [];
+    cards.forEach(function (c) { feat.push(c.classList.contains('sol-featured')); });
 
     function lerp(a, b, t) { return a + (b - a) * t; }
-    function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
-    function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+    function clamp(v) { return Math.max(0, Math.min(1, v)); }
+    function ease(t) { return t * t * (3 - 2 * t); } // smoothstep
 
     function update() {
       var rect = scene.getBoundingClientRect();
-      var sceneH = scene.offsetHeight;
       var scrolled = -rect.top;
-      var progress = clamp(scrolled / (sceneH - window.innerHeight), 0, 1);
+      var total = scene.offsetHeight - window.innerHeight;
+      var progress = Math.max(0, Math.min(1, scrolled / total));
 
-      // 5 segments: 4 cards (0–0.8) + conclusion (0.8–1.0)
-      var cardZone = progress / 0.8; // 0–1 mapped to card segments
-      var segment = cardZone * totalCards;
-
-      // Conclusion phase
-      var conclusionPhase = clamp((progress - 0.78) / 0.18, 0, 1);
-      var stackFade = 1 - conclusionPhase;
-
-      // Update cards
-      cards.forEach(function (c, i) {
-        var rel = segment - i; // relative progress for this card
-        var opacity, y, scale, shadow, borderColor, bg;
-
-        if (rel < 0) {
-          // Not yet visible — waiting below
-          var entry = clamp(rel + 0.3, 0, 0.3) / 0.3; // slight pre-fade
-          opacity = 0;
-          y = 40;
-          scale = 0.96;
-        } else if (rel <= 1) {
-          // Entering / active
-          var t = ease(clamp(rel / 0.6, 0, 1));
-          opacity = t;
-          y = lerp(40, 0, t);
-          scale = lerp(0.96, isFeatured[i] ? 1.02 : 1, t);
-        } else {
-          // Pushed back — depth layer
-          var depth = clamp(rel - 1, 0, 3);
-          var depthT = depth / 3;
-          opacity = lerp(0.40, 0.04, depthT);
-          y = lerp(-16, -36, depthT);
-          scale = lerp(0.94, 0.86, depthT);
-        }
-
-        // Apply conclusion fade to entire stack
-        opacity *= stackFade;
-
-        c.style.opacity = opacity;
-        c.style.transform = 'translateY(' + y + 'px) scale(' + scale + ')';
-        c.style.zIndex = rel >= 0 && rel <= 1 ? 10 : Math.max(1, 8 - Math.floor(rel));
-
-        // Active card styling
-        if (rel >= 0 && rel <= 1.2 && opacity > 0.5) {
-          if (isFeatured[i]) {
-            c.style.borderColor = 'var(--accent)';
-            c.style.boxShadow = '0 16px 48px rgba(46,125,114,0.22), 0 0 0 1px rgba(70,165,148,0.12)';
-          } else {
-            c.style.borderColor = 'var(--accent)';
-            c.style.background = 'var(--white)';
-            c.style.boxShadow = '0 10px 32px rgba(46,125,114,0.09)';
-          }
-        } else {
-          c.style.borderColor = '';
-          c.style.background = '';
-          c.style.boxShadow = '';
-        }
-      });
-
-      // Progress pips
-      var activeCard = Math.min(Math.floor(segment), totalCards - 1);
-      pips.forEach(function (p, i) {
-        p.classList.toggle('active', i <= activeCard && progress < 0.82);
-      });
+      // 5 zones: 4 cards (0–0.82) + conclusion (0.82–1.0)
+      var seg = (progress / 0.82) * N;
 
       // Conclusion
+      var cRaw = Math.max(0, Math.min(1, (progress - 0.80) / 0.16));
+      var cT = ease(cRaw);
+      var stackMul = 1 - cT;
+
+      cards.forEach(function (c, i) {
+        var rel = seg - i;
+
+        // Active amount: sustained plateau with smooth ramps
+        var activeT = clamp(Math.min(rel / 0.35, (1.15 - rel) / 0.35));
+        activeT = ease(activeT);
+
+        // Core transforms
+        var opacity, y, scale;
+        if (rel < 0) {
+          opacity = 0; y = 60; scale = 0.94;
+        } else if (rel <= 1) {
+          var t = ease(clamp(rel / 0.45));
+          opacity = t;
+          y = lerp(60, 0, t);
+          scale = lerp(0.94, feat[i] ? 1.03 : 1.0, t);
+        } else {
+          var d = ease(clamp((rel - 1) / 3));
+          opacity = lerp(0.32, 0.02, d);
+          y = lerp(-8, -22, d);
+          scale = lerp(feat[i] ? 1.03 : 1.0, 0.88, d);
+        }
+        opacity *= stackMul;
+
+        c.style.opacity = opacity.toFixed(3);
+        c.style.transform = 'translateY(' + y.toFixed(1) + 'px) scale(' + scale.toFixed(4) + ')';
+        c.style.zIndex = rel >= 0 && rel <= 1.2 ? 10 : Math.max(1, 8 - Math.floor(Math.max(0, rel)));
+
+        // Continuous shadow — all values interpolated
+        if (feat[i]) {
+          var sY = lerp(2, 20, activeT);
+          var sB = lerp(12, 56, activeT);
+          var sA = lerp(0.06, 0.28, activeT);
+          c.style.boxShadow = '0 ' + sY.toFixed(1) + 'px ' + sB.toFixed(1) + 'px rgba(46,125,114,' + sA.toFixed(3) + ')';
+          // Border: accent2 → accent
+          var bR = Math.round(lerp(31, 46, activeT));
+          var bG = Math.round(lerp(94, 125, activeT));
+          var bB = Math.round(lerp(89, 114, activeT));
+          c.style.borderColor = 'rgb(' + bR + ',' + bG + ',' + bB + ')';
+        } else {
+          var sY = lerp(2, 24, activeT);
+          var sB = lerp(8, 64, activeT);
+          var sA = lerp(0.03, 0.10, activeT);
+          c.style.boxShadow = '0 ' + sY.toFixed(1) + 'px ' + sB.toFixed(1) + 'px rgba(0,0,0,' + sA.toFixed(3) + ')';
+          // Border: border → accent
+          var bR = Math.round(lerp(226, 46, activeT));
+          var bG = Math.round(lerp(232, 125, activeT));
+          var bB = Math.round(lerp(230, 114, activeT));
+          c.style.borderColor = 'rgb(' + bR + ',' + bG + ',' + bB + ')';
+          // Background: warm → white
+          var bgV = Math.round(lerp(246, 255, activeT));
+          c.style.background = 'rgb(' + bgV + ',' + Math.round(lerp(247, 255, activeT)) + ',' + bgV + ')';
+        }
+      });
+
+      // Pips
+      var activeIdx = Math.min(Math.floor(seg), N - 1);
+      pips.forEach(function (p, i) {
+        p.classList.toggle('active', i <= activeIdx && progress < 0.84);
+      });
+
+      // Conclusion + left column fade
       if (conclusionWrap) {
-        var cEase = ease(conclusionPhase);
-        conclusionWrap.style.opacity = cEase;
-        conclusionText.style.transform = 'translateY(' + lerp(20, 0, cEase) + 'px)';
+        conclusionWrap.style.opacity = cT.toFixed(3);
+        conclusionText.style.transform = 'translateY(' + lerp(24, 0, cT).toFixed(1) + 'px)';
+      }
+      if (solLeft) {
+        solLeft.style.opacity = lerp(1, 0.15, cT).toFixed(3);
       }
 
       requestAnimationFrame(update);
