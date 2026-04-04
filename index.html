@@ -162,7 +162,11 @@
       position: relative; z-index: 3;
       max-width: 1400px; width: 100%; margin: 0 auto;
     }
-    .hero-content { max-width: 680px; }
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
     .hero-h1 {
       font-size: clamp(48px, 7.5vw, 96px);
       font-weight: 900; color: #fff;
@@ -173,16 +177,19 @@
     .hero-sub {
       font-size: clamp(16px, 1.2vw, 18px);
       color: rgba(255,255,255,0.42);
-      line-height: 1.8; max-width: 420px; margin-bottom: 48px;
+      line-height: 1.8; max-width: 420px; margin: 0 auto 48px;
     }
-    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
     .hero-note { font-size: 13px; color: rgba(255,255,255,0.14); font-weight: 500; }
 
     /* ══ STATS — compact modern cards ══ */
     #stats {
-      background: var(--white);
+      background: rgba(46,125,114,0.08);
       padding: 40px 64px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(46,125,114,0.12);
+      transition: background 0.3s var(--ease-out);
+    }
+    #stats:hover {
+      background: rgba(46,125,114,0.13);
     }
     .stats-inner {
       max-width: 860px; margin: 0 auto;
@@ -247,27 +254,6 @@
       max-width: 380px; margin-bottom: 32px;
     }
 
-    /* Frame-sequence animation — blend with page */
-    .pain-anim-wrap {
-      position: relative;
-      max-width: 380px;
-    }
-    .pain-anim-wrap canvas {
-      display: block; width: 100%; height: auto;
-      border-radius: var(--radius-lg);
-      mix-blend-mode: multiply;
-      filter: contrast(1.08) brightness(1.04);
-    }
-    /* Soft gradient edges for seamless blend */
-    .pain-anim-wrap::before {
-      content: ''; position: absolute; inset: 0; z-index: 1;
-      border-radius: var(--radius-lg);
-      background:
-        linear-gradient(to bottom, var(--canvas) 0%, transparent 10%, transparent 90%, var(--canvas) 100%),
-        linear-gradient(to right, var(--canvas) 0%, transparent 6%, transparent 94%, var(--canvas) 100%);
-      pointer-events: none;
-    }
-
     .pain-right { display: flex; flex-direction: column; gap: 16px; }
 
     .pain-card {
@@ -312,7 +298,7 @@
     /* ══ IMPACT ══ */
     #impact {
       background: var(--night);
-      padding: 120px 64px;
+      padding: 72px 64px;
       position: relative; overflow: hidden;
     }
     #impact::before {
@@ -324,6 +310,7 @@
     }
     .impact-inner {
       position: relative; z-index: 1; max-width: 900px; margin: 0 auto;
+      text-align: center;
     }
     .impact-text {
       font-size: clamp(30px, 4.5vw, 56px); font-weight: 900;
@@ -331,13 +318,13 @@
     }
     .impact-text em { font-style: normal; color: var(--accent3); }
     .impact-cta {
-      margin-top: 48px; display: flex; gap: 14px; flex-wrap: wrap;
+      margin-top: 48px; display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
     }
 
     /* ══ ABOUT ══ */
     #over {
       background: var(--white);
-      padding: 120px 64px;
+      padding: 72px 64px;
     }
     .over-inner {
       max-width: 1400px; margin: 0 auto;
@@ -603,23 +590,12 @@
   <canvas id="heroMesh" aria-hidden="true"></canvas>
   <div class="hero-inner">
     <div class="hero-content">
-      <span class="eyebrow eyebrow-light reveal">Websites voor vakmensen</span>
       <h1 class="hero-h1 reveal">
         Veel bedrijven zijn beter dan hun online aanwezigheid <em>laat zien.</em>
       </h1>
       <p class="hero-sub reveal">
         Ik zorg dat die eerste indruk klopt — zodat klanten jou vinden en kiezen.
       </p>
-      <div class="hero-ctas reveal">
-        <a href="https://wa.me/31XXXXXXXXX" class="btn-primary" target="_blank" rel="noopener">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
-          WhatsApp mij
-        </a>
-        <a href="tel:+31XXXXXXXXX" class="btn-secondary">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.8 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          Bel mij
-        </a>
-      </div>
       <p class="hero-note reveal">Geen verplichtingen — gewoon een eerlijk gesprek.</p>
     </div>
   </div>
@@ -652,11 +628,6 @@
         <span class="eyebrow reveal">Herken je dit?</span>
         <h2 class="pain-headline reveal">Je verliest klanten zonder dat je het doorhebt.</h2>
         <p class="pain-intro reveal">Je bent goed in wat je doet. Klanten zijn tevreden, via via komt er altijd wel iets binnen. Maar online werkt het anders.</p>
-
-        <!-- Scroll-driven frame animation -->
-        <div class="pain-anim-wrap reveal">
-          <canvas id="animCanvas" width="800" height="800"></canvas>
-        </div>
       </div>
 
       <div class="pain-right stagger">
@@ -718,11 +689,6 @@
       <div class="over-bio reveal">
         <p>Ik zag steeds opnieuw hetzelfde probleem: kleine bedrijven die regionaal opereren en klanten mislopen. Niet omdat ze niet goed zijn in wat ze doen, maar omdat ze simpelweg niet meegegroeid zijn met de veranderingen van het online landschap.</p>
         <p>Dat is waar FlowEdge het verschil maakt. Ik zorg ervoor dat jouw online aanwezigheid klopt — zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
-      </div>
-      <div class="over-facts stagger">
-        <div class="reveal"><div class="over-fact-num">7 - 10</div><div class="over-fact-label">dagen doorlooptijd</div></div>
-        <div class="reveal"><div class="over-fact-num">100%</div><div class="over-fact-label">focus op vakmensen</div></div>
-        <div class="reveal"><div class="over-fact-num">NL</div><div class="over-fact-label">heel Nederland</div></div>
       </div>
     </div>
   </div>
@@ -1062,62 +1028,6 @@
       });
     }, { threshold: 0.6 });
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
-  })();
-
-  /* ── Scroll-driven frame sequence ── */
-  (function () {
-    var TOTAL = 146;
-    var canvas = document.getElementById('animCanvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var frames = [];
-    var loaded = 0;
-    var currentFrame = -1;
-
-    function pad(n) { return String(n).padStart(4, '0'); }
-
-    for (var i = 1; i <= TOTAL; i++) {
-      var img = new Image();
-      img.src = 'anim-frames/frame_' + pad(i) + '.jpg';
-      img.onload = function () {
-        loaded++;
-        if (loaded === 1) drawFrame(0);
-        if (loaded === TOTAL) initScroll();
-      };
-      frames.push(img);
-    }
-
-    function drawFrame(idx) {
-      if (idx === currentFrame) return;
-      var img = frames[idx];
-      if (!img || !img.complete) return;
-      currentFrame = idx;
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-    }
-
-    function initScroll() {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        setTimeout(initScroll, 60);
-        return;
-      }
-      gsap.registerPlugin(ScrollTrigger);
-
-      ScrollTrigger.create({
-        trigger: '#pijnpunten',
-        start: 'top 60%',
-        end: 'bottom 20%',
-        scrub: 0.2,
-        onUpdate: function (self) {
-          var idx = Math.min(Math.floor(self.progress * TOTAL), TOTAL - 1);
-          drawFrame(idx);
-        }
-      });
-    }
-
-    drawFrame(0);
   })();
 
   /* ── Sticky card scale on scroll ── */
