@@ -356,108 +356,128 @@
     }
     .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 5px; font-weight: 500; }
 
-    /* ══ SOLUTION ══ */
+    /* ══ SOLUTION — system section ══ */
     #oplossing {
       background: var(--white);
       border-top: 1px solid var(--border);
-      padding: 96px 52px 88px;
+      padding: 96px 52px 80px;
     }
-    .sol-inner { max-width: 1040px; margin: 0 auto; }
+    .sol-inner { max-width: 960px; margin: 0 auto; }
 
-    /* Layer 1 — positioning */
-    .sol-layer1 { text-align: center; margin-bottom: 56px; }
-    .sol-eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 2.4px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 18px;
-    }
+    /* Intro headline — centered */
     .sol-headline {
       font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
       color: var(--ink); letter-spacing: -2px; line-height: 1.08;
-      margin-bottom: 20px;
-    }
-    .sol-sub {
-      font-size: 16px; color: var(--ink2); line-height: 1.76;
-      max-width: 540px; margin: 0 auto 28px;
-    }
-    /* Trust bar */
-    .sol-trust {
-      font-size: 14px; font-weight: 600; color: var(--ink3);
-      line-height: 1.6; max-width: 520px; margin: 0 auto;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
+      text-align: center; margin-bottom: 28px;
     }
 
-    /* Layer 2 — two-column */
-    .sol-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 56px; align-items: start;
-      margin-bottom: 56px;
+    /* Intro copy block */
+    .sol-intro {
+      max-width: 620px; margin: 0 auto 56px;
+      text-align: center;
     }
-    .sol-explain p {
-      font-size: 15px; color: var(--ink2); line-height: 1.84;
+    .sol-intro p {
+      font-size: 15.5px; color: var(--ink3); line-height: 1.84;
     }
-    .sol-explain p + p { margin-top: 14px; }
-    .sol-explain strong { color: var(--ink); font-weight: 700; }
-    .sol-bullets {
-      list-style: none; margin-top: 24px; padding: 0;
-      display: flex; flex-direction: column; gap: 12px;
+    .sol-intro p + p { margin-top: 14px; }
+    .sol-intro strong { color: var(--ink); font-weight: 700; }
+
+    /* System label block — centered */
+    .sol-system {
+      text-align: center;
+      margin-bottom: 0;
     }
-    .sol-bullets li {
-      font-size: 14.5px; font-weight: 600; color: var(--ink);
-      padding-left: 20px; position: relative; line-height: 1.5;
+    .sol-system-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.4px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
     }
-    .sol-bullets li::before {
-      content: '';
-      position: absolute; left: 0; top: 8px;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent);
+    .sol-system-title {
+      font-size: clamp(24px, 2.8vw, 36px); font-weight: 900;
+      color: var(--ink); letter-spacing: -1.5px; line-height: 1.10;
+      margin-bottom: 24px;
+    }
+    .sol-system-sub {
+      font-size: 14px; color: var(--ink3); line-height: 1.7;
+      max-width: 400px; margin: 0 auto;
+    }
+    .sol-system-sub + .sol-system-sub {
+      margin-top: 24px;
     }
 
-    /* Right column — 4 system cards stacked */
-    .sol-stack {
-      display: flex; flex-direction: column; gap: 12px;
+    /* Diagram wrapper */
+    .sol-diagram { position: relative; margin-top: 48px; }
+    .sol-spine-svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: visible;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .sol-spine-line {
+      stroke: var(--border2);
+      stroke-width: 1.5;
+      fill: none;
+    }
+    .sol-connector {
+      stroke: var(--border2);
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    /* Card grid — 2x2, 25% more gap */
+    .sol-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      position: relative;
+      z-index: 2;
     }
     .sol-card {
-      padding: 22px 24px;
-      border-radius: 12px;
+      padding: 28px 28px 24px;
+      border-radius: 14px;
       background: var(--canvas);
       border: 1px solid var(--border);
     }
     .sol-card-num {
-      font-size: 10px; font-weight: 700; color: var(--accent);
+      font-size: 11px; font-weight: 700; color: var(--accent);
       letter-spacing: 1.8px; text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
     .sol-card h3 {
-      font-size: 16px; font-weight: 800; color: var(--ink);
-      letter-spacing: -0.2px; margin-bottom: 4px; line-height: 1.3;
+      font-size: 17px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.3px; margin-bottom: 6px; line-height: 1.3;
     }
     .sol-card p {
-      font-size: 13.5px; color: var(--ink3); line-height: 1.64;
+      font-size: 14px; color: var(--ink3); line-height: 1.68;
     }
     .sol-card--featured {
       background: var(--night);
-      border-color: rgba(46,125,114,0.18);
+      border-color: rgba(46,125,114,0.20);
     }
     .sol-card--featured .sol-card-num { color: var(--accent3); }
     .sol-card--featured h3 { color: #fff; }
-    .sol-card--featured p { color: rgba(255,255,255,0.46); }
+    .sol-card--featured p { color: rgba(255,255,255,0.48); }
     .sol-card--featured .sol-card-badge {
       display: inline-block; font-size: 10px; font-weight: 700;
       letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--accent3); background: rgba(70,165,148,0.10);
-      padding: 4px 11px; border-radius: 6px; margin-top: 8px;
+      padding: 5px 12px; border-radius: 6px; margin-top: 12px;
     }
 
-    /* Layer 3 — transition */
-    .sol-transition {
-      text-align: center;
-      padding-top: 48px;
-      border-top: 1px solid var(--border);
+    /* Bottom */
+    .sol-bottom {
+      text-align: center; margin-top: 48px;
     }
-    .sol-transition-text {
-      font-size: 15px; font-weight: 500; color: var(--ink3);
-      line-height: 1.7; max-width: 480px; margin: 0 auto;
+    .sol-bottom-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .sol-bottom-text {
+      font-size: clamp(24px, 3.2vw, 40px); font-weight: 900;
+      color: var(--ink); letter-spacing: -1.8px; line-height: 1.14;
+      max-width: 640px; margin: 0 auto;
     }
 
     /* ══ CTA ══ */
@@ -523,7 +543,8 @@
         padding-left: 24px; padding-right: 24px;
         padding-top: 64px; padding-bottom: 64px;
       }
-      .sol-grid { grid-template-columns: 1fr; gap: 40px; }
+      .sol-cards { grid-template-columns: 1fr; }
+      .sol-spine-svg { display: none; }
       .cta-buttons { flex-direction: column; }
       footer { padding: 20px 24px; }
     }
@@ -650,60 +671,60 @@
   </div>
 </section>
 
-<!-- ══ SOLUTION ══ -->
+<!-- ══ SOLUTION — system ══ -->
 <section id="oplossing">
   <div class="sol-inner">
 
-    <!-- Layer 1 — Positioning -->
-    <div class="sol-layer1">
-      <p class="sol-eyebrow reveal">Wat ik voor je doe</p>
-      <h2 class="sol-headline reveal">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
-      <p class="sol-sub reveal">Niet alleen een mooie website — maar een compleet systeem dat zorgt voor zichtbaarheid, vertrouwen en resultaat.</p>
-      <p class="sol-trust reveal">FlowEdge is een compacte methode waarmee lokale bedrijven online sterk en kloppend worden neergezet.</p>
+    <!-- Headline -->
+    <h2 class="sol-headline reveal">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
+
+    <!-- Intro copy -->
+    <div class="sol-intro reveal">
+      <p>De meeste websites zien er oké uit — maar doen niets voor je. Geen koppeling met Google, niet geoptimaliseerd voor mobiel, geen technische basis om gevonden te worden.</p>
+      <p><strong>Ik bouw websites die onder de motorkap alles doen om jou zichtbaar te maken — zonder dat je duizenden euro's kwijt bent aan advertenties.</strong></p>
     </div>
 
-    <!-- Layer 2 — Two-column explanation -->
-    <div class="sol-grid">
+    <!-- System label -->
+    <div class="sol-system reveal">
+      <p class="sol-system-eyebrow">Het systeem</p>
+      <h3 class="sol-system-title">Vier pijlers. Eén doel.</h3>
+      <p class="sol-system-sub">Elke stap bouwt voort op de vorige.</p>
+      <p class="sol-system-sub">Samen vormen ze een complete online aanwezigheid.</p>
+    </div>
 
-      <div class="sol-explain reveal">
-        <p>De meeste websites zien er oké uit — maar doen niets voor je. Geen koppeling met Google, niet geoptimaliseerd voor mobiel, geen technische basis om gevonden te worden.</p>
-        <p><strong>Ik bouw websites die onder de motorkap alles doen om jou zichtbaar te maken — zonder dat je duizenden euro's kwijt bent aan advertenties.</strong></p>
-        <ul class="sol-bullets">
-          <li>Vindbaar wanneer mensen actief zoeken</li>
-          <li>Sterk op mobiel, waar de meeste bezoekers zitten</li>
-          <li>Technisch gebouwd om vertrouwen op te wekken</li>
-        </ul>
-      </div>
+    <!-- Diagram: spine + connectors + cards -->
+    <div class="sol-diagram" id="solDiagram">
+      <svg class="sol-spine-svg" id="solSpine"></svg>
 
-      <div class="sol-stack">
-        <div class="sol-card">
+      <div class="sol-cards" id="solCards">
+        <div class="sol-card" data-card="1">
           <div class="sol-card-num">01 — Design</div>
           <h3>Een strakke, moderne website</h3>
           <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
         </div>
-        <div class="sol-card">
+        <div class="sol-card" data-card="2">
           <div class="sol-card-num">02 — Mobiel</div>
           <h3>Volledig geoptimaliseerd voor mobiel</h3>
           <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
         </div>
-        <div class="sol-card">
+        <div class="sol-card" data-card="3">
           <div class="sol-card-num">03 — Snelheid</div>
           <h3>Snelle laadtijden en een soepele ervaring</h3>
           <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
         </div>
-        <div class="sol-card sol-card--featured">
+        <div class="sol-card sol-card--featured" data-card="4">
           <div class="sol-card-num">04 — Google</div>
           <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
           <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
           <span class="sol-card-badge">Kern van het systeem</span>
         </div>
       </div>
-
     </div>
 
-    <!-- Layer 3 — Transition -->
-    <div class="sol-transition reveal">
-      <p class="sol-transition-text">Elke stap bouwt voort op de vorige — samen vormen ze een complete online basis.</p>
+    <!-- Bottom -->
+    <div class="sol-bottom reveal">
+      <p class="sol-bottom-label">De kern</p>
+      <p class="sol-bottom-text">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
     </div>
 
   </div>
@@ -820,6 +841,136 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
+  /* ── Solution — scroll-driven spine + connectors ── */
+  (function () {
+    function init() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(init, 60);
+        return;
+      }
+      gsap.registerPlugin(ScrollTrigger);
+
+      var diagram = document.getElementById('solDiagram');
+      var svg = document.getElementById('solSpine');
+      var cards = document.querySelectorAll('#solCards .sol-card');
+      if (!diagram || !svg || cards.length < 4) return;
+
+      var svgNS = 'http://www.w3.org/2000/svg';
+      var allPaths = [];
+
+      function build() {
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        allPaths = [];
+
+        var dRect = diagram.getBoundingClientRect();
+        var cardsEl = document.getElementById('solCards');
+        var cRect = cardsEl.getBoundingClientRect();
+        var w = dRect.width;
+        var h = cRect.bottom - dRect.top;
+        var cx = w / 2;
+
+        svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+        svg.style.width = w + 'px';
+        svg.style.height = h + 'px';
+        svg.style.left = '0';
+        svg.style.top = '0';
+
+        /* For each card: build a path from spine center down to card center-Y,
+           then horizontally to the card edge */
+        var pathData = [];
+        for (var i = 0; i < cards.length; i++) {
+          var cr = cards[i].getBoundingClientRect();
+          var cardMidY = (cr.top + cr.height / 2) - dRect.top;
+          var isLeft = i % 2 === 0;
+          var cardEdgeX = isLeft ? (cr.right - dRect.left + 1) : (cr.left - dRect.left - 1);
+          pathData.push({ y: cardMidY, ex: cardEdgeX });
+        }
+
+        /* Sort by Y to draw spine in order */
+        var sortedByY = pathData.map(function (d, i) { return { idx: i, y: d.y, ex: d.ex }; });
+        sortedByY.sort(function (a, b) { return a.y - b.y; });
+
+        /* Build one continuous path: vertical spine segments + horizontal branches */
+        var prevY = 0;
+        for (var j = 0; j < sortedByY.length; j++) {
+          var item = sortedByY[j];
+
+          /* Vertical segment from prevY down to this card's Y */
+          if (item.y > prevY) {
+            var vPath = document.createElementNS(svgNS, 'path');
+            vPath.setAttribute('d', 'M ' + cx + ' ' + prevY + ' L ' + cx + ' ' + item.y);
+            vPath.setAttribute('class', 'sol-spine-line');
+            var vLen = item.y - prevY;
+            vPath.style.strokeDasharray = vLen;
+            vPath.style.strokeDashoffset = vLen;
+            svg.appendChild(vPath);
+            allPaths.push({ el: vPath, len: vLen, order: j * 2 });
+          }
+
+          /* Horizontal connector to card */
+          var hPath = document.createElementNS(svgNS, 'path');
+          hPath.setAttribute('d', 'M ' + cx + ' ' + item.y + ' L ' + item.ex + ' ' + item.y);
+          hPath.setAttribute('class', 'sol-connector');
+          var hLen = Math.abs(item.ex - cx);
+          hPath.style.strokeDasharray = hLen;
+          hPath.style.strokeDashoffset = hLen;
+          svg.appendChild(hPath);
+          allPaths.push({ el: hPath, len: hLen, order: j * 2 + 1 });
+
+          prevY = item.y;
+        }
+
+        /* Final vertical segment to bottom */
+        if (prevY < h) {
+          var vLast = document.createElementNS(svgNS, 'path');
+          vLast.setAttribute('d', 'M ' + cx + ' ' + prevY + ' L ' + cx + ' ' + h);
+          vLast.setAttribute('class', 'sol-spine-line');
+          var vLastLen = h - prevY;
+          vLast.style.strokeDasharray = vLastLen;
+          vLast.style.strokeDashoffset = vLastLen;
+          svg.appendChild(vLast);
+          allPaths.push({ el: vLast, len: vLastLen, order: sortedByY.length * 2 });
+        }
+
+        /* Compute total length for scroll mapping */
+        var totalLen = 0;
+        allPaths.forEach(function (p) { totalLen += p.len; });
+
+        /* Store cumulative offsets */
+        var cum = 0;
+        allPaths.forEach(function (p) {
+          p.start = cum / totalLen;
+          cum += p.len;
+          p.end = cum / totalLen;
+        });
+      }
+
+      build();
+
+      /* Scroll-driven draw — 1:1 with scroll, no lag */
+      ScrollTrigger.create({
+        trigger: diagram,
+        start: 'top 80%',
+        end: 'bottom 30%',
+        scrub: 0,
+        onUpdate: function (self) {
+          var p = self.progress;
+          for (var i = 0; i < allPaths.length; i++) {
+            var seg = allPaths[i];
+            var segP = Math.max(0, Math.min(1, (p - seg.start) / (seg.end - seg.start)));
+            seg.el.style.strokeDashoffset = seg.len * (1 - segP);
+          }
+        }
+      });
+
+      var rt;
+      window.addEventListener('resize', function () {
+        clearTimeout(rt);
+        rt = setTimeout(function () { build(); ScrollTrigger.refresh(); }, 200);
+      });
+    }
+    init();
+  })();
 </script>
 
 </body>
