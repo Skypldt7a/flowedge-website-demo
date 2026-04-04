@@ -860,9 +860,10 @@
 
       var grid = document.getElementById('solGrid');
       var container = document.getElementById('solLines');
+      var systemTitle = document.querySelector('.sol-system-title');
       var systemLabel = document.querySelector('.sol-system-label');
       var cards = document.querySelectorAll('#solStack .sol-card');
-      if (!grid || !container || !systemLabel || cards.length < 4) return;
+      if (!grid || !container || !systemTitle || !systemLabel || cards.length < 4) return;
 
       /* Create SVG */
       var svgNS = 'http://www.w3.org/2000/svg';
@@ -881,14 +882,20 @@
         dots = [];
 
         var gridRect = grid.getBoundingClientRect();
-        var labelRect = systemLabel.getBoundingClientRect();
+        var titleRect = systemTitle.getBoundingClientRect();
 
-        /* Start point: bottom-center of system label, relative to grid */
-        var startX = (labelRect.left + labelRect.width / 2) - gridRect.left;
-        var startY = labelRect.bottom - gridRect.top + 12;
+        /* "Vier pijlers." is the first line, "Eén doel." is the second line.
+           The title has line-height ~1.10, so the break between lines is at ~50% height.
+           Start X: just after "Vier pijlers." text — right edge of title + small offset
+           Start Y: vertically between the two lines = titleRect.top + titleRect.height * 0.5 */
+        var startX = (titleRect.right + 8) - gridRect.left;
+        var startY = (titleRect.top + titleRect.height * 0.48) - gridRect.top;
 
-        /* Horizontal trunk extends right toward the cards column */
-        var midX = gridRect.width * 0.5; /* center of grid = column gap area */
+        /* Shift 7% left from where it would naturally be */
+        startX -= gridRect.width * 0.07;
+
+        /* Horizontal trunk — column gap area */
+        var midX = gridRect.width * 0.5;
 
         for (var i = 0; i < cards.length; i++) {
           var cardRect = cards[i].getBoundingClientRect();
@@ -924,19 +931,19 @@
 
       buildPaths();
 
-      /* Scroll animation */
+      /* Scroll animation — 30% faster completion (end earlier) */
       ScrollTrigger.create({
-        trigger: systemLabel,
-        start: 'bottom 85%',
-        end: 'bottom 15%',
-        scrub: 0.5,
+        trigger: systemTitle,
+        start: 'center 90%',
+        end: 'center 40%',
+        scrub: 0.4,
         onUpdate: function (self) {
           var p = self.progress; /* 0 → 1 */
 
           for (var i = 0; i < paths.length; i++) {
-            /* Stagger: each line starts at i*0.15 and completes by i*0.15 + 0.55 */
-            var lineStart = i * 0.15;
-            var lineEnd = lineStart + 0.55;
+            /* Stagger: each line starts at i*0.12 and completes by i*0.12 + 0.40 (30% faster) */
+            var lineStart = i * 0.12;
+            var lineEnd = lineStart + 0.40;
             var lineP = Math.max(0, Math.min(1, (p - lineStart) / (lineEnd - lineStart)));
             /* Ease */
             lineP = lineP * lineP * (3 - 2 * lineP);
