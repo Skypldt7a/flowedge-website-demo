@@ -26,6 +26,8 @@
     "serviceType": "Webdesign en online marketing voor vakmensen"
   }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -217,6 +219,29 @@
     .pain-headline {
       font-size: clamp(34px, 4.2vw, 54px); font-weight: 900;
       color: var(--ink); letter-spacing: -2.5px; line-height: 1.06;
+    }
+
+    /* ── Scroll video ── */
+    .pain-video-wrap {
+      margin-top: 40px;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      will-change: transform, opacity, clip-path;
+      clip-path: inset(12% 12% 12% 12% round 12px);
+      opacity: 0.4;
+      transform: scale(0.92);
+      transition: box-shadow 0.4s ease;
+    }
+    .pain-video-wrap.is-open {
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    }
+    .pain-video {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
     }
     .pain-text { font-size: 15.5px; color: var(--ink2); line-height: 1.84; }
     .pain-text p + p { margin-top: 18px; }
@@ -464,6 +489,7 @@
       .over-foto { max-width: 240px; }
       .pain-top { grid-template-columns: 1fr; gap: 48px; }
       .pain-left { position: relative; top: 0; }
+      .pain-video-wrap { margin-top: 32px; }
     }
     @media (max-width: 768px) {
       nav { padding: 0 24px; height: 60px; }
@@ -556,6 +582,11 @@
       <div class="pain-left fade-up">
         <span class="eyebrow">Herken je dit?</span>
         <h2 class="pain-headline">Je verliest klanten<br>zonder dat je het<br>doorhebt.</h2>
+        <div class="pain-video-wrap" id="painVideo">
+          <video class="pain-video" muted playsinline preload="auto">
+            <source src="Flow%20edge%20video%20animation%20.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
       <div class="pain-right fade-up" data-delay="120">
         <div class="pain-text">
@@ -799,6 +830,63 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -48px 0px' });
 
     cards.forEach(function (c) { obs.observe(c); });
+  })();
+
+  /* ── Scroll-driven video reveal ── */
+  (function () {
+    function initScrollVideo() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(initScrollVideo, 60);
+        return;
+      }
+      gsap.registerPlugin(ScrollTrigger);
+
+      var wrap = document.getElementById('painVideo');
+      if (!wrap) return;
+      var video = wrap.querySelector('video');
+      if (!video) return;
+
+      /* Wait until video metadata is loaded */
+      function setup() {
+        var duration = video.duration || 5;
+
+        /* Reveal animation: clip-path opens, scale goes to 1, opacity to 1 */
+        gsap.to(wrap, {
+          clipPath: 'inset(0% 0% 0% 0% round 16px)',
+          scale: 1,
+          opacity: 1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: wrap,
+            start: 'top 85%',
+            end: 'top 25%',
+            scrub: 0.6,
+            onEnter: function () { wrap.classList.add('is-open'); },
+            onLeaveBack: function () { wrap.classList.remove('is-open'); }
+          }
+        });
+
+        /* Scrub video playback to scroll position */
+        ScrollTrigger.create({
+          trigger: wrap,
+          start: 'top 60%',
+          end: 'bottom 20%',
+          scrub: 0.3,
+          onUpdate: function (self) {
+            if (video.readyState >= 2) {
+              video.currentTime = self.progress * duration;
+            }
+          }
+        });
+      }
+
+      if (video.readyState >= 1) {
+        setup();
+      } else {
+        video.addEventListener('loadedmetadata', setup);
+      }
+    }
+    initScrollVideo();
   })();
 </script>
 
