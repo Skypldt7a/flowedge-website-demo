@@ -364,55 +364,69 @@
     }
     .sol-inner { max-width: 960px; margin: 0 auto; }
 
-    /* Top block — centered */
-    .sol-top {
+    /* Intro headline — centered */
+    .sol-headline {
+      font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.08;
+      text-align: center; margin-bottom: 28px;
+    }
+
+    /* Intro copy block */
+    .sol-intro {
+      max-width: 620px; margin: 0 auto 56px;
+      text-align: center;
+    }
+    .sol-intro p {
+      font-size: 15.5px; color: var(--ink3); line-height: 1.84;
+    }
+    .sol-intro p + p { margin-top: 14px; }
+    .sol-intro strong { color: var(--ink); font-weight: 700; }
+
+    /* System label block — centered */
+    .sol-system {
       text-align: center;
       margin-bottom: 0;
     }
-    .sol-top-eyebrow {
+    .sol-system-eyebrow {
       font-size: 11px; font-weight: 700; letter-spacing: 2.4px;
       text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
     }
-    .sol-top-title {
-      font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.08;
-      margin-bottom: 12px;
+    .sol-system-title {
+      font-size: clamp(24px, 2.8vw, 36px); font-weight: 900;
+      color: var(--ink); letter-spacing: -1.5px; line-height: 1.10;
+      margin-bottom: 10px;
     }
-    .sol-top-sub {
-      font-size: 15px; color: var(--ink3); line-height: 1.7;
-      max-width: 440px; margin: 0 auto;
+    .sol-system-sub {
+      font-size: 14px; color: var(--ink3); line-height: 1.7;
+      max-width: 400px; margin: 0 auto;
     }
 
-    /* Spine + connectors SVG */
-    .sol-diagram {
-      position: relative;
-      padding: 0;
-    }
+    /* Diagram wrapper */
+    .sol-diagram { position: relative; }
     .sol-spine-svg {
       position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 1px; height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       overflow: visible;
       pointer-events: none;
       z-index: 1;
     }
     .sol-spine-line {
       stroke: var(--border2);
-      stroke-width: 1;
+      stroke-width: 1.5;
       fill: none;
     }
     .sol-connector {
       stroke: var(--border2);
-      stroke-width: 1;
+      stroke-width: 1.5;
       fill: none;
     }
 
-    /* Card grid — 2x2 */
+    /* Card grid — 2x2, 25% more gap */
     .sol-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 25px;
       position: relative;
       z-index: 2;
     }
@@ -421,13 +435,6 @@
       border-radius: 14px;
       background: var(--canvas);
       border: 1px solid var(--border);
-      opacity: 0;
-      transform: translateY(12px);
-      transition: none;
-    }
-    .sol-card.is-visible {
-      opacity: 1;
-      transform: translateY(0);
     }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
@@ -441,7 +448,6 @@
     .sol-card p {
       font-size: 14px; color: var(--ink3); line-height: 1.68;
     }
-    /* Featured card — 04 Google */
     .sol-card--featured {
       background: var(--night);
       border-color: rgba(46,125,114,0.20);
@@ -456,10 +462,9 @@
       padding: 5px 12px; border-radius: 6px; margin-top: 12px;
     }
 
-    /* Bottom conclusion */
+    /* Bottom */
     .sol-bottom {
-      text-align: center;
-      margin-top: 56px;
+      text-align: center; margin-top: 56px;
     }
     .sol-bottom-label {
       font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
@@ -537,7 +542,6 @@
       }
       .sol-cards { grid-template-columns: 1fr; }
       .sol-spine-svg { display: none; }
-      .sol-card { opacity: 1; transform: none; }
       .cta-buttons { flex-direction: column; }
       footer { padding: 20px 24px; }
     }
@@ -668,16 +672,25 @@
 <section id="oplossing">
   <div class="sol-inner">
 
-    <!-- Top block -->
-    <div class="sol-top" id="solTop">
-      <p class="sol-top-eyebrow">Het systeem</p>
-      <h2 class="sol-top-title">Vier pijlers. Eén doel.</h2>
-      <p class="sol-top-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
+    <!-- Headline -->
+    <h2 class="sol-headline reveal">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
+
+    <!-- Intro copy -->
+    <div class="sol-intro reveal">
+      <p>De meeste websites zien er oké uit — maar doen niets voor je. Geen koppeling met Google, niet geoptimaliseerd voor mobiel, geen technische basis om gevonden te worden.</p>
+      <p><strong>Ik bouw websites die onder de motorkap alles doen om jou zichtbaar te maken — zonder dat je duizenden euro's kwijt bent aan advertenties.</strong></p>
+    </div>
+
+    <!-- System label -->
+    <div class="sol-system reveal">
+      <p class="sol-system-eyebrow">Het systeem</p>
+      <h3 class="sol-system-title">Vier pijlers. Eén doel.</h3>
+      <p class="sol-system-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
     </div>
 
     <!-- Diagram: spine + connectors + cards -->
     <div class="sol-diagram" id="solDiagram">
-      <svg class="sol-spine-svg" id="solSpine" viewBox="0 0 1 1" preserveAspectRatio="none"></svg>
+      <svg class="sol-spine-svg" id="solSpine"></svg>
 
       <div class="sol-cards" id="solCards">
         <div class="sol-card" data-card="1">
@@ -704,9 +717,9 @@
       </div>
     </div>
 
-    <!-- Bottom block -->
-    <div class="sol-bottom" id="solBottom">
-      <p class="sol-bottom-label">De kern van het systeem</p>
+    <!-- Bottom -->
+    <div class="sol-bottom reveal">
+      <p class="sol-bottom-label">De kern</p>
       <p class="sol-bottom-text">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
     </div>
 
@@ -824,144 +837,135 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Solution system — one-time reveal animation ── */
+  /* ── Solution — scroll-driven spine + connectors ── */
   (function () {
-    var section = document.getElementById('oplossing');
-    var top = document.getElementById('solTop');
-    var diagram = document.getElementById('solDiagram');
-    var spine = document.getElementById('solSpine');
-    var cards = document.querySelectorAll('#solCards .sol-card');
-    var bottom = document.getElementById('solBottom');
-    if (!section || !top || !diagram || !spine || !cards.length || !bottom) return;
-
-    var played = false;
-
-    /* Build spine + connector SVG */
-    var svgNS = 'http://www.w3.org/2000/svg';
-
-    function buildSpine() {
-      while (spine.firstChild) spine.removeChild(spine.firstChild);
-
-      var dRect = diagram.getBoundingClientRect();
-      var cardsEl = document.getElementById('solCards');
-      var cRect = cardsEl.getBoundingClientRect();
-
-      /* Spine dimensions relative to diagram */
-      var spineTop = 0;
-      var spineBottom = cRect.bottom - dRect.top;
-      var centerX = dRect.width / 2;
-
-      /* Update SVG viewBox to cover full diagram area */
-      spine.setAttribute('viewBox', '0 0 ' + dRect.width + ' ' + spineBottom);
-      spine.style.width = dRect.width + 'px';
-      spine.style.height = spineBottom + 'px';
-      spine.style.left = '0';
-      spine.style.transform = 'none';
-
-      /* Vertical spine */
-      var vLine = document.createElementNS(svgNS, 'line');
-      vLine.setAttribute('x1', centerX);
-      vLine.setAttribute('y1', spineTop);
-      vLine.setAttribute('x2', centerX);
-      vLine.setAttribute('y2', spineBottom);
-      vLine.setAttribute('class', 'sol-spine-line');
-      vLine.id = 'spineVert';
-      /* Dash for draw animation */
-      var vLen = spineBottom - spineTop;
-      vLine.style.strokeDasharray = vLen;
-      vLine.style.strokeDashoffset = vLen;
-      spine.appendChild(vLine);
-
-      /* Horizontal connectors — one per card */
-      for (var i = 0; i < cards.length; i++) {
-        var cardRect = cards[i].getBoundingClientRect();
-        var cardCenterY = (cardRect.top + cardRect.height / 2) - dRect.top;
-        var isLeft = i % 2 === 0; /* 0,2 = left column; 1,3 = right column */
-        var cardEdgeX = isLeft
-          ? (cardRect.right - dRect.left + 1)
-          : (cardRect.left - dRect.left - 1);
-
-        var hLine = document.createElementNS(svgNS, 'line');
-        hLine.setAttribute('x1', centerX);
-        hLine.setAttribute('y1', cardCenterY);
-        hLine.setAttribute('x2', cardEdgeX);
-        hLine.setAttribute('y2', cardCenterY);
-        hLine.setAttribute('class', 'sol-connector');
-        hLine.setAttribute('data-idx', i);
-        var hLen = Math.abs(cardEdgeX - centerX);
-        hLine.style.strokeDasharray = hLen;
-        hLine.style.strokeDashoffset = hLen;
-        spine.appendChild(hLine);
+    function init() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(init, 60);
+        return;
       }
-    }
+      gsap.registerPlugin(ScrollTrigger);
 
-    buildSpine();
+      var diagram = document.getElementById('solDiagram');
+      var svg = document.getElementById('solSpine');
+      var cards = document.querySelectorAll('#solCards .sol-card');
+      if (!diagram || !svg || cards.length < 4) return;
 
-    /* Animation sequence — fires once */
-    function playSequence() {
-      if (played) return;
-      played = true;
+      var svgNS = 'http://www.w3.org/2000/svg';
+      var allPaths = [];
 
-      var ease = 'cubic-bezier(0.22, 1, 0.36, 1)';
+      function build() {
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        allPaths = [];
 
-      /* 1. Top text — fade in */
-      top.style.transition = 'opacity 0.5s ' + ease + ', transform 0.5s ' + ease;
-      top.style.opacity = '1';
-      top.style.transform = 'translateY(0)';
+        var dRect = diagram.getBoundingClientRect();
+        var cardsEl = document.getElementById('solCards');
+        var cRect = cardsEl.getBoundingClientRect();
+        var w = dRect.width;
+        var h = cRect.bottom - dRect.top;
+        var cx = w / 2;
 
-      /* 2. Spine draws down (starts at 150ms) */
-      var vLine = document.getElementById('spineVert');
-      setTimeout(function () {
-        vLine.style.transition = 'stroke-dashoffset 0.6s ' + ease;
-        vLine.style.strokeDashoffset = '0';
-      }, 150);
+        svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+        svg.style.width = w + 'px';
+        svg.style.height = h + 'px';
+        svg.style.left = '0';
+        svg.style.top = '0';
 
-      /* 3. Connectors appear (start at 350ms, tiny stagger) */
-      var connectors = spine.querySelectorAll('.sol-connector');
-      connectors.forEach(function (c, i) {
-        setTimeout(function () {
-          c.style.transition = 'stroke-dashoffset 0.35s ' + ease;
-          c.style.strokeDashoffset = '0';
-        }, 350 + i * 40);
+        /* For each card: build a path from spine center down to card center-Y,
+           then horizontally to the card edge */
+        var pathData = [];
+        for (var i = 0; i < cards.length; i++) {
+          var cr = cards[i].getBoundingClientRect();
+          var cardMidY = (cr.top + cr.height / 2) - dRect.top;
+          var isLeft = i % 2 === 0;
+          var cardEdgeX = isLeft ? (cr.right - dRect.left + 1) : (cr.left - dRect.left - 1);
+          pathData.push({ y: cardMidY, ex: cardEdgeX });
+        }
+
+        /* Sort by Y to draw spine in order */
+        var sortedByY = pathData.map(function (d, i) { return { idx: i, y: d.y, ex: d.ex }; });
+        sortedByY.sort(function (a, b) { return a.y - b.y; });
+
+        /* Build one continuous path: vertical spine segments + horizontal branches */
+        var prevY = 0;
+        for (var j = 0; j < sortedByY.length; j++) {
+          var item = sortedByY[j];
+
+          /* Vertical segment from prevY down to this card's Y */
+          if (item.y > prevY) {
+            var vPath = document.createElementNS(svgNS, 'path');
+            vPath.setAttribute('d', 'M ' + cx + ' ' + prevY + ' L ' + cx + ' ' + item.y);
+            vPath.setAttribute('class', 'sol-spine-line');
+            var vLen = item.y - prevY;
+            vPath.style.strokeDasharray = vLen;
+            vPath.style.strokeDashoffset = vLen;
+            svg.appendChild(vPath);
+            allPaths.push({ el: vPath, len: vLen, order: j * 2 });
+          }
+
+          /* Horizontal connector to card */
+          var hPath = document.createElementNS(svgNS, 'path');
+          hPath.setAttribute('d', 'M ' + cx + ' ' + item.y + ' L ' + item.ex + ' ' + item.y);
+          hPath.setAttribute('class', 'sol-connector');
+          var hLen = Math.abs(item.ex - cx);
+          hPath.style.strokeDasharray = hLen;
+          hPath.style.strokeDashoffset = hLen;
+          svg.appendChild(hPath);
+          allPaths.push({ el: hPath, len: hLen, order: j * 2 + 1 });
+
+          prevY = item.y;
+        }
+
+        /* Final vertical segment to bottom */
+        if (prevY < h) {
+          var vLast = document.createElementNS(svgNS, 'path');
+          vLast.setAttribute('d', 'M ' + cx + ' ' + prevY + ' L ' + cx + ' ' + h);
+          vLast.setAttribute('class', 'sol-spine-line');
+          var vLastLen = h - prevY;
+          vLast.style.strokeDasharray = vLastLen;
+          vLast.style.strokeDashoffset = vLastLen;
+          svg.appendChild(vLast);
+          allPaths.push({ el: vLast, len: vLastLen, order: sortedByY.length * 2 });
+        }
+
+        /* Compute total length for scroll mapping */
+        var totalLen = 0;
+        allPaths.forEach(function (p) { totalLen += p.len; });
+
+        /* Store cumulative offsets */
+        var cum = 0;
+        allPaths.forEach(function (p) {
+          p.start = cum / totalLen;
+          cum += p.len;
+          p.end = cum / totalLen;
+        });
+      }
+
+      build();
+
+      /* Scroll-driven draw — 1:1 with scroll, no lag */
+      ScrollTrigger.create({
+        trigger: diagram,
+        start: 'top 80%',
+        end: 'bottom 30%',
+        scrub: 0,
+        onUpdate: function (self) {
+          var p = self.progress;
+          for (var i = 0; i < allPaths.length; i++) {
+            var seg = allPaths[i];
+            var segP = Math.max(0, Math.min(1, (p - seg.start) / (seg.end - seg.start)));
+            seg.el.style.strokeDashoffset = seg.len * (1 - segP);
+          }
+        }
       });
 
-      /* 4. Cards fade in (start at 400ms, fast stagger) */
-      cards.forEach(function (card, i) {
-        setTimeout(function () {
-          card.style.transition = 'opacity 0.4s ' + ease + ', transform 0.4s ' + ease;
-          card.classList.add('is-visible');
-        }, 400 + i * 60);
+      var rt;
+      window.addEventListener('resize', function () {
+        clearTimeout(rt);
+        rt = setTimeout(function () { build(); ScrollTrigger.refresh(); }, 200);
       });
-
-      /* 5. Bottom text (start at 700ms) */
-      setTimeout(function () {
-        bottom.style.transition = 'opacity 0.5s ' + ease + ', transform 0.5s ' + ease;
-        bottom.style.opacity = '1';
-        bottom.style.transform = 'translateY(0)';
-      }, 700);
     }
-
-    /* Initial hidden state */
-    top.style.opacity = '0';
-    top.style.transform = 'translateY(16px)';
-    bottom.style.opacity = '0';
-    bottom.style.transform = 'translateY(12px)';
-
-    /* Trigger on intersection */
-    var obs = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) {
-        playSequence();
-        obs.disconnect();
-      }
-    }, { threshold: 0.15 });
-    obs.observe(section);
-
-    /* Rebuild on resize */
-    var rt;
-    window.addEventListener('resize', function () {
-      clearTimeout(rt);
-      rt = setTimeout(buildSpine, 200);
-    });
+    init();
   })();
 </script>
 
