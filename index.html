@@ -92,53 +92,49 @@
     }
     .eyebrow-light { color: var(--accent3); }
 
-    /* ══ NAV — logo only, chameleon (JS controls colors) ══ */
+    /* ══ NAV ══ */
     nav {
-      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
-      z-index: 100;
-      padding: 0 32px; height: 48px;
-      display: flex; align-items: center;
-      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-      border-radius: 100px;
-      will-change: background-color;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px; padding: 0 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(12,26,22,0.94);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .nav-logo {
-      font-size: 20px; font-weight: 800;
-      letter-spacing: -0.5px; text-decoration: none;
+    .nav-logo { font-size: 34px; font-weight: 800; color: #fff; letter-spacing: -1px; text-decoration: none; }
+    .nav-logo em { font-style: normal; color: var(--accent); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: #fff; text-decoration: none;
+      font-size: 13.5px; font-weight: 600; padding: 9px 20px;
+      border-radius: 8px; transition: background 0.2s, transform 0.15s;
     }
-    .nav-logo em { font-style: normal; }
+    .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
 
     /* ══ Buttons ══ */
     .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
+      display: inline-flex; align-items: center; gap: 9px;
       background: var(--accent); color: #fff; text-decoration: none;
-      font-size: 15px; font-weight: 700; padding: 15px 30px;
-      border-radius: 100px;
-      transition: background 0.25s, transform 0.2s;
-      white-space: nowrap;
+      font-size: 15px; font-weight: 700; padding: 14px 28px;
+      border-radius: 10px; transition: background 0.2s, transform 0.15s; white-space: nowrap;
     }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
-    .btn-primary:active { transform: translateY(0) scale(0.98); }
-    .btn-secondary {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: transparent; color: rgba(255,255,255,0.55); text-decoration: none;
-      font-size: 15px; font-weight: 600; padding: 15px 26px;
-      border-radius: 100px; border: 1px solid rgba(255,255,255,0.10);
-      transition: background 0.25s, border-color 0.25s, color 0.3s;
-      white-space: nowrap;
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.68); text-decoration: none;
+      font-size: 15px; font-weight: 600; padding: 14px 24px;
+      border-radius: 10px; border: 1px solid rgba(255,255,255,0.11);
+      transition: background 0.2s, border-color 0.2s, color 0.2s; white-space: nowrap;
     }
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.20);
-      color: #fff;
-    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); color: #fff; }
 
     /* ══ HERO ══ */
     #hero {
-      min-height: 100dvh;
+      min-height: 100vh;
       background: var(--night);
-      display: flex; align-items: center;
-      padding: 140px 64px 120px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 140px 52px 120px;
       position: relative; overflow: hidden;
     }
     #heroMesh {
@@ -148,38 +144,30 @@
     #hero::before {
       content: ''; position: absolute; inset: 0; z-index: 1;
       background:
-        linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
-      background-size: 72px 72px;
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 80px 80px;
       pointer-events: none;
     }
     #hero::after {
       content: ''; position: absolute; inset: 0; z-index: 2;
-      background: radial-gradient(ellipse 75% 65% at 30% 50%, transparent 30%, rgba(17,26,23,0.7) 100%);
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(12,26,22,0.6) 100%);
       pointer-events: none;
     }
-    .hero-inner {
-      position: relative; z-index: 3;
-      max-width: 1400px; width: 100%; margin: 0 auto;
-    }
-    .hero-content {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
+    .hero-inner { position: relative; z-index: 3; max-width: 820px; }
     .hero-h1 {
-      font-size: clamp(48px, 7.5vw, 96px);
+      font-size: clamp(52px, 8.5vw, 112px);
       font-weight: 900; color: #fff;
-      line-height: 0.96; letter-spacing: -0.04em; margin-bottom: 32px;
-      text-wrap: balance;
+      line-height: 0.98; letter-spacing: -4.5px; margin-bottom: 36px;
     }
     .hero-h1 em { font-style: normal; color: var(--accent3); }
     .hero-sub {
-      font-size: clamp(16px, 1.2vw, 18px);
-      color: rgba(255,255,255,0.42);
-      line-height: 1.8; max-width: 420px; margin: 0 auto 48px;
+      font-size: clamp(16px, 1.3vw, 18.5px);
+      color: rgba(255,255,255,0.44);
+      line-height: 1.76; max-width: 440px; margin: 0 auto 56px;
     }
-    .hero-note { font-size: 13px; color: rgba(255,255,255,0.14); font-weight: 500; }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+    .hero-note { font-size: 12.5px; color: rgba(255,255,255,0.15); }
 
     /* ══ STATS — compact modern cards ══ */
     #stats {
@@ -368,133 +356,81 @@
     }
     .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 5px; font-weight: 500; }
 
-    /* ══ SOLUTION — sticky card stack ══ */
+    /* ══ SOLUTION ══ */
     #oplossing {
-      background: var(--canvas);
-      padding: 120px 64px 60px;
-    }
-    .sol-inner { max-width: 1400px; margin: 0 auto; }
-    .sol-header {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 48px; margin-bottom: 64px; align-items: end;
-    }
-    .sol-title {
-      font-size: clamp(30px, 3.5vw, 48px); font-weight: 900;
-      color: var(--ink); letter-spacing: -0.035em; line-height: 1.06;
-      text-wrap: balance;
-    }
-    .sol-header-text {
-      font-size: 15px; color: var(--ink3); line-height: 1.8; max-width: 440px;
-    }
-    .sol-header-text strong { color: var(--ink); font-weight: 700; }
-
-    /* Sticky stack container */
-    .sol-stack {
-      position: relative;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    .sol-sticky-card {
-      position: sticky;
-      border-radius: var(--radius-lg);
-      padding: 44px 40px;
-      border: 1px solid var(--border);
-      will-change: transform;
-      transition: box-shadow 0.4s var(--ease-out);
-    }
-    .sol-sticky-card:hover {
-      box-shadow: 0 20px 48px -12px var(--shadow);
-    }
-    /* Double-bezel */
-    .sol-sticky-card::after {
-      content: '';
-      position: absolute; inset: 4px;
-      border-radius: calc(var(--radius-lg) - 4px);
-      border: 1px solid rgba(255,255,255,0.6);
-      pointer-events: none;
-    }
-    .sol-sticky-card--light {
       background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 48px 52px 56px;
     }
-    .sol-sticky-card--dark {
-      background: var(--night);
-      border-color: rgba(70,165,148,0.15);
+    .sol-inner { max-width: 1100px; margin: 0 auto; }
+    .sol-header { max-width: 640px; margin-bottom: 28px; }
+    .sol-title {
+      font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 20px;
     }
-    .sol-sticky-card--dark::after {
-      border-color: rgba(255,255,255,0.04);
-    }
-    .sol-sticky-card--dark:hover {
-      box-shadow: 0 24px 56px -12px rgba(46,125,114,0.14);
-      border-color: var(--accent);
-    }
-
-    .sol-card-inner {
+    .sol-grid {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 40px; align-items: center;
+      gap: 48px; align-items: start;
     }
+    .sol-left { position: sticky; top: 88px; }
+    .sol-intro-text { font-size: 15.5px; color: var(--ink2); line-height: 1.84; }
+    .sol-intro-text p + p { margin-top: 12px; }
+    .sol-intro-text strong { color: var(--ink); font-weight: 700; }
+    .sol-system-label { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .sol-system-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .sol-system-title {
+      font-size: clamp(24px, 2.6vw, 36px); font-weight: 800;
+      color: var(--ink); letter-spacing: -1.5px; line-height: 1.10; margin-bottom: 14px;
+    }
+    .sol-system-sub { font-size: 14px; color: var(--ink3); line-height: 1.72; }
+    .sol-progress { display: flex; gap: 8px; margin-top: 20px; }
+    .sol-pip { flex: 1; height: 3px; border-radius: 2px; background: var(--border); transition: background 0.5s; }
+    .sol-pip.active { background: var(--accent); }
+    .sol-stack { display: flex; flex-direction: column; gap: 14px; }
+    .sol-card {
+      padding: 26px 28px; border-radius: 16px;
+      background: var(--canvas); border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      opacity: 0; transform: translateY(24px) scale(0.98);
+      transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.6s cubic-bezier(0.22,1,0.36,1), border-color 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .sol-card.revealed { opacity: 1; transform: translateY(0) scale(1); }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
-      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;
     }
-    .sol-card-title {
-      font-size: clamp(22px, 2.2vw, 28px); font-weight: 800;
-      letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 12px;
+    .sol-card h3 {
+      font-size: 17px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.3px; margin-bottom: 4px; line-height: 1.28;
     }
-    .sol-sticky-card--light .sol-card-title { color: var(--ink); }
-    .sol-sticky-card--dark .sol-card-title { color: #fff; }
-    .sol-card-desc {
-      font-size: 15px; line-height: 1.72;
+    .sol-card p { font-size: 14px; color: var(--ink3); line-height: 1.64; }
+    .sol-card.sol-featured {
+      background: var(--night); border-color: var(--accent2); padding: 28px 30px;
     }
-    .sol-sticky-card--light .sol-card-desc { color: var(--ink3); }
-    .sol-sticky-card--dark .sol-card-desc { color: rgba(255,255,255,0.45); }
-    .sol-sticky-card--dark .sol-card-num { color: var(--accent3); }
-
-    /* Visual side of sticky card */
-    .sol-card-visual {
-      display: flex; align-items: center; justify-content: center;
-      min-height: 180px;
-      border-radius: calc(var(--radius-lg) - 8px);
-      position: relative;
+    .sol-card.sol-featured.revealed {
+      border-color: var(--accent);
+      box-shadow: 0 12px 40px rgba(46,125,114,0.14), 0 0 0 1px rgba(70,165,148,0.08);
     }
-    .sol-sticky-card--light .sol-card-visual {
-      background: var(--canvas);
-      border: 1px solid var(--border);
+    .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
+    .sol-card.sol-featured h3 {
+      color: #fff; font-size: clamp(17px, 1.8vw, 20px);
+      letter-spacing: -0.4px; margin-bottom: 6px;
     }
-    .sol-sticky-card--dark .sol-card-visual {
-      background: rgba(70,165,148,0.06);
-      border: 1px solid rgba(70,165,148,0.12);
-    }
-
-    /* Visual icon/illustration inside */
-    .sol-visual-icon {
-      width: 64px; height: 64px;
-      border-radius: 16px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .sol-sticky-card--light .sol-visual-icon {
-      background: rgba(46,125,114,0.08);
-      color: var(--accent);
-    }
-    .sol-sticky-card--dark .sol-visual-icon {
-      background: rgba(70,165,148,0.12);
-      color: var(--accent3);
-    }
-
-    .sol-featured-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    .sol-card.sol-featured p { color: rgba(255,255,255,0.50); font-size: 14px; line-height: 1.68; }
+    .sol-card.sol-featured .sol-card-badge {
+      display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
       text-transform: uppercase; color: var(--accent3);
-      background: rgba(70,165,148,0.10);
-      padding: 6px 14px; border-radius: 100px;
-      margin-top: 16px;
+      background: rgba(70,165,148,0.12); padding: 5px 12px; border-radius: 6px; margin-top: 10px;
     }
-
-    .sol-conclusion {
-      margin-top: 80px; text-align: center;
-    }
+    .sol-conclusion { padding: 48px 0 0; text-align: center; }
     .sol-conclusion-text {
-      font-size: clamp(24px, 3vw, 40px); font-weight: 900;
-      color: var(--ink); letter-spacing: -0.03em; line-height: 1.12;
+      font-size: clamp(24px, 3.4vw, 42px); font-weight: 900;
+      color: var(--ink); letter-spacing: -1.8px; line-height: 1.14;
+      max-width: 700px; margin: 0 auto;
     }
 
     /* ══ CTA ══ */
@@ -542,62 +478,74 @@
 
     /* ══ RESPONSIVE ══ */
     @media (max-width: 1060px) {
+      .sol-grid { grid-template-columns: 1fr; gap: 32px; }
+      .sol-left { position: relative; top: 0; }
+      .sol-card { opacity: 1; transform: none; }
+      .sol-progress { display: none; }
+      .over-inner { grid-template-columns: 1fr; gap: 40px; }
+      .over-foto-wrap { position: relative; top: 0; max-width: 260px; }
       .pain-grid { grid-template-columns: 1fr; gap: 48px; }
       .pain-left { position: relative; top: 0; }
-      .pain-video-wrap { max-width: 100%; margin-bottom: 16px; }
-      .sol-header { grid-template-columns: 1fr; gap: 20px; }
-      .sol-card-inner { grid-template-columns: 1fr; gap: 20px; }
-      .sol-card-visual { min-height: 120px; }
-      .cta-inner { grid-template-columns: 1fr; gap: 36px; }
-      .over-inner { grid-template-columns: 1fr; gap: 48px; }
-      .over-foto-wrap { position: relative; top: 0; max-width: 260px; }
     }
     @media (max-width: 768px) {
-      nav { top: 12px; padding: 0 26px; height: 44px; }
-      .nav-logo { font-size: 18px; }
-      #hero { padding: 100px 24px 80px; }
-      .hero-ctas { flex-direction: column; }
-      .btn-primary, .btn-secondary { width: 100%; max-width: 300px; justify-content: center; }
+      nav { padding: 0 24px; height: 60px; }
+      #hero { padding: 110px 24px 88px; }
+      .hero-h1 { letter-spacing: -2.5px; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
       #stats { padding: 28px 24px; }
       .stats-inner { grid-template-columns: 1fr; gap: 10px; max-width: 320px; }
       .stat-card { padding: 18px; }
       #pijnpunten, #impact, #over, #oplossing, #cta {
         padding-left: 24px; padding-right: 24px;
-        padding-top: 80px; padding-bottom: 80px;
+        padding-top: 64px; padding-bottom: 64px;
       }
-      .sol-sticky-card { padding: 28px 24px; }
       .cta-buttons { flex-direction: column; }
-      footer { padding: 20px 24px; flex-direction: column; gap: 8px; }
+      footer { padding: 20px 24px; }
     }
     @media (max-width: 520px) {
       #hero { padding: 90px 20px 64px; }
       #stats, #pijnpunten, #impact, #over, #oplossing, #cta {
         padding-left: 20px; padding-right: 20px;
       }
+      .cta-buttons { flex-direction: column; align-items: center; }
+      .cta-buttons .btn-primary, .cta-buttons .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
       footer { padding: 18px 20px; }
     }
   </style>
 </head>
 <body>
 
-<!-- Nav — logo only -->
+<!-- Nav -->
 <nav>
   <a href="/" class="nav-logo">Flow<em>Edge</em></a>
+  <a href="https://wa.me/31XXXXXXXXX" class="nav-cta" target="_blank" rel="noopener">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
+    Stuur een bericht
+  </a>
 </nav>
 
 <!-- ══ HERO ══ -->
 <section id="hero">
   <canvas id="heroMesh" aria-hidden="true"></canvas>
   <div class="hero-inner">
-    <div class="hero-content">
-      <h1 class="hero-h1 reveal">
-        Veel bedrijven zijn beter dan hun online aanwezigheid <em>laat zien.</em>
-      </h1>
-      <p class="hero-sub reveal">
-        Ik zorg dat die eerste indruk klopt — zodat klanten jou vinden en kiezen.
-      </p>
-      <p class="hero-note reveal">Geen verplichtingen — gewoon een eerlijk gesprek.</p>
+    <h1 class="hero-h1 reveal">
+      Veel bedrijven zijn beter dan hun online aanwezigheid <em>laat zien.</em>
+    </h1>
+    <p class="hero-sub reveal">
+      Ik zorg dat die eerste indruk wél klopt — en klanten aantrekt in plaats van afstoot.
+    </p>
+    <div class="hero-ctas reveal">
+      <a href="https://wa.me/31XXXXXXXXX" class="btn-primary" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
+        WhatsApp mij
+      </a>
+      <a href="tel:+31XXXXXXXXX" class="btn-ghost">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.4a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.8 2.69h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Bel mij
+      </a>
     </div>
+    <p class="hero-note reveal">Geen verplichtingen — gewoon een eerlijk gesprek.</p>
   </div>
 </section>
 
@@ -694,81 +642,56 @@
   </div>
 </section>
 
-<!-- ══ SOLUTION — sticky card stack ══ -->
+<!-- ══ SOLUTION ══ -->
 <section id="oplossing">
   <div class="sol-inner">
 
     <div class="sol-header">
-      <div>
-        <span class="eyebrow reveal">Wat ik voor je doe</span>
-        <h2 class="sol-title reveal">Zo zorgt FlowEdge dat jouw online aanwezigheid werkt.</h2>
-      </div>
-      <div class="sol-header-text reveal">
-        <p>De meeste websites zien er oké uit — maar doen niets voor je. Geen koppeling met Google, niet geoptimaliseerd voor mobiel, geen technische basis om gevonden te worden.</p>
-        <p><strong>Ik bouw websites die onder de motorkap alles doen om jou zichtbaar te maken — zonder dat je duizenden euro's kwijt bent aan advertenties.</strong></p>
-      </div>
+      <span class="eyebrow reveal">Wat ik voor je doe</span>
+      <h2 class="sol-title reveal">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
     </div>
 
-    <div class="sol-stack" id="solStack">
+    <div class="sol-grid">
 
-      <div class="sol-sticky-card sol-sticky-card--light" style="top: 80px; margin-bottom: 24px;">
-        <div class="sol-card-inner">
-          <div>
-            <div class="sol-card-num">01 — Design</div>
-            <h3 class="sol-card-title">Een strakke, moderne website</h3>
-            <p class="sol-card-desc">Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
-          </div>
-          <div class="sol-card-visual">
-            <div class="sol-visual-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-            </div>
+      <div class="sol-left">
+        <div class="sol-intro-text reveal">
+          <p>De meeste websites zien er oké uit — maar doen niets voor je. Geen koppeling met Google, niet geoptimaliseerd voor mobiel, geen technische basis om gevonden te worden.</p>
+          <p><strong>Ik bouw websites die onder de motorkap alles doen om jou zichtbaar te maken — zonder dat je duizenden euro's kwijt bent aan advertenties.</strong></p>
+        </div>
+        <div class="sol-system-label reveal">
+          <p class="sol-system-eyebrow">Het systeem</p>
+          <h3 class="sol-system-title">Vier pijlers.<br>Eén doel.</h3>
+          <p class="sol-system-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
+          <div class="sol-progress">
+            <div class="sol-pip" data-pip="1"></div>
+            <div class="sol-pip" data-pip="2"></div>
+            <div class="sol-pip" data-pip="3"></div>
+            <div class="sol-pip" data-pip="4"></div>
           </div>
         </div>
       </div>
 
-      <div class="sol-sticky-card sol-sticky-card--light" style="top: 100px; margin-bottom: 24px;">
-        <div class="sol-card-inner">
-          <div>
-            <div class="sol-card-num">02 — Mobiel</div>
-            <h3 class="sol-card-title">Volledig geoptimaliseerd voor mobiel</h3>
-            <p class="sol-card-desc">Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
-          </div>
-          <div class="sol-card-visual">
-            <div class="sol-visual-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
-            </div>
-          </div>
+      <div class="sol-stack" id="solStack">
+        <div class="sol-card">
+          <div class="sol-card-num">01 — Design</div>
+          <h3>Een strakke, moderne website</h3>
+          <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
         </div>
-      </div>
-
-      <div class="sol-sticky-card sol-sticky-card--light" style="top: 120px; margin-bottom: 24px;">
-        <div class="sol-card-inner">
-          <div>
-            <div class="sol-card-num">03 — Snelheid</div>
-            <h3 class="sol-card-title">Snelle laadtijden en een soepele ervaring</h3>
-            <p class="sol-card-desc">Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
-          </div>
-          <div class="sol-card-visual">
-            <div class="sol-visual-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            </div>
-          </div>
+        <div class="sol-card">
+          <div class="sol-card-num">02 — Mobiel</div>
+          <h3>Volledig geoptimaliseerd voor mobiel</h3>
+          <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
         </div>
-      </div>
-
-      <div class="sol-sticky-card sol-sticky-card--dark" style="top: 140px; margin-bottom: 24px;">
-        <div class="sol-card-inner">
-          <div>
-            <div class="sol-card-num">04 — Google</div>
-            <h3 class="sol-card-title">Technisch gekoppeld aan het Google-ecosysteem</h3>
-            <p class="sol-card-desc">De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
-            <span class="sol-featured-badge">Kern van het systeem</span>
-          </div>
-          <div class="sol-card-visual">
-            <div class="sol-visual-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            </div>
-          </div>
+        <div class="sol-card">
+          <div class="sol-card-num">03 — Snelheid</div>
+          <h3>Snelle laadtijden en een soepele ervaring</h3>
+          <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
+        </div>
+        <div class="sol-card sol-featured">
+          <div class="sol-card-num">04 — Google</div>
+          <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
+          <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
+          <span class="sol-card-badge">Kern van het systeem</span>
         </div>
       </div>
 
@@ -854,144 +777,6 @@
     draw();
   })();
 
-  /* ── Nav chameleon — proportional color blend at section edges ── */
-  (function () {
-    var nav = document.querySelector('nav');
-    var logo = nav.querySelector('.nav-logo');
-    var logoEm = logo.querySelector('em');
-    var darkIds = ['hero', 'impact', 'cta'];
-    var sections = document.querySelectorAll('section');
-    var ticking = false;
-    var BLEND_ZONE = 24; /* px — transition happens across this distance */
-
-    /* Color definitions */
-    var LIGHT_PILL = { bg: 'rgba(255,255,255,0.92)', border: 'rgba(0,0,0,0.06)', shadow: '0 8px 32px rgba(0,0,0,0.08)' };
-    var DARK_PILL = { bg: 'rgba(17,26,23,0.88)', border: 'rgba(255,255,255,0.06)', shadow: '0 8px 32px rgba(0,0,0,0.18)' };
-
-    function lerp(a, b, t) { return a + (b - a) * t; }
-
-    function lerpColor(c1, c2, t) {
-      /* c1, c2 = [r,g,b] */
-      return 'rgb(' + Math.round(lerp(c1[0], c2[0], t)) + ',' + Math.round(lerp(c1[1], c2[1], t)) + ',' + Math.round(lerp(c1[2], c2[2], t)) + ')';
-    }
-
-    /* Colors: light pill logo = accent green, dark pill logo = white */
-    var LOGO_LIGHT = [46,125,114];  /* accent on light pill */
-    var LOGO_DARK = [255,255,255];  /* white on dark pill */
-    var EM_LIGHT = [31,94,89];      /* accent2 on light pill */
-    var EM_DARK = [70,165,148];     /* accent3 on dark pill */
-
-    function isDark(section) {
-      return darkIds.indexOf(section.id) !== -1;
-    }
-
-    function update() {
-      var navRect = nav.getBoundingClientRect();
-      var navBottom = navRect.bottom;
-      var navMid = navRect.top + navRect.height / 2;
-
-      /* Find which section the nav bottom edge is in */
-      var currentDark = false;
-      var blendT = -1; /* -1 = no blend happening */
-
-      for (var i = 0; i < sections.length; i++) {
-        var rect = sections[i].getBoundingClientRect();
-
-        /* Check if nav mid is inside this section */
-        if (navMid >= rect.top && navMid < rect.bottom) {
-          currentDark = isDark(sections[i]);
-
-          /* Check proximity to top edge (transition zone) */
-          var distFromTop = navBottom - rect.top;
-          if (distFromTop >= 0 && distFromTop < BLEND_ZONE && i > 0) {
-            /* We're in the blend zone entering this section */
-            var prevDark = isDark(sections[i - 1]);
-            if (prevDark !== currentDark) {
-              blendT = distFromTop / BLEND_ZONE;
-              /* blendT 0 = fully previous, 1 = fully current */
-              if (!currentDark) {
-                /* Going from dark to light: blend from light-pill to dark-pill */
-                blendT = blendT; /* dark-pill at t=1 */
-              }
-            }
-          }
-
-          /* Check proximity to bottom edge */
-          var distFromBottom = rect.bottom - navBottom;
-          if (distFromBottom >= 0 && distFromBottom < BLEND_ZONE && i < sections.length - 1) {
-            var nextDark = isDark(sections[i + 1]);
-            if (currentDark !== nextDark) {
-              blendT = 1 - (distFromBottom / BLEND_ZONE);
-            }
-          }
-          break;
-        }
-      }
-
-      /* Hero exception: always light pill (blends in) */
-      var isHero = false;
-      var heroRect = document.getElementById('hero').getBoundingClientRect();
-      if (navMid >= heroRect.top && navMid < heroRect.bottom) {
-        isHero = true;
-      }
-
-      /* Determine target state */
-      var wantDarkPill = !currentDark && !isHero;
-
-      if (isHero) {
-        /* Hero: green logo on dark bg — special state */
-        nav.style.background = LIGHT_PILL.bg;
-        nav.style.borderColor = LIGHT_PILL.border;
-        nav.style.boxShadow = LIGHT_PILL.shadow;
-        logo.style.color = lerpColor(LOGO_LIGHT, LOGO_LIGHT, 0);
-        logoEm.style.color = lerpColor(EM_LIGHT, EM_LIGHT, 0);
-      } else if (blendT >= 0 && blendT <= 1) {
-        /* In a blend zone — interpolate */
-        var t = Math.max(0, Math.min(1, blendT));
-        /* Ease the transition */
-        t = t * t * (3 - 2 * t); /* smoothstep */
-
-        if (currentDark) {
-          /* Currently in dark section = light pill, blending toward dark pill */
-          var bga = 'rgba(255,255,255,' + lerp(0.92, 0.0, t).toFixed(2) + ')';
-          var bgb = 'rgba(17,26,23,' + lerp(0.0, 0.88, t).toFixed(2) + ')';
-          nav.style.background = t < 0.5 ? LIGHT_PILL.bg : DARK_PILL.bg;
-          nav.style.borderColor = t < 0.5 ? LIGHT_PILL.border : DARK_PILL.border;
-          nav.style.boxShadow = t < 0.5 ? LIGHT_PILL.shadow : DARK_PILL.shadow;
-          logo.style.color = lerpColor(LOGO_LIGHT, LOGO_DARK, 1 - t);
-          logoEm.style.color = lerpColor(EM_LIGHT, EM_DARK, 1 - t);
-        } else {
-          /* Currently in light section = dark pill, blending toward light pill */
-          nav.style.background = t < 0.5 ? DARK_PILL.bg : LIGHT_PILL.bg;
-          nav.style.borderColor = t < 0.5 ? DARK_PILL.border : LIGHT_PILL.border;
-          nav.style.boxShadow = t < 0.5 ? DARK_PILL.shadow : LIGHT_PILL.shadow;
-          logo.style.color = lerpColor(LOGO_DARK, LOGO_LIGHT, 1 - t);
-          logoEm.style.color = lerpColor(EM_DARK, EM_LIGHT, 1 - t);
-        }
-      } else if (wantDarkPill) {
-        nav.style.background = DARK_PILL.bg;
-        nav.style.borderColor = DARK_PILL.border;
-        nav.style.boxShadow = DARK_PILL.shadow;
-        logo.style.color = '#fff';
-        logoEm.style.color = '#46A594';
-      } else {
-        nav.style.background = LIGHT_PILL.bg;
-        nav.style.borderColor = LIGHT_PILL.border;
-        nav.style.boxShadow = LIGHT_PILL.shadow;
-        logo.style.color = '#2E7D72';
-        logoEm.style.color = '#1F5E59';
-      }
-
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function () {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
-
-    update();
-  })();
-
   /* ── Scroll reveal ── */
   (function () {
     var obs = new IntersectionObserver(function (entries) {
@@ -1030,34 +815,25 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Sticky card scale on scroll ── */
+  /* ── Solution — card reveal ── */
   (function () {
-    function init() {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        setTimeout(init, 60);
-        return;
-      }
-      gsap.registerPlugin(ScrollTrigger);
+    var cards = document.querySelectorAll('#solStack .sol-card');
+    var pips = document.querySelectorAll('.sol-pip');
+    if (!cards.length) return;
 
-      var cards = document.querySelectorAll('#solStack .sol-sticky-card');
-      cards.forEach(function (card, i) {
-        if (i < cards.length - 1) {
-          ScrollTrigger.create({
-            trigger: card,
-            start: 'top ' + (80 + i * 20) + 'px',
-            end: 'bottom ' + (80 + i * 20) + 'px',
-            scrub: 0.3,
-            onUpdate: function (self) {
-              var scale = 1 - (self.progress * 0.04);
-              var opacity = 1 - (self.progress * 0.3);
-              card.style.transform = 'scale(' + scale + ')';
-              card.style.opacity = opacity;
-            }
-          });
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('revealed');
+          var idx = Array.from(cards).indexOf(e.target);
+          for (var i = 0; i <= idx; i++) {
+            if (pips[i]) pips[i].classList.add('active');
+          }
+          obs.unobserve(e.target);
         }
       });
-    }
-    init();
+    }, { threshold: 0.3, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(function (c) { obs.observe(c); });
   })();
 </script>
 
