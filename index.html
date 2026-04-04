@@ -92,38 +92,21 @@
     }
     .eyebrow-light { color: var(--accent3); }
 
-    /* ══ NAV — logo only, chameleon ══ */
+    /* ══ NAV — logo only, chameleon (JS controls colors) ══ */
     nav {
       position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
       z-index: 100;
       padding: 0 32px; height: 48px;
       display: flex; align-items: center;
-      background: rgba(255,255,255,0.92);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 100px;
-      border: 1px solid rgba(0,0,0,0.06);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-      transition: background 0.35s var(--ease-out), border-color 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
       will-change: background-color;
     }
-    /* State A — dark pill (lichte secties) */
-    nav.nav-dark {
-      background: rgba(17,26,23,0.88);
-      border-color: rgba(255,255,255,0.06);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    }
     .nav-logo {
-      font-size: 20px; font-weight: 800; color: var(--accent);
+      font-size: 20px; font-weight: 800;
       letter-spacing: -0.5px; text-decoration: none;
-      transition: color 0.35s var(--ease-out);
     }
-    .nav-logo em {
-      font-style: normal; color: var(--accent2);
-      transition: color 0.35s var(--ease-out);
-    }
-    /* Dark pill text */
-    nav.nav-dark .nav-logo { color: #fff; }
-    nav.nav-dark .nav-logo em { color: var(--accent3); }
+    .nav-logo em { font-style: normal; }
 
     /* ══ Buttons ══ */
     .btn-primary {
@@ -264,25 +247,24 @@
       max-width: 380px; margin-bottom: 32px;
     }
 
-    /* Video wrapper — blend with page */
-    .pain-video-wrap {
+    /* Frame-sequence animation — blend with page */
+    .pain-anim-wrap {
       position: relative;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
       max-width: 380px;
     }
-    .pain-video-wrap video {
+    .pain-anim-wrap canvas {
       display: block; width: 100%; height: auto;
       border-radius: var(--radius-lg);
       mix-blend-mode: multiply;
-      filter: contrast(1.05) saturate(0.9);
+      filter: contrast(1.08) brightness(1.04);
     }
-    /* Gradient edges to blend into background */
-    .pain-video-wrap::before {
+    /* Soft gradient edges for seamless blend */
+    .pain-anim-wrap::before {
       content: ''; position: absolute; inset: 0; z-index: 1;
+      border-radius: var(--radius-lg);
       background:
-        linear-gradient(to bottom, var(--canvas) 0%, transparent 12%, transparent 88%, var(--canvas) 100%),
-        linear-gradient(to right, var(--canvas) 0%, transparent 8%, transparent 92%, var(--canvas) 100%);
+        linear-gradient(to bottom, var(--canvas) 0%, transparent 10%, transparent 90%, var(--canvas) 100%),
+        linear-gradient(to right, var(--canvas) 0%, transparent 6%, transparent 94%, var(--canvas) 100%);
       pointer-events: none;
     }
 
@@ -671,11 +653,9 @@
         <h2 class="pain-headline reveal">Je verliest klanten zonder dat je het doorhebt.</h2>
         <p class="pain-intro reveal">Je bent goed in wat je doet. Klanten zijn tevreden, via via komt er altijd wel iets binnen. Maar online werkt het anders.</p>
 
-        <!-- Scroll-driven video -->
-        <div class="pain-video-wrap reveal">
-          <video id="scrollVideo" muted playsinline preload="auto" poster="frames/frame_0001.jpg">
-            <source src="flow%20edge%20video%20animatie%201.mp4" type="video/mp4">
-          </video>
+        <!-- Scroll-driven frame animation -->
+        <div class="pain-anim-wrap reveal">
+          <canvas id="animCanvas" width="800" height="800"></canvas>
         </div>
       </div>
 
@@ -908,38 +888,139 @@
     draw();
   })();
 
-  /* ── Nav chameleon — color inversion on section boundaries ── */
+  /* ── Nav chameleon — proportional color blend at section edges ── */
   (function () {
     var nav = document.querySelector('nav');
-    var darkSections = ['hero', 'impact', 'cta'];
+    var logo = nav.querySelector('.nav-logo');
+    var logoEm = logo.querySelector('em');
+    var darkIds = ['hero', 'impact', 'cta'];
     var sections = document.querySelectorAll('section');
     var ticking = false;
+    var BLEND_ZONE = 24; /* px — transition happens across this distance */
+
+    /* Color definitions */
+    var LIGHT_PILL = { bg: 'rgba(255,255,255,0.92)', border: 'rgba(0,0,0,0.06)', shadow: '0 8px 32px rgba(0,0,0,0.08)' };
+    var DARK_PILL = { bg: 'rgba(17,26,23,0.88)', border: 'rgba(255,255,255,0.06)', shadow: '0 8px 32px rgba(0,0,0,0.18)' };
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function lerpColor(c1, c2, t) {
+      /* c1, c2 = [r,g,b] */
+      return 'rgb(' + Math.round(lerp(c1[0], c2[0], t)) + ',' + Math.round(lerp(c1[1], c2[1], t)) + ',' + Math.round(lerp(c1[2], c2[2], t)) + ')';
+    }
+
+    /* Colors: light pill logo = accent green, dark pill logo = white */
+    var LOGO_LIGHT = [46,125,114];  /* accent on light pill */
+    var LOGO_DARK = [255,255,255];  /* white on dark pill */
+    var EM_LIGHT = [31,94,89];      /* accent2 on light pill */
+    var EM_DARK = [70,165,148];     /* accent3 on dark pill */
+
+    function isDark(section) {
+      return darkIds.indexOf(section.id) !== -1;
+    }
 
     function update() {
-      var navMid = nav.getBoundingClientRect().top + nav.offsetHeight / 2;
-      var onDark = false;
+      var navRect = nav.getBoundingClientRect();
+      var navBottom = navRect.bottom;
+      var navMid = navRect.top + navRect.height / 2;
+
+      /* Find which section the nav bottom edge is in */
+      var currentDark = false;
+      var blendT = -1; /* -1 = no blend happening */
 
       for (var i = 0; i < sections.length; i++) {
         var rect = sections[i].getBoundingClientRect();
+
+        /* Check if nav mid is inside this section */
         if (navMid >= rect.top && navMid < rect.bottom) {
-          onDark = darkSections.indexOf(sections[i].id) !== -1;
+          currentDark = isDark(sections[i]);
+
+          /* Check proximity to top edge (transition zone) */
+          var distFromTop = navBottom - rect.top;
+          if (distFromTop >= 0 && distFromTop < BLEND_ZONE && i > 0) {
+            /* We're in the blend zone entering this section */
+            var prevDark = isDark(sections[i - 1]);
+            if (prevDark !== currentDark) {
+              blendT = distFromTop / BLEND_ZONE;
+              /* blendT 0 = fully previous, 1 = fully current */
+              if (!currentDark) {
+                /* Going from dark to light: blend from light-pill to dark-pill */
+                blendT = blendT; /* dark-pill at t=1 */
+              }
+            }
+          }
+
+          /* Check proximity to bottom edge */
+          var distFromBottom = rect.bottom - navBottom;
+          if (distFromBottom >= 0 && distFromBottom < BLEND_ZONE && i < sections.length - 1) {
+            var nextDark = isDark(sections[i + 1]);
+            if (currentDark !== nextDark) {
+              blendT = 1 - (distFromBottom / BLEND_ZONE);
+            }
+          }
           break;
         }
       }
 
-      if (onDark) {
-        nav.classList.remove('nav-dark');
-      } else {
-        nav.classList.add('nav-dark');
+      /* Hero exception: always light pill (blends in) */
+      var isHero = false;
+      var heroRect = document.getElementById('hero').getBoundingClientRect();
+      if (navMid >= heroRect.top && navMid < heroRect.bottom) {
+        isHero = true;
       }
+
+      /* Determine target state */
+      var wantDarkPill = !currentDark && !isHero;
+
+      if (isHero) {
+        /* Hero: green logo on dark bg — special state */
+        nav.style.background = LIGHT_PILL.bg;
+        nav.style.borderColor = LIGHT_PILL.border;
+        nav.style.boxShadow = LIGHT_PILL.shadow;
+        logo.style.color = lerpColor(LOGO_LIGHT, LOGO_LIGHT, 0);
+        logoEm.style.color = lerpColor(EM_LIGHT, EM_LIGHT, 0);
+      } else if (blendT >= 0 && blendT <= 1) {
+        /* In a blend zone — interpolate */
+        var t = Math.max(0, Math.min(1, blendT));
+        /* Ease the transition */
+        t = t * t * (3 - 2 * t); /* smoothstep */
+
+        if (currentDark) {
+          /* Currently in dark section = light pill, blending toward dark pill */
+          var bga = 'rgba(255,255,255,' + lerp(0.92, 0.0, t).toFixed(2) + ')';
+          var bgb = 'rgba(17,26,23,' + lerp(0.0, 0.88, t).toFixed(2) + ')';
+          nav.style.background = t < 0.5 ? LIGHT_PILL.bg : DARK_PILL.bg;
+          nav.style.borderColor = t < 0.5 ? LIGHT_PILL.border : DARK_PILL.border;
+          nav.style.boxShadow = t < 0.5 ? LIGHT_PILL.shadow : DARK_PILL.shadow;
+          logo.style.color = lerpColor(LOGO_LIGHT, LOGO_DARK, 1 - t);
+          logoEm.style.color = lerpColor(EM_LIGHT, EM_DARK, 1 - t);
+        } else {
+          /* Currently in light section = dark pill, blending toward light pill */
+          nav.style.background = t < 0.5 ? DARK_PILL.bg : LIGHT_PILL.bg;
+          nav.style.borderColor = t < 0.5 ? DARK_PILL.border : LIGHT_PILL.border;
+          nav.style.boxShadow = t < 0.5 ? DARK_PILL.shadow : LIGHT_PILL.shadow;
+          logo.style.color = lerpColor(LOGO_DARK, LOGO_LIGHT, 1 - t);
+          logoEm.style.color = lerpColor(EM_DARK, EM_LIGHT, 1 - t);
+        }
+      } else if (wantDarkPill) {
+        nav.style.background = DARK_PILL.bg;
+        nav.style.borderColor = DARK_PILL.border;
+        nav.style.boxShadow = DARK_PILL.shadow;
+        logo.style.color = '#fff';
+        logoEm.style.color = '#46A594';
+      } else {
+        nav.style.background = LIGHT_PILL.bg;
+        nav.style.borderColor = LIGHT_PILL.border;
+        nav.style.boxShadow = LIGHT_PILL.shadow;
+        logo.style.color = '#2E7D72';
+        logoEm.style.color = '#1F5E59';
+      }
+
       ticking = false;
     }
 
     window.addEventListener('scroll', function () {
-      if (!ticking) {
-        requestAnimationFrame(update);
-        ticking = true;
-      }
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
     }, { passive: true });
 
     update();
@@ -983,38 +1064,60 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Scroll-driven video ── */
+  /* ── Scroll-driven frame sequence ── */
   (function () {
-    function init() {
+    var TOTAL = 146;
+    var canvas = document.getElementById('animCanvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var frames = [];
+    var loaded = 0;
+    var currentFrame = -1;
+
+    function pad(n) { return String(n).padStart(4, '0'); }
+
+    for (var i = 1; i <= TOTAL; i++) {
+      var img = new Image();
+      img.src = 'anim-frames/frame_' + pad(i) + '.jpg';
+      img.onload = function () {
+        loaded++;
+        if (loaded === 1) drawFrame(0);
+        if (loaded === TOTAL) initScroll();
+      };
+      frames.push(img);
+    }
+
+    function drawFrame(idx) {
+      if (idx === currentFrame) return;
+      var img = frames[idx];
+      if (!img || !img.complete) return;
+      currentFrame = idx;
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+    }
+
+    function initScroll() {
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        setTimeout(init, 60);
+        setTimeout(initScroll, 60);
         return;
       }
       gsap.registerPlugin(ScrollTrigger);
 
-      var video = document.getElementById('scrollVideo');
-      if (!video) return;
-
-      function setup() {
-        var duration = video.duration || 5;
-
-        ScrollTrigger.create({
-          trigger: '#pijnpunten',
-          start: 'top 50%',
-          end: 'bottom 20%',
-          scrub: 0.4,
-          onUpdate: function (self) {
-            if (video.readyState >= 2) {
-              video.currentTime = self.progress * duration;
-            }
-          }
-        });
-      }
-
-      if (video.readyState >= 1) setup();
-      else video.addEventListener('loadedmetadata', setup);
+      ScrollTrigger.create({
+        trigger: '#pijnpunten',
+        start: 'top 60%',
+        end: 'bottom 20%',
+        scrub: 0.2,
+        onUpdate: function (self) {
+          var idx = Math.min(Math.floor(self.progress * TOTAL), TOTAL - 1);
+          drawFrame(idx);
+        }
+      });
     }
-    init();
+
+    drawFrame(0);
   })();
 
   /* ── Sticky card scale on scroll ── */
