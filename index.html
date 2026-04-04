@@ -609,24 +609,27 @@
       }
       .hero-inner {
         min-height: 100dvh;
-        justify-content: center;
+        justify-content: space-between;
         align-items: stretch;
       }
       .hero-content {
         display: flex; flex-direction: column;
-        justify-content: center;
-        flex: 1;
-        padding-top: 72px;
+        justify-content: flex-end;
+        padding-top: 18dvh;
+        padding-bottom: 0;
       }
       .hero-h1 { letter-spacing: -0.03em; margin-bottom: 20px; }
       .hero-sub { margin-bottom: 0; }
       .hero-bottom {
-        padding-top: 40px;
-        padding-bottom: 36px;
-        margin-top: 0;
+        margin-top: auto;
+        padding-top: 32px;
+        padding-bottom: env(safe-area-inset-bottom, 20px);
       }
       .hero-ctas { flex-direction: column; align-items: stretch; gap: 10px; }
-      .hero-note { text-align: center; }
+      .hero-note {
+        text-align: center;
+        padding-bottom: 4px;
+      }
       .btn-primary, .btn-ghost, .btn-secondary { width: 100%; justify-content: center; }
       #stats { padding: 28px 24px; }
       .stats-inner { grid-template-columns: 1fr; gap: 10px; max-width: 320px; }
