@@ -376,7 +376,7 @@
     .sol-intro-text { font-size: 15.5px; color: var(--ink2); line-height: 1.84; }
     .sol-intro-text p + p { margin-top: 12px; }
     .sol-intro-text strong { color: var(--ink); font-weight: 700; }
-    .sol-system-label { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .sol-system-label { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
     .sol-system-eyebrow {
       font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
       text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
@@ -389,7 +389,35 @@
     .sol-progress { display: flex; gap: 8px; margin-top: 20px; }
     .sol-pip { flex: 1; height: 3px; border-radius: 2px; background: var(--border); transition: background 0.5s; }
     .sol-pip.active { background: var(--accent); }
-    .sol-stack { display: flex; flex-direction: column; gap: 14px; }
+    .sol-stack { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+
+    /* ── Flow lines SVG ── */
+    .sol-lines-wrap {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .sol-lines-wrap svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: visible;
+    }
+    .sol-flow-line {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.35;
+    }
+    .sol-flow-dot {
+      fill: var(--accent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .sol-grid { position: relative; }
     .sol-card {
       padding: 26px 28px; border-radius: 16px;
       background: var(--canvas); border: 1px solid var(--border);
@@ -635,7 +663,8 @@
       <h2 class="sol-title reveal">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
     </div>
 
-    <div class="sol-grid">
+    <div class="sol-grid" id="solGrid">
+      <div class="sol-lines-wrap" id="solLines"></div>
 
       <div class="sol-left">
         <div class="sol-intro-text reveal">
@@ -818,6 +847,120 @@
       });
     }, { threshold: 0.3, rootMargin: '0px 0px -40px 0px' });
     cards.forEach(function (c) { obs.observe(c); });
+  })();
+
+  /* ── Flow lines — scroll-driven branching lines from "Vier pijlers" to cards ── */
+  (function () {
+    function init() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(init, 60);
+        return;
+      }
+      gsap.registerPlugin(ScrollTrigger);
+
+      var grid = document.getElementById('solGrid');
+      var container = document.getElementById('solLines');
+      var systemLabel = document.querySelector('.sol-system-label');
+      var cards = document.querySelectorAll('#solStack .sol-card');
+      if (!grid || !container || !systemLabel || cards.length < 4) return;
+
+      /* Create SVG */
+      var svgNS = 'http://www.w3.org/2000/svg';
+      var svg = document.createElementNS(svgNS, 'svg');
+      svg.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;';
+      container.appendChild(svg);
+
+      /* Build paths */
+      var paths = [];
+      var dots = [];
+
+      function buildPaths() {
+        /* Clear previous */
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        paths = [];
+        dots = [];
+
+        var gridRect = grid.getBoundingClientRect();
+        var labelRect = systemLabel.getBoundingClientRect();
+
+        /* Start point: bottom-center of system label, relative to grid */
+        var startX = (labelRect.left + labelRect.width / 2) - gridRect.left;
+        var startY = labelRect.bottom - gridRect.top + 12;
+
+        /* Horizontal trunk extends right toward the cards column */
+        var midX = gridRect.width * 0.5; /* center of grid = column gap area */
+
+        for (var i = 0; i < cards.length; i++) {
+          var cardRect = cards[i].getBoundingClientRect();
+          var endX = cardRect.left - gridRect.left - 8;
+          var endY = (cardRect.top + cardRect.height * 0.5) - gridRect.top;
+
+          /* Path: start → horizontal to midX → vertical to card Y → horizontal to card */
+          var turnX = midX - 4;
+          var d = 'M ' + startX + ' ' + startY +
+                  ' L ' + turnX + ' ' + startY +
+                  ' L ' + turnX + ' ' + endY +
+                  ' L ' + endX + ' ' + endY;
+
+          var path = document.createElementNS(svgNS, 'path');
+          path.setAttribute('d', d);
+          path.setAttribute('class', 'sol-flow-line');
+          var len = path.getTotalLength();
+          path.style.strokeDasharray = len;
+          path.style.strokeDashoffset = len;
+          svg.appendChild(path);
+          paths.push({ el: path, len: len });
+
+          /* Dot at end */
+          var dot = document.createElementNS(svgNS, 'circle');
+          dot.setAttribute('cx', endX);
+          dot.setAttribute('cy', endY);
+          dot.setAttribute('r', '4');
+          dot.setAttribute('class', 'sol-flow-dot');
+          svg.appendChild(dot);
+          dots.push(dot);
+        }
+      }
+
+      buildPaths();
+
+      /* Scroll animation */
+      ScrollTrigger.create({
+        trigger: systemLabel,
+        start: 'bottom 85%',
+        end: 'bottom 15%',
+        scrub: 0.5,
+        onUpdate: function (self) {
+          var p = self.progress; /* 0 → 1 */
+
+          for (var i = 0; i < paths.length; i++) {
+            /* Stagger: each line starts at i*0.15 and completes by i*0.15 + 0.55 */
+            var lineStart = i * 0.15;
+            var lineEnd = lineStart + 0.55;
+            var lineP = Math.max(0, Math.min(1, (p - lineStart) / (lineEnd - lineStart)));
+            /* Ease */
+            lineP = lineP * lineP * (3 - 2 * lineP);
+
+            var offset = paths[i].len * (1 - lineP);
+            paths[i].el.style.strokeDashoffset = offset;
+
+            /* Show dot when line is mostly drawn */
+            dots[i].style.opacity = lineP > 0.85 ? 0.5 : 0;
+          }
+        }
+      });
+
+      /* Rebuild on resize */
+      var resizeTimer;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          buildPaths();
+          ScrollTrigger.refresh();
+        }, 200);
+      });
+    }
+    init();
   })();
 </script>
 
