@@ -394,15 +394,18 @@
     .sol-system-title {
       font-size: clamp(24px, 2.8vw, 36px); font-weight: 900;
       color: var(--ink); letter-spacing: -1.5px; line-height: 1.10;
-      margin-bottom: 10px;
+      margin-bottom: 24px;
     }
     .sol-system-sub {
       font-size: 14px; color: var(--ink3); line-height: 1.7;
       max-width: 400px; margin: 0 auto;
     }
+    .sol-system-sub + .sol-system-sub {
+      margin-top: 24px;
+    }
 
     /* Diagram wrapper */
-    .sol-diagram { position: relative; }
+    .sol-diagram { position: relative; margin-top: 48px; }
     .sol-spine-svg {
       position: absolute;
       top: 0; left: 0;
@@ -426,7 +429,7 @@
     .sol-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 25px;
+      gap: 32px;
       position: relative;
       z-index: 2;
     }
@@ -464,7 +467,7 @@
 
     /* Bottom */
     .sol-bottom {
-      text-align: center; margin-top: 56px;
+      text-align: center; margin-top: 48px;
     }
     .sol-bottom-label {
       font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
@@ -685,7 +688,8 @@
     <div class="sol-system reveal">
       <p class="sol-system-eyebrow">Het systeem</p>
       <h3 class="sol-system-title">Vier pijlers. Eén doel.</h3>
-      <p class="sol-system-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
+      <p class="sol-system-sub">Elke stap bouwt voort op de vorige.</p>
+      <p class="sol-system-sub">Samen vormen ze een complete online aanwezigheid.</p>
     </div>
 
     <!-- Diagram: spine + connectors + cards -->
