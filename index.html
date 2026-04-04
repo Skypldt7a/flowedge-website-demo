@@ -453,13 +453,17 @@
     }
     .sol-card {
       position: sticky;
+      top: 80px;
       padding: 32px 28px 28px;
       border-radius: 18px;
       background: var(--white);
       border: 1px solid var(--border);
       box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
+      margin-bottom: 60vh;
       will-change: transform, opacity;
+    }
+    .sol-card:last-child {
+      margin-bottom: 0;
     }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
@@ -750,22 +754,22 @@
 
     <!-- Sticky card stack -->
     <div class="sol-cards" id="solCards">
-      <div class="sol-card" style="top: 80px;">
+      <div class="sol-card">
         <div class="sol-card-num">01 — Design</div>
         <h3>Een strakke, moderne website</h3>
         <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
       </div>
-      <div class="sol-card" style="top: 100px;">
+      <div class="sol-card">
         <div class="sol-card-num">02 — Mobiel</div>
         <h3>Volledig geoptimaliseerd voor mobiel</h3>
         <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
       </div>
-      <div class="sol-card" style="top: 120px;">
+      <div class="sol-card">
         <div class="sol-card-num">03 — Snelheid</div>
         <h3>Snelle laadtijden en een soepele ervaring</h3>
         <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
       </div>
-      <div class="sol-card sol-card--featured" style="top: 140px;">
+      <div class="sol-card sol-card--featured">
         <div class="sol-card-num">04 — Google</div>
         <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
         <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
@@ -979,17 +983,17 @@
 
       cards.forEach(function (card, i) {
         if (i < cards.length - 1) {
-          var topVal = parseInt(card.style.top) || (80 + i * 20);
+          /* Next card is the trigger — when it approaches, current card shrinks + fades */
+          var nextCard = cards[i + 1];
           ScrollTrigger.create({
-            trigger: card,
-            start: 'top ' + topVal + 'px',
-            end: 'bottom ' + topVal + 'px',
-            scrub: 0.3,
+            trigger: nextCard,
+            start: 'top bottom',
+            end: 'top 80px',
+            scrub: true,
             onUpdate: function (self) {
-              var scale = 1 - (self.progress * 0.05);
-              var opacity = 1 - (self.progress * 0.4);
-              card.style.transform = 'scale(' + scale + ')';
-              card.style.opacity = opacity;
+              var p = self.progress;
+              card.style.transform = 'scale(' + (1 - p * 0.06) + ')';
+              card.style.opacity = 1 - p * 0.5;
             }
           });
         }
