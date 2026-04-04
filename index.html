@@ -26,8 +26,6 @@
     "serviceType": "Webdesign en online marketing voor vakmensen"
   }
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -305,22 +303,6 @@
     }
     .pain-card p {
       font-size: 14px; color: var(--ink3); line-height: 1.68;
-    }
-
-    /* Frame scroll animation */
-    .pain-animation-wrap {
-      position: relative;
-      max-width: 680px;
-      margin: 0 auto 48px;
-      border-radius: 16px;
-      overflow: hidden;
-      background: var(--warm);
-    }
-    .pain-animation-wrap canvas {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 16px;
     }
 
     /* Closing */
@@ -750,7 +732,7 @@
 
     <div class="pain-header fade-up">
       <span class="eyebrow">Herken je dit?</span>
-      <h2 class="pain-headline">Drie redenen waarom<br>je klanten misloopt.</h2>
+      <h2 class="pain-headline">3 redenen waarom kleine<br>bedrijven die regionaal werken,<br>klanten mislopen.</h2>
     </div>
 
     <div class="pain-cards">
@@ -773,11 +755,6 @@
         <p>Bezoekers beslissen binnen een paar seconden of ze blijven of weggaan. Als je website geen vertrouwen uitstraalt, ben je die bezoeker kwijt voordat het gesprek begint.</p>
       </div>
 
-    </div>
-
-    <!-- Scroll-driven 3D animation -->
-    <div class="pain-animation-wrap fade-up" data-delay="100">
-      <canvas id="frameCanvas" width="800" height="800"></canvas>
     </div>
 
     <div class="pain-closing-block fade-up">
@@ -1043,65 +1020,6 @@
     cards.forEach(function (c) { obs.observe(c); });
   })();
 
-  /* ── Frame sequence scroll animation ── */
-  (function () {
-    var TOTAL_FRAMES = 151;
-    var canvas = document.getElementById('frameCanvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var frames = [];
-    var loaded = 0;
-    var currentFrame = 0;
-
-    function pad(n) {
-      return String(n).padStart(4, '0');
-    }
-
-    /* Preload all frames */
-    for (var i = 1; i <= TOTAL_FRAMES; i++) {
-      var img = new Image();
-      img.src = 'frames/frame_' + pad(i) + '.jpg';
-      img.onload = function () {
-        loaded++;
-        if (loaded === 1) drawFrame(0);
-        if (loaded === TOTAL_FRAMES) initScroll();
-      };
-      frames.push(img);
-    }
-
-    function drawFrame(idx) {
-      var img = frames[idx];
-      if (!img || !img.complete) return;
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-    }
-
-    function initScroll() {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        setTimeout(initScroll, 60);
-        return;
-      }
-      gsap.registerPlugin(ScrollTrigger);
-
-      ScrollTrigger.create({
-        trigger: '#pijnpunten',
-        start: 'top 60%',
-        end: 'bottom 20%',
-        scrub: 0.3,
-        onUpdate: function (self) {
-          var idx = Math.min(Math.floor(self.progress * TOTAL_FRAMES), TOTAL_FRAMES - 1);
-          if (idx !== currentFrame) {
-            currentFrame = idx;
-            drawFrame(idx);
-          }
-        }
-      });
-    }
-
-    drawFrame(0);
-  })();
 </script>
 
 </body>
