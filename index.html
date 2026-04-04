@@ -450,21 +450,24 @@
       z-index: 2;
       max-width: 640px;
       margin: 0 auto;
+      padding-bottom: 160px;
     }
     .sol-card {
       position: sticky;
-      top: 80px;
-      padding: 32px 28px 28px;
-      border-radius: 18px;
+      padding: 36px 30px 30px;
+      border-radius: 20px;
       background: var(--white);
       border: 1px solid var(--border);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-      margin-bottom: 60vh;
-      will-change: transform, opacity;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+      margin-bottom: 32px;
+      min-height: 200px;
+      will-change: transform;
+      transition: transform 0.1s ease;
     }
-    .sol-card:last-child {
-      margin-bottom: 0;
-    }
+    .sol-card:nth-child(1) { top: 80px; z-index: 1; }
+    .sol-card:nth-child(2) { top: 100px; z-index: 2; }
+    .sol-card:nth-child(3) { top: 120px; z-index: 3; }
+    .sol-card:nth-child(4) { top: 140px; z-index: 4; }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
       letter-spacing: 1.8px; text-transform: uppercase;
@@ -983,17 +986,14 @@
 
       cards.forEach(function (card, i) {
         if (i < cards.length - 1) {
-          /* Next card is the trigger — when it approaches, current card shrinks + fades */
-          var nextCard = cards[i + 1];
-          ScrollTrigger.create({
-            trigger: nextCard,
-            start: 'top bottom',
-            end: 'top 80px',
-            scrub: true,
-            onUpdate: function (self) {
-              var p = self.progress;
-              card.style.transform = 'scale(' + (1 - p * 0.06) + ')';
-              card.style.opacity = 1 - p * 0.5;
+          gsap.to(card, {
+            scale: 0.95,
+            opacity: 0.6,
+            scrollTrigger: {
+              trigger: cards[i + 1],
+              start: 'top 80%',
+              end: 'top 20%',
+              scrub: true
             }
           });
         }
