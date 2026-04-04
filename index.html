@@ -366,9 +366,9 @@
     }
     .sol-bg-paths {
       position: absolute;
-      top: 0; left: 50%;
+      top: -30%; left: 50%;
       transform: translateX(-50%);
-      width: 560px; height: 400px;
+      width: 476px; height: 340px;
       pointer-events: none;
       z-index: 0;
       filter: blur(0.5px);
@@ -946,7 +946,7 @@
 
           /* Color: thicker lines (higher i) get stronger accent colors */
           var ci = colors[i % colors.length];
-          var opacity = 0.01 + i * 0.006;
+          var opacity = 0.008 + i * 0.0048;
           var width = 0.5 + i * 0.04;
 
           var path = document.createElementNS(svgNS, 'path');
@@ -994,10 +994,10 @@
         scrub: 0,
         onUpdate: function (self) {
           var progress = self.progress;
+          var slowP = progress / 3; /* 3x slower relative to scroll */
           for (var i = 0; i < allPaths.length; i++) {
             var p = allPaths[i];
-            /* Slow: progress maps directly, slight stagger per path */
-            var staggeredP = Math.max(0, Math.min(1, progress - (p.offset / p.len) * 0.08));
+            var staggeredP = Math.max(0, Math.min(1, slowP - (p.offset / p.len) * 0.08));
             /* Gentle ease */
             staggeredP = staggeredP * staggeredP * (3 - 2 * staggeredP);
             p.el.style.strokeDashoffset = p.len * (1 - staggeredP);
