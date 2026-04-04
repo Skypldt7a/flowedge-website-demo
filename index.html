@@ -356,109 +356,120 @@
     }
     .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 5px; font-weight: 500; }
 
-    /* ══ SOLUTION ══ */
+    /* ══ SOLUTION — system section ══ */
     #oplossing {
       background: var(--white);
       border-top: 1px solid var(--border);
-      padding: 48px 52px 56px;
+      padding: 96px 52px 80px;
     }
-    .sol-inner { max-width: 1100px; margin: 0 auto; }
-    .sol-header { max-width: 640px; margin-bottom: 28px; }
-    .sol-title {
-      font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
-      color: var(--ink); letter-spacing: -2px; line-height: 1.06; margin-bottom: 20px;
-    }
-    .sol-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 48px; align-items: start;
-    }
-    .sol-left { position: sticky; top: 88px; }
-    .sol-intro-text { font-size: 15.5px; color: var(--ink2); line-height: 1.84; }
-    .sol-intro-text p + p { margin-top: 12px; }
-    .sol-intro-text strong { color: var(--ink); font-weight: 700; }
-    .sol-system-label { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
-    .sol-system-eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
-    }
-    .sol-system-title {
-      font-size: clamp(24px, 2.6vw, 36px); font-weight: 800;
-      color: var(--ink); letter-spacing: -1.5px; line-height: 1.10; margin-bottom: 14px;
-    }
-    .sol-system-sub { font-size: 14px; color: var(--ink3); line-height: 1.72; }
-    .sol-progress { display: flex; gap: 8px; margin-top: 20px; }
-    .sol-pip { flex: 1; height: 3px; border-radius: 2px; background: var(--border); transition: background 0.5s; }
-    .sol-pip.active { background: var(--accent); }
-    .sol-stack { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    .sol-inner { max-width: 960px; margin: 0 auto; }
 
-    /* ── Flow lines SVG ── */
-    .sol-lines-wrap {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-      z-index: 0;
+    /* Top block — centered */
+    .sol-top {
+      text-align: center;
+      margin-bottom: 0;
     }
-    .sol-lines-wrap svg {
+    .sol-top-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.4px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+    }
+    .sol-top-title {
+      font-size: clamp(28px, 3.2vw, 44px); font-weight: 900;
+      color: var(--ink); letter-spacing: -2px; line-height: 1.08;
+      margin-bottom: 12px;
+    }
+    .sol-top-sub {
+      font-size: 15px; color: var(--ink3); line-height: 1.7;
+      max-width: 440px; margin: 0 auto;
+    }
+
+    /* Spine + connectors SVG */
+    .sol-diagram {
+      position: relative;
+      padding: 0;
+    }
+    .sol-spine-svg {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px; height: 100%;
       overflow: visible;
+      pointer-events: none;
+      z-index: 1;
     }
-    .sol-flow-line {
+    .sol-spine-line {
+      stroke: var(--border2);
+      stroke-width: 1;
       fill: none;
-      stroke: var(--accent);
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0.35;
     }
-    .sol-flow-dot {
-      fill: var(--accent);
-      opacity: 0;
-      transition: opacity 0.3s;
+    .sol-connector {
+      stroke: var(--border2);
+      stroke-width: 1;
+      fill: none;
     }
-    .sol-grid { position: relative; }
+
+    /* Card grid — 2x2 */
+    .sol-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+    }
     .sol-card {
-      padding: 26px 28px; border-radius: 16px;
-      background: var(--canvas); border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-      opacity: 0; transform: translateY(24px) scale(0.98);
-      transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1),
-                  box-shadow 0.6s cubic-bezier(0.22,1,0.36,1), border-color 0.6s cubic-bezier(0.22,1,0.36,1);
+      padding: 28px 28px 24px;
+      border-radius: 14px;
+      background: var(--canvas);
+      border: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: none;
     }
-    .sol-card.revealed { opacity: 1; transform: translateY(0) scale(1); }
+    .sol-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
-      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px;
+      letter-spacing: 1.8px; text-transform: uppercase;
+      margin-bottom: 10px;
     }
     .sol-card h3 {
       font-size: 17px; font-weight: 800; color: var(--ink);
-      letter-spacing: -0.3px; margin-bottom: 4px; line-height: 1.28;
+      letter-spacing: -0.3px; margin-bottom: 6px; line-height: 1.3;
     }
-    .sol-card p { font-size: 14px; color: var(--ink3); line-height: 1.64; }
-    .sol-card.sol-featured {
-      background: var(--night); border-color: var(--accent2); padding: 28px 30px;
+    .sol-card p {
+      font-size: 14px; color: var(--ink3); line-height: 1.68;
     }
-    .sol-card.sol-featured.revealed {
-      border-color: var(--accent);
-      box-shadow: 0 12px 40px rgba(46,125,114,0.14), 0 0 0 1px rgba(70,165,148,0.08);
+    /* Featured card — 04 Google */
+    .sol-card--featured {
+      background: var(--night);
+      border-color: rgba(46,125,114,0.20);
     }
-    .sol-card.sol-featured .sol-card-num { color: var(--accent3); }
-    .sol-card.sol-featured h3 {
-      color: #fff; font-size: clamp(17px, 1.8vw, 20px);
-      letter-spacing: -0.4px; margin-bottom: 6px;
+    .sol-card--featured .sol-card-num { color: var(--accent3); }
+    .sol-card--featured h3 { color: #fff; }
+    .sol-card--featured p { color: rgba(255,255,255,0.48); }
+    .sol-card--featured .sol-card-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--accent3); background: rgba(70,165,148,0.10);
+      padding: 5px 12px; border-radius: 6px; margin-top: 12px;
     }
-    .sol-card.sol-featured p { color: rgba(255,255,255,0.50); font-size: 14px; line-height: 1.68; }
-    .sol-card.sol-featured .sol-card-badge {
-      display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--accent3);
-      background: rgba(70,165,148,0.12); padding: 5px 12px; border-radius: 6px; margin-top: 10px;
+
+    /* Bottom conclusion */
+    .sol-bottom {
+      text-align: center;
+      margin-top: 56px;
     }
-    .sol-conclusion { padding: 48px 0 0; text-align: center; }
-    .sol-conclusion-text {
-      font-size: clamp(24px, 3.4vw, 42px); font-weight: 900;
+    .sol-bottom-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .sol-bottom-text {
+      font-size: clamp(24px, 3.2vw, 40px); font-weight: 900;
       color: var(--ink); letter-spacing: -1.8px; line-height: 1.14;
-      max-width: 700px; margin: 0 auto;
+      max-width: 640px; margin: 0 auto;
     }
 
     /* ══ CTA ══ */
@@ -506,10 +517,6 @@
 
     /* ══ RESPONSIVE ══ */
     @media (max-width: 1060px) {
-      .sol-grid { grid-template-columns: 1fr; gap: 32px; }
-      .sol-left { position: relative; top: 0; }
-      .sol-card { opacity: 1; transform: none; }
-      .sol-progress { display: none; }
       .over-inner { grid-template-columns: 1fr; gap: 40px; }
       .over-foto-wrap { position: relative; top: 0; max-width: 260px; }
       .pain-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -528,6 +535,9 @@
         padding-left: 24px; padding-right: 24px;
         padding-top: 64px; padding-bottom: 64px;
       }
+      .sol-cards { grid-template-columns: 1fr; }
+      .sol-spine-svg { display: none; }
+      .sol-card { opacity: 1; transform: none; }
       .cta-buttons { flex-direction: column; }
       footer { padding: 20px 24px; }
     }
@@ -654,64 +664,50 @@
   </div>
 </section>
 
-<!-- ══ SOLUTION ══ -->
+<!-- ══ SOLUTION — system ══ -->
 <section id="oplossing">
   <div class="sol-inner">
 
-    <div class="sol-header">
-      <span class="eyebrow reveal">Wat ik voor je doe</span>
-      <h2 class="sol-title reveal">Zo zorgt FlowEdge dat jouw online aanwezigheid wél werkt.</h2>
+    <!-- Top block -->
+    <div class="sol-top" id="solTop">
+      <p class="sol-top-eyebrow">Het systeem</p>
+      <h2 class="sol-top-title">Vier pijlers. Eén doel.</h2>
+      <p class="sol-top-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
     </div>
 
-    <div class="sol-grid" id="solGrid">
-      <div class="sol-lines-wrap" id="solLines"></div>
+    <!-- Diagram: spine + connectors + cards -->
+    <div class="sol-diagram" id="solDiagram">
+      <svg class="sol-spine-svg" id="solSpine" viewBox="0 0 1 1" preserveAspectRatio="none"></svg>
 
-      <div class="sol-left">
-        <div class="sol-intro-text reveal">
-          <p>De meeste websites zien er oké uit — maar doen niets voor je. Geen koppeling met Google, niet geoptimaliseerd voor mobiel, geen technische basis om gevonden te worden.</p>
-          <p><strong>Ik bouw websites die onder de motorkap alles doen om jou zichtbaar te maken — zonder dat je duizenden euro's kwijt bent aan advertenties.</strong></p>
-        </div>
-        <div class="sol-system-label reveal">
-          <p class="sol-system-eyebrow">Het systeem</p>
-          <h3 class="sol-system-title">Vier pijlers.<br>Eén doel.</h3>
-          <p class="sol-system-sub">Elke stap bouwt voort op de vorige — samen vormen ze een complete online aanwezigheid.</p>
-          <div class="sol-progress">
-            <div class="sol-pip" data-pip="1"></div>
-            <div class="sol-pip" data-pip="2"></div>
-            <div class="sol-pip" data-pip="3"></div>
-            <div class="sol-pip" data-pip="4"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sol-stack" id="solStack">
-        <div class="sol-card">
+      <div class="sol-cards" id="solCards">
+        <div class="sol-card" data-card="1">
           <div class="sol-card-num">01 — Design</div>
           <h3>Een strakke, moderne website</h3>
           <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
         </div>
-        <div class="sol-card">
+        <div class="sol-card" data-card="2">
           <div class="sol-card-num">02 — Mobiel</div>
           <h3>Volledig geoptimaliseerd voor mobiel</h3>
           <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
         </div>
-        <div class="sol-card">
+        <div class="sol-card" data-card="3">
           <div class="sol-card-num">03 — Snelheid</div>
           <h3>Snelle laadtijden en een soepele ervaring</h3>
           <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
         </div>
-        <div class="sol-card sol-featured">
+        <div class="sol-card sol-card--featured" data-card="4">
           <div class="sol-card-num">04 — Google</div>
           <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
           <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
           <span class="sol-card-badge">Kern van het systeem</span>
         </div>
       </div>
-
     </div>
 
-    <div class="sol-conclusion reveal">
-      <p class="sol-conclusion-text">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
+    <!-- Bottom block -->
+    <div class="sol-bottom" id="solBottom">
+      <p class="sol-bottom-label">De kern van het systeem</p>
+      <p class="sol-bottom-text">Zichtbaar worden. Vertrouwen winnen. Gekozen worden.</p>
     </div>
 
   </div>
@@ -828,146 +824,144 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Solution — card reveal ── */
+  /* ── Solution system — one-time reveal animation ── */
   (function () {
-    var cards = document.querySelectorAll('#solStack .sol-card');
-    var pips = document.querySelectorAll('.sol-pip');
-    if (!cards.length) return;
+    var section = document.getElementById('oplossing');
+    var top = document.getElementById('solTop');
+    var diagram = document.getElementById('solDiagram');
+    var spine = document.getElementById('solSpine');
+    var cards = document.querySelectorAll('#solCards .sol-card');
+    var bottom = document.getElementById('solBottom');
+    if (!section || !top || !diagram || !spine || !cards.length || !bottom) return;
 
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('revealed');
-          var idx = Array.from(cards).indexOf(e.target);
-          for (var i = 0; i <= idx; i++) {
-            if (pips[i]) pips[i].classList.add('active');
-          }
-          obs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.3, rootMargin: '0px 0px -40px 0px' });
-    cards.forEach(function (c) { obs.observe(c); });
-  })();
+    var played = false;
 
-  /* ── Flow lines — scroll-driven branching lines from "Vier pijlers" to cards ── */
-  (function () {
-    function init() {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        setTimeout(init, 60);
-        return;
+    /* Build spine + connector SVG */
+    var svgNS = 'http://www.w3.org/2000/svg';
+
+    function buildSpine() {
+      while (spine.firstChild) spine.removeChild(spine.firstChild);
+
+      var dRect = diagram.getBoundingClientRect();
+      var cardsEl = document.getElementById('solCards');
+      var cRect = cardsEl.getBoundingClientRect();
+
+      /* Spine dimensions relative to diagram */
+      var spineTop = 0;
+      var spineBottom = cRect.bottom - dRect.top;
+      var centerX = dRect.width / 2;
+
+      /* Update SVG viewBox to cover full diagram area */
+      spine.setAttribute('viewBox', '0 0 ' + dRect.width + ' ' + spineBottom);
+      spine.style.width = dRect.width + 'px';
+      spine.style.height = spineBottom + 'px';
+      spine.style.left = '0';
+      spine.style.transform = 'none';
+
+      /* Vertical spine */
+      var vLine = document.createElementNS(svgNS, 'line');
+      vLine.setAttribute('x1', centerX);
+      vLine.setAttribute('y1', spineTop);
+      vLine.setAttribute('x2', centerX);
+      vLine.setAttribute('y2', spineBottom);
+      vLine.setAttribute('class', 'sol-spine-line');
+      vLine.id = 'spineVert';
+      /* Dash for draw animation */
+      var vLen = spineBottom - spineTop;
+      vLine.style.strokeDasharray = vLen;
+      vLine.style.strokeDashoffset = vLen;
+      spine.appendChild(vLine);
+
+      /* Horizontal connectors — one per card */
+      for (var i = 0; i < cards.length; i++) {
+        var cardRect = cards[i].getBoundingClientRect();
+        var cardCenterY = (cardRect.top + cardRect.height / 2) - dRect.top;
+        var isLeft = i % 2 === 0; /* 0,2 = left column; 1,3 = right column */
+        var cardEdgeX = isLeft
+          ? (cardRect.right - dRect.left + 1)
+          : (cardRect.left - dRect.left - 1);
+
+        var hLine = document.createElementNS(svgNS, 'line');
+        hLine.setAttribute('x1', centerX);
+        hLine.setAttribute('y1', cardCenterY);
+        hLine.setAttribute('x2', cardEdgeX);
+        hLine.setAttribute('y2', cardCenterY);
+        hLine.setAttribute('class', 'sol-connector');
+        hLine.setAttribute('data-idx', i);
+        var hLen = Math.abs(cardEdgeX - centerX);
+        hLine.style.strokeDasharray = hLen;
+        hLine.style.strokeDashoffset = hLen;
+        spine.appendChild(hLine);
       }
-      gsap.registerPlugin(ScrollTrigger);
-
-      var grid = document.getElementById('solGrid');
-      var container = document.getElementById('solLines');
-      var systemTitle = document.querySelector('.sol-system-title');
-      var systemLabel = document.querySelector('.sol-system-label');
-      var cards = document.querySelectorAll('#solStack .sol-card');
-      if (!grid || !container || !systemTitle || !systemLabel || cards.length < 4) return;
-
-      /* Create SVG */
-      var svgNS = 'http://www.w3.org/2000/svg';
-      var svg = document.createElementNS(svgNS, 'svg');
-      svg.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;overflow:visible;';
-      container.appendChild(svg);
-
-      /* Build paths */
-      var paths = [];
-      var dots = [];
-
-      function buildPaths() {
-        /* Clear previous */
-        while (svg.firstChild) svg.removeChild(svg.firstChild);
-        paths = [];
-        dots = [];
-
-        var gridRect = grid.getBoundingClientRect();
-        var titleRect = systemTitle.getBoundingClientRect();
-
-        /* "Vier pijlers." is the first line, "Eén doel." is the second line.
-           The title has line-height ~1.10, so the break between lines is at ~50% height.
-           Start X: just after "Vier pijlers." text — right edge of title + small offset
-           Start Y: vertically between the two lines = titleRect.top + titleRect.height * 0.5 */
-        var startX = (titleRect.right + 8) - gridRect.left;
-        var startY = (titleRect.top + titleRect.height * 0.48) - gridRect.top;
-
-        /* Shift 17% left from where it would naturally be */
-        startX -= gridRect.width * 0.17;
-
-        /* Horizontal trunk — column gap area */
-        var midX = gridRect.width * 0.5;
-
-        for (var i = 0; i < cards.length; i++) {
-          var cardRect = cards[i].getBoundingClientRect();
-          var endX = cardRect.left - gridRect.left - 8;
-          var endY = (cardRect.top + cardRect.height * 0.5) - gridRect.top;
-
-          /* Path: start → horizontal to midX → vertical to card Y → horizontal to card */
-          var turnX = midX - 4;
-          var d = 'M ' + startX + ' ' + startY +
-                  ' L ' + turnX + ' ' + startY +
-                  ' L ' + turnX + ' ' + endY +
-                  ' L ' + endX + ' ' + endY;
-
-          var path = document.createElementNS(svgNS, 'path');
-          path.setAttribute('d', d);
-          path.setAttribute('class', 'sol-flow-line');
-          var len = path.getTotalLength();
-          path.style.strokeDasharray = len;
-          path.style.strokeDashoffset = len;
-          svg.appendChild(path);
-          paths.push({ el: path, len: len });
-
-          /* Dot at end */
-          var dot = document.createElementNS(svgNS, 'circle');
-          dot.setAttribute('cx', endX);
-          dot.setAttribute('cy', endY);
-          dot.setAttribute('r', '4');
-          dot.setAttribute('class', 'sol-flow-dot');
-          svg.appendChild(dot);
-          dots.push(dot);
-        }
-      }
-
-      buildPaths();
-
-      /* Scroll animation — 30% faster completion (end earlier) */
-      ScrollTrigger.create({
-        trigger: systemTitle,
-        start: 'center 90%',
-        end: 'center 40%',
-        scrub: 0.4,
-        onUpdate: function (self) {
-          var p = self.progress; /* 0 → 1 */
-
-          for (var i = 0; i < paths.length; i++) {
-            /* Stagger: each line starts at i*0.12 and completes by i*0.12 + 0.40 (30% faster) */
-            var lineStart = i * 0.12;
-            var lineEnd = lineStart + 0.40;
-            var lineP = Math.max(0, Math.min(1, (p - lineStart) / (lineEnd - lineStart)));
-            /* Ease */
-            lineP = lineP * lineP * (3 - 2 * lineP);
-
-            var offset = paths[i].len * (1 - lineP);
-            paths[i].el.style.strokeDashoffset = offset;
-
-            /* Show dot when line is mostly drawn */
-            dots[i].style.opacity = lineP > 0.85 ? 0.5 : 0;
-          }
-        }
-      });
-
-      /* Rebuild on resize */
-      var resizeTimer;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-          buildPaths();
-          ScrollTrigger.refresh();
-        }, 200);
-      });
     }
-    init();
+
+    buildSpine();
+
+    /* Animation sequence — fires once */
+    function playSequence() {
+      if (played) return;
+      played = true;
+
+      var ease = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
+      /* 1. Top text — fade in */
+      top.style.transition = 'opacity 0.5s ' + ease + ', transform 0.5s ' + ease;
+      top.style.opacity = '1';
+      top.style.transform = 'translateY(0)';
+
+      /* 2. Spine draws down (starts at 150ms) */
+      var vLine = document.getElementById('spineVert');
+      setTimeout(function () {
+        vLine.style.transition = 'stroke-dashoffset 0.6s ' + ease;
+        vLine.style.strokeDashoffset = '0';
+      }, 150);
+
+      /* 3. Connectors appear (start at 350ms, tiny stagger) */
+      var connectors = spine.querySelectorAll('.sol-connector');
+      connectors.forEach(function (c, i) {
+        setTimeout(function () {
+          c.style.transition = 'stroke-dashoffset 0.35s ' + ease;
+          c.style.strokeDashoffset = '0';
+        }, 350 + i * 40);
+      });
+
+      /* 4. Cards fade in (start at 400ms, fast stagger) */
+      cards.forEach(function (card, i) {
+        setTimeout(function () {
+          card.style.transition = 'opacity 0.4s ' + ease + ', transform 0.4s ' + ease;
+          card.classList.add('is-visible');
+        }, 400 + i * 60);
+      });
+
+      /* 5. Bottom text (start at 700ms) */
+      setTimeout(function () {
+        bottom.style.transition = 'opacity 0.5s ' + ease + ', transform 0.5s ' + ease;
+        bottom.style.opacity = '1';
+        bottom.style.transform = 'translateY(0)';
+      }, 700);
+    }
+
+    /* Initial hidden state */
+    top.style.opacity = '0';
+    top.style.transform = 'translateY(16px)';
+    bottom.style.opacity = '0';
+    bottom.style.transform = 'translateY(12px)';
+
+    /* Trigger on intersection */
+    var obs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) {
+        playSequence();
+        obs.disconnect();
+      }
+    }, { threshold: 0.15 });
+    obs.observe(section);
+
+    /* Rebuild on resize */
+    var rt;
+    window.addEventListener('resize', function () {
+      clearTimeout(rt);
+      rt = setTimeout(buildSpine, 200);
+    });
   })();
 </script>
 
