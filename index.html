@@ -384,20 +384,7 @@
       position: relative;
       overflow: hidden;
     }
-    .sol-bg-paths {
-      position: absolute;
-      top: -30%; left: 50%;
-      transform: translateX(-50%);
-      width: 476px; height: 340px;
-      pointer-events: none;
-      z-index: 0;
-      filter: blur(0.5px);
-    }
-    .sol-bg-paths svg {
-      width: 100%;
-      height: 100%;
-    }
-    .sol-inner { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+.sol-inner { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
 
     /* Intro headline — centered */
     #oplossing .eyebrow { text-align: center; margin-bottom: 22px; }
@@ -457,51 +444,22 @@
     }
 
     /* Diagram wrapper */
-    .sol-diagram { position: relative; margin-top: 48px; }
-    .sol-spine-svg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      overflow: visible;
-      pointer-events: none;
-      z-index: 1;
-    }
-    .sol-spine-line {
-      stroke: var(--accent);
-      stroke-width: 2.5;
-      fill: none;
-      opacity: 0.5;
-    }
-    .sol-connector {
-      stroke: var(--accent);
-      stroke-width: 2.5;
-      fill: none;
-      opacity: 0.5;
-    }
-    .sol-node {
-      fill: var(--accent);
-      opacity: 0.5;
-    }
-
-    /* Card grid — 2x2, 25% more gap */
+    /* Sticky card stack */
     .sol-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
       position: relative;
       z-index: 2;
+      max-width: 640px;
+      margin: 0 auto;
     }
     .sol-card {
-      padding: 28px 28px 24px;
-      border-radius: 14px;
+      position: sticky;
+      padding: 32px 28px 28px;
+      border-radius: 18px;
       background: var(--white);
       border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    .sol-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+      will-change: transform, opacity;
     }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
@@ -520,11 +478,6 @@
       border-color: rgba(46,125,114,0.20);
       border-left: 3px solid var(--accent3);
       box-shadow: 0 4px 20px rgba(46,125,114,0.15);
-      transform: scale(1.02);
-    }
-    .sol-card--featured:hover {
-      transform: scale(1.02) translateY(-3px);
-      box-shadow: 0 10px 32px rgba(46,125,114,0.20);
     }
     .sol-card--featured .sol-card-num { color: var(--accent3); }
     .sol-card--featured h3 { color: #fff; }
@@ -638,8 +591,7 @@
         padding-left: 24px; padding-right: 24px;
         padding-top: 64px; padding-bottom: 64px;
       }
-      .sol-cards { grid-template-columns: 1fr; }
-      .sol-spine-svg { display: none; }
+      .sol-cards { max-width: 100%; }
       .cta-buttons { flex-direction: column; }
       footer { padding: 20px 24px; }
     }
@@ -774,7 +726,6 @@
 
 <!-- ══ SOLUTION — system ══ -->
 <section id="oplossing">
-  <div class="sol-bg-paths" id="solBgPaths"></div>
   <div class="sol-inner">
 
     <!-- Headline -->
@@ -797,32 +748,28 @@
       </div>
     </div>
 
-    <!-- Diagram: spine + connectors + cards -->
-    <div class="sol-diagram" id="solDiagram">
-      <svg class="sol-spine-svg" id="solSpine"></svg>
-
-      <div class="sol-cards" id="solCards">
-        <div class="sol-card" data-card="1">
-          <div class="sol-card-num">01 — Design</div>
-          <h3>Een strakke, moderne website</h3>
-          <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
-        </div>
-        <div class="sol-card" data-card="2">
-          <div class="sol-card-num">02 — Mobiel</div>
-          <h3>Volledig geoptimaliseerd voor mobiel</h3>
-          <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
-        </div>
-        <div class="sol-card" data-card="3">
-          <div class="sol-card-num">03 — Snelheid</div>
-          <h3>Snelle laadtijden en een soepele ervaring</h3>
-          <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
-        </div>
-        <div class="sol-card sol-card--featured" data-card="4">
-          <div class="sol-card-num">04 — Google</div>
-          <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
-          <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
-          <span class="sol-card-badge">Kern van het systeem</span>
-        </div>
+    <!-- Sticky card stack -->
+    <div class="sol-cards" id="solCards">
+      <div class="sol-card" style="top: 80px;">
+        <div class="sol-card-num">01 — Design</div>
+        <h3>Een strakke, moderne website</h3>
+        <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
+      </div>
+      <div class="sol-card" style="top: 100px;">
+        <div class="sol-card-num">02 — Mobiel</div>
+        <h3>Volledig geoptimaliseerd voor mobiel</h3>
+        <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
+      </div>
+      <div class="sol-card" style="top: 120px;">
+        <div class="sol-card-num">03 — Snelheid</div>
+        <h3>Snelle laadtijden en een soepele ervaring</h3>
+        <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
+      </div>
+      <div class="sol-card sol-card--featured" style="top: 140px;">
+        <div class="sol-card-num">04 — Google</div>
+        <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
+        <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
+        <span class="sol-card-badge">Kern van het systeem</span>
       </div>
     </div>
 
@@ -1018,7 +965,7 @@
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Background paths — scroll-driven ── */
+  /* ── Solution — sticky card stack with scale + fade ── */
   (function () {
     function init() {
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
@@ -1027,244 +974,25 @@
       }
       gsap.registerPlugin(ScrollTrigger);
 
-      var container = document.getElementById('solBgPaths');
-      var section = document.getElementById('oplossing');
-      if (!container || !section) return;
-
-      var svgNS = 'http://www.w3.org/2000/svg';
-      var TOTAL = 36;
-
-      /* Brand colors — thick lines get strong color, thin lines get light */
-      var colors = [
-        { r: 46, g: 125, b: 114 },  /* --accent  #2E7D72 */
-        { r: 31, g: 94,  b: 89  },  /* --accent2 #1F5E59 */
-        { r: 70, g: 165, b: 148 },  /* --accent3 #46A594 */
-      ];
-
-      function buildSVG(position, zLayer) {
-        var svg = document.createElementNS(svgNS, 'svg');
-        svg.setAttribute('viewBox', '0 0 696 316');
-        svg.setAttribute('fill', 'none');
-        svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-        /* 3D depth: back layer slightly smaller + more blurred, front layer sharper */
-        var scale = zLayer === 0 ? 0.85 : 1;
-        var blur = zLayer === 0 ? 1.5 : 0;
-        svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;' +
-          'transform:scale(' + scale + ');' +
-          'filter:blur(' + blur + 'px);' +
-          'opacity:' + (zLayer === 0 ? 0.5 : 1) + ';';
-
-        var paths = [];
-        for (var i = 0; i < TOTAL; i++) {
-          var p = position;
-          var d = 'M-' + (380 - i * 5 * p) + ' -' + (189 + i * 6) +
-                  'C-' + (380 - i * 5 * p) + ' -' + (189 + i * 6) +
-                  ' -' + (312 - i * 5 * p) + ' ' + (216 - i * 6) +
-                  ' ' + (152 - i * 5 * p) + ' ' + (343 - i * 6) +
-                  'C' + (616 - i * 5 * p) + ' ' + (470 - i * 6) +
-                  ' ' + (684 - i * 5 * p) + ' ' + (875 - i * 6) +
-                  ' ' + (684 - i * 5 * p) + ' ' + (875 - i * 6);
-
-          /* Color: thicker lines (higher i) get stronger accent colors */
-          var ci = colors[i % colors.length];
-          var opacity = 0.008 + i * 0.0048;
-          var width = 0.5 + i * 0.04;
-
-          var path = document.createElementNS(svgNS, 'path');
-          path.setAttribute('d', d);
-          path.setAttribute('stroke', 'rgba(' + ci.r + ',' + ci.g + ',' + ci.b + ',' + opacity + ')');
-          path.setAttribute('stroke-width', width);
-          path.setAttribute('fill', 'none');
-
-          /* Dash setup for scroll animation */
-          var len = path.getTotalLength ? 2000 : 2000;
-          path.style.strokeDasharray = len;
-          path.style.strokeDashoffset = len;
-
-          svg.appendChild(path);
-          paths.push({ el: path, len: len, offset: i * 0.4 });
-        }
-
-        container.appendChild(svg);
-        return paths;
-      }
-
-      /* Two depth layers: back (blurred, smaller) + front (sharp) */
-      var pathsLeftBack = buildSVG(1, 0);
-      var pathsRightBack = buildSVG(-1, 0);
-      var pathsLeft = buildSVG(1, 1);
-      var pathsRight = buildSVG(-1, 1);
-      var allBack = pathsLeftBack.concat(pathsRightBack);
-      var allPaths = allBack.concat(pathsLeft).concat(pathsRight);
-
-      /* After appending, measure real path lengths */
-      allPaths.forEach(function (p) {
-        if (p.el.getTotalLength) {
-          var realLen = p.el.getTotalLength();
-          p.len = realLen;
-          p.el.style.strokeDasharray = realLen;
-          p.el.style.strokeDashoffset = realLen;
-        }
-      });
-
-      /* Scroll-driven: 1:1 with scroll, scrub: 0 = no lag */
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 100%',
-        end: 'bottom 0%',
-        scrub: 0,
-        onUpdate: function (self) {
-          var progress = self.progress;
-          var slowP = progress / 3; /* 3x slower relative to scroll */
-          for (var i = 0; i < allPaths.length; i++) {
-            var p = allPaths[i];
-            var staggeredP = Math.max(0, Math.min(1, slowP - (p.offset / p.len) * 0.08));
-            /* Gentle ease */
-            staggeredP = staggeredP * staggeredP * (3 - 2 * staggeredP);
-            p.el.style.strokeDashoffset = p.len * (1 - staggeredP);
-          }
-        }
-      });
-    }
-    init();
-  })();
-
-  /* ── Solution — scroll-driven spine + connectors ── */
-  (function () {
-    function init() {
-      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        setTimeout(init, 60);
-        return;
-      }
-      gsap.registerPlugin(ScrollTrigger);
-
-      var diagram = document.getElementById('solDiagram');
-      var svg = document.getElementById('solSpine');
       var cards = document.querySelectorAll('#solCards .sol-card');
-      if (!diagram || !svg || cards.length < 4) return;
+      if (!cards.length) return;
 
-      var svgNS = 'http://www.w3.org/2000/svg';
-      var allPaths = [];
-
-      function build() {
-        while (svg.firstChild) svg.removeChild(svg.firstChild);
-        allPaths = [];
-
-        var dRect = diagram.getBoundingClientRect();
-        var cardsEl = document.getElementById('solCards');
-        var cRect = cardsEl.getBoundingClientRect();
-        var w = dRect.width;
-        var h = cRect.bottom - dRect.top;
-        var cx = w / 2;
-
-        svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-        svg.style.width = w + 'px';
-        svg.style.height = h + 'px';
-        svg.style.left = '0';
-        svg.style.top = '0';
-
-        /* For each card: build a path from spine center down to card center-Y,
-           then horizontally to the card edge */
-        var pathData = [];
-        for (var i = 0; i < cards.length; i++) {
-          var cr = cards[i].getBoundingClientRect();
-          var cardMidY = (cr.top + cr.height / 2) - dRect.top;
-          var isLeft = i % 2 === 0;
-          var cardEdgeX = isLeft ? (cr.right - dRect.left + 1) : (cr.left - dRect.left - 1);
-          pathData.push({ y: cardMidY, ex: cardEdgeX });
+      cards.forEach(function (card, i) {
+        if (i < cards.length - 1) {
+          var topVal = parseInt(card.style.top) || (80 + i * 20);
+          ScrollTrigger.create({
+            trigger: card,
+            start: 'top ' + topVal + 'px',
+            end: 'bottom ' + topVal + 'px',
+            scrub: 0.3,
+            onUpdate: function (self) {
+              var scale = 1 - (self.progress * 0.05);
+              var opacity = 1 - (self.progress * 0.4);
+              card.style.transform = 'scale(' + scale + ')';
+              card.style.opacity = opacity;
+            }
+          });
         }
-
-        /* Sort by Y to draw spine in order */
-        var sortedByY = pathData.map(function (d, i) { return { idx: i, y: d.y, ex: d.ex }; });
-        sortedByY.sort(function (a, b) { return a.y - b.y; });
-
-        /* Build one continuous path: vertical spine segments + horizontal branches */
-        var prevY = 0;
-        for (var j = 0; j < sortedByY.length; j++) {
-          var item = sortedByY[j];
-
-          /* Vertical segment from prevY down to this card's Y */
-          if (item.y > prevY) {
-            var vPath = document.createElementNS(svgNS, 'path');
-            vPath.setAttribute('d', 'M ' + cx + ' ' + prevY + ' L ' + cx + ' ' + item.y);
-            vPath.setAttribute('class', 'sol-spine-line');
-            var vLen = item.y - prevY;
-            vPath.style.strokeDasharray = vLen;
-            vPath.style.strokeDashoffset = vLen;
-            svg.appendChild(vPath);
-            allPaths.push({ el: vPath, len: vLen, order: j * 2 });
-          }
-
-          /* Node circle at junction */
-          var node = document.createElementNS(svgNS, 'circle');
-          node.setAttribute('cx', cx);
-          node.setAttribute('cy', item.y);
-          node.setAttribute('r', '4');
-          node.setAttribute('class', 'sol-node');
-          node.style.opacity = '0';
-          svg.appendChild(node);
-
-          /* Horizontal connector to card */
-          var hPath = document.createElementNS(svgNS, 'path');
-          hPath.setAttribute('d', 'M ' + cx + ' ' + item.y + ' L ' + item.ex + ' ' + item.y);
-          hPath.setAttribute('class', 'sol-connector');
-          var hLen = Math.abs(item.ex - cx);
-          hPath.style.strokeDasharray = hLen;
-          hPath.style.strokeDashoffset = hLen;
-          svg.appendChild(hPath);
-          allPaths.push({ el: hPath, len: hLen, order: j * 2 + 1, node: node });
-
-          prevY = item.y;
-        }
-
-        /* Final vertical segment to bottom */
-        if (prevY < h) {
-          var vLast = document.createElementNS(svgNS, 'path');
-          vLast.setAttribute('d', 'M ' + cx + ' ' + prevY + ' L ' + cx + ' ' + h);
-          vLast.setAttribute('class', 'sol-spine-line');
-          var vLastLen = h - prevY;
-          vLast.style.strokeDasharray = vLastLen;
-          vLast.style.strokeDashoffset = vLastLen;
-          svg.appendChild(vLast);
-          allPaths.push({ el: vLast, len: vLastLen, order: sortedByY.length * 2 });
-        }
-
-        /* Compute total length for scroll mapping */
-        var totalLen = 0;
-        allPaths.forEach(function (p) { totalLen += p.len; });
-
-        /* Store cumulative offsets */
-        var cum = 0;
-        allPaths.forEach(function (p) {
-          p.start = cum / totalLen;
-          cum += p.len;
-          p.end = cum / totalLen;
-        });
-      }
-
-      build();
-
-      /* Scroll-driven draw — 1:1 with scroll, no lag */
-      ScrollTrigger.create({
-        trigger: diagram,
-        start: 'top 80%',
-        end: 'bottom 30%',
-        scrub: 0,
-        onUpdate: function (self) {
-          var p = self.progress;
-          for (var i = 0; i < allPaths.length; i++) {
-            var seg = allPaths[i];
-            var segP = Math.max(0, Math.min(1, (p - seg.start) / (seg.end - seg.start)));
-            seg.el.style.strokeDashoffset = seg.len * (1 - segP);
-            if (seg.node) seg.node.style.opacity = segP > 0.1 ? '0.5' : '0';
-          }
-        }
-      });
-
-      var rt;
-      window.addEventListener('resize', function () {
-        clearTimeout(rt);
-        rt = setTimeout(function () { build(); ScrollTrigger.refresh(); }, 200);
       });
     }
     init();
