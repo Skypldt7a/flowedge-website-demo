@@ -937,7 +937,7 @@
 
           /* Color: thicker lines (higher i) get stronger accent colors */
           var ci = colors[i % colors.length];
-          var opacity = 0.03 + i * 0.018;
+          var opacity = 0.015 + i * 0.009;
           var width = 0.5 + i * 0.04;
 
           var path = document.createElementNS(svgNS, 'path');
@@ -976,8 +976,8 @@
       /* Scroll-driven: 1:1 with scroll, scrub: 0 = no lag */
       ScrollTrigger.create({
         trigger: section,
-        start: 'top bottom',
-        end: 'bottom top',
+        start: 'top 95%',
+        end: 'bottom 5%',
         scrub: 0,
         onUpdate: function (self) {
           var progress = self.progress; /* 0 at top, 1 at bottom */
