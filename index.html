@@ -26,14 +26,14 @@
     "serviceType": "Webdesign en online marketing voor vakmensen"
   }
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* ── Reset ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── Tokens ── */
     :root {
       --night:   #111A17;
       --night2:  #0D1411;
@@ -52,7 +52,7 @@
       --radius:  20px;
       --radius-lg: 28px;
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     html { scroll-behavior: smooth; }
@@ -65,7 +65,7 @@
       overflow-x: hidden;
     }
 
-    /* ── Grain overlay ── */
+    /* Grain */
     body::after {
       content: '';
       position: fixed; inset: 0;
@@ -74,25 +74,17 @@
       opacity: 0.018;
     }
 
-    /* ── Reveal animation ── */
+    /* Reveal */
     .reveal {
-      opacity: 0;
-      transform: translateY(32px);
+      opacity: 0; transform: translateY(32px);
       transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── Stagger children ── */
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
     .stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
     .stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
     .stagger > .reveal:nth-child(4) { transition-delay: 240ms; }
-    .stagger > .reveal:nth-child(5) { transition-delay: 320ms; }
 
-    /* ── Eyebrow ── */
     .eyebrow {
       font-size: 11px; font-weight: 700; letter-spacing: 2.6px;
       text-transform: uppercase; color: var(--accent); margin-bottom: 18px;
@@ -100,14 +92,12 @@
     }
     .eyebrow-light { color: var(--accent3); }
 
-    /* ══════════════════════════════════
-       NAV — floating pill
-    ══════════════════════════════════ */
+    /* ══ NAV — logo only ══ */
     nav {
       position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
       z-index: 100;
-      padding: 0 8px 0 28px; height: 52px;
-      display: flex; align-items: center; gap: 32px;
+      padding: 0 32px; height: 48px;
+      display: flex; align-items: center;
       background: rgba(17,26,23,0.88);
       backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-radius: 100px;
@@ -117,20 +107,10 @@
     .nav-logo {
       font-size: 20px; font-weight: 800; color: #fff;
       letter-spacing: -0.5px; text-decoration: none;
-      white-space: nowrap;
     }
     .nav-logo em { font-style: normal; color: var(--accent3); }
-    .nav-cta {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--accent); color: #fff; text-decoration: none;
-      font-size: 13px; font-weight: 600; padding: 8px 18px;
-      border-radius: 100px;
-      transition: background 0.25s, transform 0.2s;
-    }
-    .nav-cta:hover { background: var(--accent2); transform: scale(1.03); }
-    .nav-cta:active { transform: scale(0.97); }
 
-    /* ── Buttons ── */
+    /* ══ Buttons ══ */
     .btn-primary {
       display: inline-flex; align-items: center; gap: 10px;
       background: var(--accent); color: #fff; text-decoration: none;
@@ -154,20 +134,8 @@
       border-color: rgba(255,255,255,0.20);
       color: #fff;
     }
-    .btn-dark {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--night); color: #fff; text-decoration: none;
-      font-size: 15px; font-weight: 700; padding: 15px 30px;
-      border-radius: 100px;
-      transition: background 0.25s, transform 0.2s;
-      white-space: nowrap;
-    }
-    .btn-dark:hover { background: var(--ink); transform: translateY(-2px); }
-    .btn-dark:active { transform: translateY(0) scale(0.98); }
 
-    /* ══════════════════════════════════
-       HERO — asymmetric left-aligned
-    ══════════════════════════════════ */
+    /* ══ HERO ══ */
     #hero {
       min-height: 100dvh;
       background: var(--night);
@@ -179,7 +147,6 @@
       position: absolute; inset: 0; z-index: 0;
       width: 100%; height: 100%; pointer-events: none;
     }
-    /* Subtle grid */
     #hero::before {
       content: ''; position: absolute; inset: 0; z-index: 1;
       background:
@@ -188,69 +155,67 @@
       background-size: 72px 72px;
       pointer-events: none;
     }
-    /* Radial vignette */
     #hero::after {
       content: ''; position: absolute; inset: 0; z-index: 2;
       background: radial-gradient(ellipse 75% 65% at 30% 50%, transparent 30%, rgba(17,26,23,0.7) 100%);
       pointer-events: none;
     }
-
     .hero-inner {
       position: relative; z-index: 3;
       max-width: 1400px; width: 100%; margin: 0 auto;
     }
     .hero-content { max-width: 680px; }
-
     .hero-h1 {
       font-size: clamp(48px, 7.5vw, 96px);
       font-weight: 900; color: #fff;
       line-height: 0.96; letter-spacing: -0.04em; margin-bottom: 32px;
       text-wrap: balance;
     }
-    .hero-h1 em {
-      font-style: normal;
-      color: var(--accent3);
-    }
-
+    .hero-h1 em { font-style: normal; color: var(--accent3); }
     .hero-sub {
       font-size: clamp(16px, 1.2vw, 18px);
       color: rgba(255,255,255,0.42);
       line-height: 1.8; max-width: 420px; margin-bottom: 48px;
     }
-
     .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
-    .hero-note {
-      font-size: 13px; color: rgba(255,255,255,0.14);
-      font-weight: 500;
-    }
+    .hero-note { font-size: 13px; color: rgba(255,255,255,0.14); font-weight: 500; }
 
-    /* ══════════════════════════════════
-       STATS — horizontal inline
-    ══════════════════════════════════ */
+    /* ══ STATS — compact modern cards ══ */
     #stats {
       background: var(--white);
-      padding: 52px 64px;
+      padding: 40px 64px;
       border-bottom: 1px solid var(--border);
     }
     .stats-inner {
-      max-width: 1400px; margin: 0 auto;
-      display: flex; justify-content: center; gap: 0;
+      max-width: 860px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
-    .stat {
-      flex: 1; max-width: 340px;
-      text-align: center; padding: 24px 32px;
+    .stat-card {
+      background: var(--canvas);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 22px;
+      text-align: center;
       position: relative;
+      transition: box-shadow 0.4s var(--ease-out), transform 0.3s var(--ease-out), border-color 0.4s;
     }
-    .stat + .stat::before {
+    .stat-card::after {
       content: '';
-      position: absolute; left: 0; top: 20%; height: 60%;
-      width: 1px;
-      background: var(--border);
+      position: absolute; inset: 3px;
+      border-radius: calc(var(--radius) - 3px);
+      border: 1px solid rgba(255,255,255,0.6);
+      pointer-events: none;
+    }
+    .stat-card:hover {
+      box-shadow: 0 12px 36px -8px rgba(46,125,114,0.10);
+      border-color: var(--accent3);
+      transform: translateY(-2px);
     }
     .stat-num {
-      font-size: clamp(42px, 5vw, 64px); font-weight: 900;
+      font-size: clamp(36px, 4vw, 48px); font-weight: 900;
       color: var(--ink); letter-spacing: -0.04em; line-height: 1;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-variant-numeric: tabular-nums;
     }
     .stat-num em {
@@ -258,41 +223,56 @@
       color: var(--ink3); letter-spacing: -0.02em;
     }
     .stat-label {
-      font-size: 14px; font-weight: 500; color: var(--ink3);
-      line-height: 1.5;
+      font-size: 13px; font-weight: 500; color: var(--ink3);
+      line-height: 1.4;
     }
 
-    /* ══════════════════════════════════
-       PROBLEM — editorial split
-    ══════════════════════════════════ */
+    /* ══ PROBLEM — editorial split + video ══ */
     #pijnpunten {
       background: var(--canvas);
       padding: 120px 64px 100px;
     }
-    .pain-inner {
-      max-width: 1400px; margin: 0 auto;
-    }
+    .pain-inner { max-width: 1400px; margin: 0 auto; }
     .pain-grid {
       display: grid;
       grid-template-columns: 5fr 7fr;
-      gap: 80px;
-      align-items: start;
+      gap: 80px; align-items: start;
     }
     .pain-left { position: sticky; top: 100px; }
     .pain-headline {
       font-size: clamp(32px, 4vw, 52px); font-weight: 900;
       color: var(--ink); letter-spacing: -0.035em; line-height: 1.04;
-      margin-bottom: 24px;
-      text-wrap: balance;
+      margin-bottom: 24px; text-wrap: balance;
     }
     .pain-intro {
       font-size: 15px; color: var(--ink3); line-height: 1.8;
+      max-width: 380px; margin-bottom: 32px;
+    }
+
+    /* Video wrapper — blend with page */
+    .pain-video-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
       max-width: 380px;
+    }
+    .pain-video-wrap video {
+      display: block; width: 100%; height: auto;
+      border-radius: var(--radius-lg);
+      mix-blend-mode: multiply;
+      filter: contrast(1.05) saturate(0.9);
+    }
+    /* Gradient edges to blend into background */
+    .pain-video-wrap::before {
+      content: ''; position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(to bottom, var(--canvas) 0%, transparent 12%, transparent 88%, var(--canvas) 100%),
+        linear-gradient(to right, var(--canvas) 0%, transparent 8%, transparent 92%, var(--canvas) 100%);
+      pointer-events: none;
     }
 
     .pain-right { display: flex; flex-direction: column; gap: 16px; }
 
-    /* Double-bezel cards */
     .pain-card {
       background: var(--white);
       border: 1px solid var(--border);
@@ -306,34 +286,25 @@
       position: absolute; inset: 4px;
       border-radius: calc(var(--radius-lg) - 4px);
       border: 1px solid rgba(255,255,255,0.7);
-      pointer-events: none;
-      transition: border-color 0.4s;
+      pointer-events: none; transition: border-color 0.4s;
     }
     .pain-card:hover {
       box-shadow: 0 20px 48px -12px rgba(46,125,114,0.10);
-      border-color: var(--accent3);
-      transform: translateY(-3px);
+      border-color: var(--accent3); transform: translateY(-3px);
     }
-    .pain-card:hover::after {
-      border-color: rgba(70,165,148,0.12);
-    }
+    .pain-card:hover::after { border-color: rgba(70,165,148,0.12); }
     .pain-card-label {
       font-size: 11px; font-weight: 700; color: var(--accent);
-      letter-spacing: 2px; text-transform: uppercase;
-      margin-bottom: 14px;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
     }
     .pain-card h3 {
       font-size: 19px; font-weight: 800; color: var(--ink);
       letter-spacing: -0.025em; line-height: 1.24; margin-bottom: 10px;
     }
-    .pain-card p {
-      font-size: 14.5px; color: var(--ink3); line-height: 1.72;
-    }
+    .pain-card p { font-size: 14.5px; color: var(--ink3); line-height: 1.72; }
 
-    /* Pull-quote */
     .pain-quote {
-      max-width: 1400px; margin: 72px auto 0;
-      text-align: center;
+      max-width: 1400px; margin: 72px auto 0; text-align: center;
     }
     .pain-quote-text {
       font-size: clamp(22px, 3vw, 36px); font-weight: 800;
@@ -341,14 +312,11 @@
     }
     .pain-quote-text em { font-style: normal; color: var(--accent); }
 
-    /* ══════════════════════════════════
-       IMPACT
-    ══════════════════════════════════ */
+    /* ══ IMPACT ══ */
     #impact {
       background: var(--night);
       padding: 120px 64px;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     #impact::before {
       content: ''; position: absolute;
@@ -358,8 +326,7 @@
       pointer-events: none;
     }
     .impact-inner {
-      position: relative; z-index: 1;
-      max-width: 900px; margin: 0 auto;
+      position: relative; z-index: 1; max-width: 900px; margin: 0 auto;
     }
     .impact-text {
       font-size: clamp(30px, 4.5vw, 56px); font-weight: 900;
@@ -367,26 +334,20 @@
     }
     .impact-text em { font-style: normal; color: var(--accent3); }
     .impact-cta {
-      margin-top: 48px;
-      display: flex; gap: 14px; flex-wrap: wrap;
+      margin-top: 48px; display: flex; gap: 14px; flex-wrap: wrap;
     }
 
-    /* ══════════════════════════════════
-       ABOUT — asymmetric
-    ══════════════════════════════════ */
+    /* ══ ABOUT ══ */
     #over {
       background: var(--white);
       padding: 120px 64px;
-      position: relative;
     }
     .over-inner {
       max-width: 1400px; margin: 0 auto;
       display: grid; grid-template-columns: 280px 1fr;
       gap: 72px; align-items: start;
     }
-    .over-foto-wrap {
-      position: sticky; top: 100px;
-    }
+    .over-foto-wrap { position: sticky; top: 100px; }
     .over-foto-bezel {
       background: var(--canvas);
       border: 1px solid var(--border);
@@ -408,10 +369,7 @@
       border-left: 2px solid var(--accent); padding-left: 20px;
       margin-bottom: 28px;
     }
-    .over-bio {
-      font-size: 15px; color: var(--ink3); line-height: 1.84;
-      max-width: 520px;
-    }
+    .over-bio { font-size: 15px; color: var(--ink3); line-height: 1.84; max-width: 520px; }
     .over-bio p + p { margin-top: 16px; }
     .over-bio strong { color: var(--ink2); font-weight: 600; }
     .over-facts {
@@ -426,18 +384,15 @@
     }
     .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 5px; font-weight: 500; }
 
-    /* ══════════════════════════════════
-       SOLUTION — bento-style
-    ══════════════════════════════════ */
+    /* ══ SOLUTION — sticky card stack ══ */
     #oplossing {
       background: var(--canvas);
-      padding: 120px 64px 100px;
+      padding: 120px 64px 60px;
     }
     .sol-inner { max-width: 1400px; margin: 0 auto; }
-
     .sol-header {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 48px; margin-bottom: 56px; align-items: end;
+      gap: 48px; margin-bottom: 64px; align-items: end;
     }
     .sol-title {
       font-size: clamp(30px, 3.5vw, 48px); font-weight: 900;
@@ -445,75 +400,102 @@
       text-wrap: balance;
     }
     .sol-header-text {
-      font-size: 15px; color: var(--ink3); line-height: 1.8;
-      max-width: 440px;
+      font-size: 15px; color: var(--ink3); line-height: 1.8; max-width: 440px;
     }
     .sol-header-text strong { color: var(--ink); font-weight: 700; }
 
-    /* Bento grid: 2 top, 2 bottom asymmetric */
-    .sol-bento {
-      display: grid;
-      grid-template-columns: 7fr 5fr;
-      gap: 16px;
-    }
-
-    .sol-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 36px 32px;
+    /* Sticky stack container */
+    .sol-stack {
       position: relative;
-      transition: box-shadow 0.4s var(--ease-out), transform 0.3s var(--ease-out);
+      max-width: 960px;
+      margin: 0 auto;
     }
-    .sol-card::after {
+    .sol-sticky-card {
+      position: sticky;
+      border-radius: var(--radius-lg);
+      padding: 44px 40px;
+      border: 1px solid var(--border);
+      will-change: transform;
+      transition: box-shadow 0.4s var(--ease-out);
+    }
+    .sol-sticky-card:hover {
+      box-shadow: 0 20px 48px -12px var(--shadow);
+    }
+    /* Double-bezel */
+    .sol-sticky-card::after {
       content: '';
       position: absolute; inset: 4px;
       border-radius: calc(var(--radius-lg) - 4px);
-      border: 1px solid rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.6);
       pointer-events: none;
     }
-    .sol-card:hover {
-      box-shadow: 0 20px 48px -12px var(--shadow);
-      transform: translateY(-3px);
+    .sol-sticky-card--light {
+      background: var(--white);
+    }
+    .sol-sticky-card--dark {
+      background: var(--night);
+      border-color: rgba(70,165,148,0.15);
+    }
+    .sol-sticky-card--dark::after {
+      border-color: rgba(255,255,255,0.04);
+    }
+    .sol-sticky-card--dark:hover {
+      box-shadow: 0 24px 56px -12px rgba(46,125,114,0.14);
+      border-color: var(--accent);
+    }
+
+    .sol-card-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: center;
     }
     .sol-card-num {
       font-size: 11px; font-weight: 700; color: var(--accent);
       letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
     }
-    .sol-card h3 {
-      font-size: 19px; font-weight: 800; color: var(--ink);
-      letter-spacing: -0.025em; margin-bottom: 8px; line-height: 1.24;
+    .sol-card-title {
+      font-size: clamp(22px, 2.2vw, 28px); font-weight: 800;
+      letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 12px;
     }
-    .sol-card p {
-      font-size: 14.5px; color: var(--ink3); line-height: 1.72;
+    .sol-sticky-card--light .sol-card-title { color: var(--ink); }
+    .sol-sticky-card--dark .sol-card-title { color: #fff; }
+    .sol-card-desc {
+      font-size: 15px; line-height: 1.72;
+    }
+    .sol-sticky-card--light .sol-card-desc { color: var(--ink3); }
+    .sol-sticky-card--dark .sol-card-desc { color: rgba(255,255,255,0.45); }
+    .sol-sticky-card--dark .sol-card-num { color: var(--accent3); }
+
+    /* Visual side of sticky card */
+    .sol-card-visual {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 180px;
+      border-radius: calc(var(--radius-lg) - 8px);
+      position: relative;
+    }
+    .sol-sticky-card--light .sol-card-visual {
+      background: var(--canvas);
+      border: 1px solid var(--border);
+    }
+    .sol-sticky-card--dark .sol-card-visual {
+      background: rgba(70,165,148,0.06);
+      border: 1px solid rgba(70,165,148,0.12);
     }
 
-    /* Featured card — Google — spans full width */
-    .sol-featured {
-      grid-column: 1 / -1;
-      background: var(--night);
-      border-color: rgba(70,165,148,0.15);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
-      padding: 44px 40px;
+    /* Visual icon/illustration inside */
+    .sol-visual-icon {
+      width: 64px; height: 64px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
     }
-    .sol-featured::after {
-      border-color: rgba(255,255,255,0.04);
+    .sol-sticky-card--light .sol-visual-icon {
+      background: rgba(46,125,114,0.08);
+      color: var(--accent);
     }
-    .sol-featured:hover {
-      box-shadow: 0 24px 56px -12px rgba(46,125,114,0.14);
-      border-color: var(--accent);
+    .sol-sticky-card--dark .sol-visual-icon {
+      background: rgba(70,165,148,0.12);
+      color: var(--accent3);
     }
-    .sol-featured .sol-card-num { color: var(--accent3); }
-    .sol-featured h3 {
-      color: #fff; font-size: clamp(20px, 2vw, 26px);
-      letter-spacing: -0.03em; margin-bottom: 10px;
-    }
-    .sol-featured p {
-      color: rgba(255,255,255,0.45); font-size: 15px; line-height: 1.72;
-    }
+
     .sol-featured-badge {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
@@ -522,28 +504,16 @@
       padding: 6px 14px; border-radius: 100px;
       margin-top: 16px;
     }
-    .sol-featured-visual {
-      display: flex; align-items: center; justify-content: center;
-      min-height: 160px;
-    }
-    .sol-featured-graphic {
-      width: 100%; max-width: 280px;
-      opacity: 0.7;
-    }
 
-    /* Conclusion */
     .sol-conclusion {
-      margin-top: 64px;
+      margin-top: 80px; text-align: center;
     }
     .sol-conclusion-text {
       font-size: clamp(24px, 3vw, 40px); font-weight: 900;
       color: var(--ink); letter-spacing: -0.03em; line-height: 1.12;
-      max-width: 600px;
     }
 
-    /* ══════════════════════════════════
-       CTA
-    ══════════════════════════════════ */
+    /* ══ CTA ══ */
     #cta {
       background: var(--night2);
       padding: 100px 64px;
@@ -566,18 +536,15 @@
       font-size: clamp(36px, 4.5vw, 60px); font-weight: 900;
       color: #fff; letter-spacing: -0.035em; line-height: 1.04;
     }
-    .cta-right {}
     .cta-sub {
       font-size: 16px; color: rgba(255,255,255,0.38); line-height: 1.76;
       margin-bottom: 36px;
     }
     .cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
     .cta-note {
-      margin-top: 24px; font-size: 13px; color: rgba(255,255,255,0.12);
-      font-weight: 500;
+      margin-top: 24px; font-size: 13px; color: rgba(255,255,255,0.12); font-weight: 500;
     }
 
-    /* ── Footer ── */
     footer {
       background: var(--night2); padding: 28px 64px;
       font-size: 12.5px; color: rgba(255,255,255,0.14);
@@ -585,44 +552,36 @@
       display: flex; justify-content: space-between; align-items: center;
     }
     footer a {
-      color: rgba(255,255,255,0.24); text-decoration: none;
-      transition: color 0.25s;
+      color: rgba(255,255,255,0.24); text-decoration: none; transition: color 0.25s;
     }
     footer a:hover { color: rgba(255,255,255,0.50); }
 
-    /* ══════════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════════ */
+    /* ══ RESPONSIVE ══ */
     @media (max-width: 1060px) {
       .pain-grid { grid-template-columns: 1fr; gap: 48px; }
       .pain-left { position: relative; top: 0; }
+      .pain-video-wrap { max-width: 100%; margin-bottom: 16px; }
       .sol-header { grid-template-columns: 1fr; gap: 20px; }
-      .sol-bento { grid-template-columns: 1fr; }
-      .sol-featured { grid-template-columns: 1fr; gap: 24px; }
-      .sol-featured-visual { display: none; }
+      .sol-card-inner { grid-template-columns: 1fr; gap: 20px; }
+      .sol-card-visual { min-height: 120px; }
       .cta-inner { grid-template-columns: 1fr; gap: 36px; }
       .over-inner { grid-template-columns: 1fr; gap: 48px; }
       .over-foto-wrap { position: relative; top: 0; max-width: 260px; }
     }
     @media (max-width: 768px) {
-      nav { top: 12px; padding: 0 6px 0 22px; height: 48px; gap: 20px; }
+      nav { top: 12px; padding: 0 26px; height: 44px; }
       .nav-logo { font-size: 18px; }
-      .nav-cta { font-size: 12px; padding: 7px 14px; }
       #hero { padding: 100px 24px 80px; }
-      .hero-h1 { letter-spacing: -0.03em; }
       .hero-ctas { flex-direction: column; }
-      .btn-primary, .btn-secondary, .btn-dark { width: 100%; max-width: 300px; justify-content: center; }
-      #stats { padding: 32px 24px; }
-      .stats-inner { flex-direction: column; gap: 0; }
-      .stat + .stat::before { width: 60%; height: 1px; top: 0; left: 20%; }
-      .stat { padding: 20px 0; }
+      .btn-primary, .btn-secondary { width: 100%; max-width: 300px; justify-content: center; }
+      #stats { padding: 28px 24px; }
+      .stats-inner { grid-template-columns: 1fr; gap: 10px; max-width: 320px; }
+      .stat-card { padding: 18px; }
       #pijnpunten, #impact, #over, #oplossing, #cta {
         padding-left: 24px; padding-right: 24px;
         padding-top: 80px; padding-bottom: 80px;
       }
-      .pain-card { padding: 26px 22px; }
-      .sol-card { padding: 28px 24px; }
-      .sol-featured { padding: 28px 24px; }
+      .sol-sticky-card { padding: 28px 24px; }
       .cta-buttons { flex-direction: column; }
       footer { padding: 20px 24px; flex-direction: column; gap: 8px; }
     }
@@ -637,16 +596,12 @@
 </head>
 <body>
 
-<!-- ── Nav — floating pill ── -->
+<!-- Nav — logo only -->
 <nav>
   <a href="/" class="nav-logo">Flow<em>Edge</em></a>
-  <a href="https://wa.me/31XXXXXXXXX" class="nav-cta" target="_blank" rel="noopener">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
-    Stuur een bericht
-  </a>
 </nav>
 
-<!-- ══ HERO — asymmetric ══ -->
+<!-- ══ HERO ══ -->
 <section id="hero">
   <canvas id="heroMesh" aria-hidden="true"></canvas>
   <div class="hero-inner">
@@ -673,33 +628,40 @@
   </div>
 </section>
 
-<!-- ══ STATS — horizontal dividers ══ -->
+<!-- ══ STATS — compact cards ══ -->
 <section id="stats">
   <div class="stats-inner stagger">
-    <div class="stat reveal">
+    <div class="stat-card reveal">
       <p class="stat-num" data-count="85" data-suffix="%">0%</p>
-      <p class="stat-label">van alle zoekopdrachten loopt via Google</p>
+      <p class="stat-label">zoekt via Google</p>
     </div>
-    <div class="stat reveal">
+    <div class="stat-card reveal">
       <p class="stat-num">&lt;1<em>sec</em></p>
-      <p class="stat-label">bepaalt of een bezoeker je vertrouwt</p>
+      <p class="stat-label">om vertrouwen te winnen</p>
     </div>
-    <div class="stat reveal">
+    <div class="stat-card reveal">
       <p class="stat-num">9<em>/10</em></p>
-      <p class="stat-label">lokale websites niet gekoppeld aan Google</p>
+      <p class="stat-label">niet gekoppeld aan Google</p>
     </div>
   </div>
 </section>
 
-<!-- ══ PROBLEM — editorial split ══ -->
+<!-- ══ PROBLEM ══ -->
 <section id="pijnpunten">
   <div class="pain-inner">
     <div class="pain-grid">
 
-      <div class="pain-left reveal">
-        <span class="eyebrow">Herken je dit?</span>
-        <h2 class="pain-headline">Je verliest klanten zonder dat je het doorhebt.</h2>
-        <p class="pain-intro">Je bent goed in wat je doet. Klanten zijn tevreden, via via komt er altijd wel iets binnen. Maar online werkt het anders.</p>
+      <div class="pain-left">
+        <span class="eyebrow reveal">Herken je dit?</span>
+        <h2 class="pain-headline reveal">Je verliest klanten zonder dat je het doorhebt.</h2>
+        <p class="pain-intro reveal">Je bent goed in wat je doet. Klanten zijn tevreden, via via komt er altijd wel iets binnen. Maar online werkt het anders.</p>
+
+        <!-- Scroll-driven video -->
+        <div class="pain-video-wrap reveal">
+          <video id="scrollVideo" muted playsinline preload="auto" poster="frames/frame_0001.jpg">
+            <source src="flow%20edge%20video%20animatie%201.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
 
       <div class="pain-right stagger">
@@ -771,7 +733,7 @@
   </div>
 </section>
 
-<!-- ══ SOLUTION — bento ══ -->
+<!-- ══ SOLUTION — sticky card stack ══ -->
 <section id="oplossing">
   <div class="sol-inner">
 
@@ -781,47 +743,74 @@
         <h2 class="sol-title reveal">Zo zorgt FlowEdge dat jouw online aanwezigheid werkt.</h2>
       </div>
       <div class="sol-header-text reveal">
-        <p>Mensen zoeken jouw dienst elke dag. Maar als je niet gevonden wordt op Google, komen ze niet bij jou uit. En als ze je wel vinden, bepaalt je website of ze blijven.</p>
+        <p>Mensen zoeken jouw dienst elke dag. Maar als je niet gevonden wordt, komen ze niet bij jou uit. En als ze je wel vinden, bepaalt je website of ze blijven.</p>
         <p><strong>Ik zorg ervoor dat beide kloppen.</strong></p>
       </div>
     </div>
 
-    <div class="sol-bento stagger">
-      <div class="sol-card reveal">
-        <div class="sol-card-num">01 — Design</div>
-        <h3>Een strakke, moderne website</h3>
-        <p>Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
-      </div>
-      <div class="sol-card reveal">
-        <div class="sol-card-num">02 — Mobiel</div>
-        <h3>Volledig geoptimaliseerd voor mobiel</h3>
-        <p>Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
-      </div>
-      <div class="sol-card reveal">
-        <div class="sol-card-num">03 — Snelheid</div>
-        <h3>Snelle laadtijden en een soepele ervaring</h3>
-        <p>Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat.</p>
-      </div>
-      <div class="sol-card sol-featured reveal">
-        <div>
-          <div class="sol-card-num">04 — Google</div>
-          <h3>Technisch gekoppeld aan het Google-ecosysteem</h3>
-          <p>De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
-          <span class="sol-featured-badge">Kern van het systeem</span>
-        </div>
-        <div class="sol-featured-visual">
-          <svg class="sol-featured-graphic" viewBox="0 0 280 160" fill="none" aria-hidden="true">
-            <rect x="10" y="20" width="260" height="120" rx="12" stroke="rgba(70,165,148,0.2)" stroke-width="1"/>
-            <rect x="24" y="38" width="80" height="8" rx="4" fill="rgba(70,165,148,0.15)"/>
-            <rect x="24" y="54" width="140" height="6" rx="3" fill="rgba(255,255,255,0.06)"/>
-            <rect x="24" y="66" width="120" height="6" rx="3" fill="rgba(255,255,255,0.04)"/>
-            <rect x="24" y="86" width="60" height="24" rx="12" fill="rgba(70,165,148,0.12)" stroke="rgba(70,165,148,0.25)" stroke-width="1"/>
-            <circle cx="220" cy="70" r="36" stroke="rgba(70,165,148,0.15)" stroke-width="1" stroke-dasharray="4 4"/>
-            <circle cx="220" cy="70" r="16" fill="rgba(70,165,148,0.08)"/>
-            <path d="M216 70l4 4 8-8" stroke="rgba(70,165,148,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+    <div class="sol-stack" id="solStack">
+
+      <div class="sol-sticky-card sol-sticky-card--light" style="top: 80px; margin-bottom: 24px;">
+        <div class="sol-card-inner">
+          <div>
+            <div class="sol-card-num">01 — Design</div>
+            <h3 class="sol-card-title">Een strakke, moderne website</h3>
+            <p class="sol-card-desc">Die direct vertrouwen uitstraalt. Je bezoeker weet binnen seconden dat hij op de juiste plek is.</p>
+          </div>
+          <div class="sol-card-visual">
+            <div class="sol-visual-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div class="sol-sticky-card sol-sticky-card--light" style="top: 100px; margin-bottom: 24px;">
+        <div class="sol-card-inner">
+          <div>
+            <div class="sol-card-num">02 — Mobiel</div>
+            <h3 class="sol-card-title">Volledig geoptimaliseerd voor mobiel</h3>
+            <p class="sol-card-desc">Meer dan de helft van je bezoekers zit op mobiel. Jouw site werkt perfect op elk scherm.</p>
+          </div>
+          <div class="sol-card-visual">
+            <div class="sol-visual-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sol-sticky-card sol-sticky-card--light" style="top: 120px; margin-bottom: 24px;">
+        <div class="sol-card-inner">
+          <div>
+            <div class="sol-card-num">03 — Snelheid</div>
+            <h3 class="sol-card-title">Snelle laadtijden en een soepele ervaring</h3>
+            <p class="sol-card-desc">Een trage website kost direct aanvragen. Jouw site laadt snel op elk apparaat en elke verbinding.</p>
+          </div>
+          <div class="sol-card-visual">
+            <div class="sol-visual-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sol-sticky-card sol-sticky-card--dark" style="top: 140px; margin-bottom: 24px;">
+        <div class="sol-card-inner">
+          <div>
+            <div class="sol-card-num">04 — Google</div>
+            <h3 class="sol-card-title">Technisch gekoppeld aan het Google-ecosysteem</h3>
+            <p class="sol-card-desc">De achterkant van je website is zo ingericht dat Google precies begrijpt wie je bent, waar je werkt en wanneer het je moet tonen aan klanten die actief zoeken.</p>
+            <span class="sol-featured-badge">Kern van het systeem</span>
+          </div>
+          <div class="sol-card-visual">
+            <div class="sol-visual-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="sol-conclusion reveal">
@@ -831,14 +820,14 @@
   </div>
 </section>
 
-<!-- ══ CTA — split ══ -->
+<!-- ══ CTA ══ -->
 <section id="cta">
   <div class="cta-inner">
     <div>
       <span class="eyebrow eyebrow-light reveal">Klaar om te beginnen?</span>
       <h2 class="cta-headline reveal">Klaar om hier werk van te maken?</h2>
     </div>
-    <div class="cta-right">
+    <div>
       <p class="cta-sub reveal">Plan een kort gesprek van 20 minuten. Dan laat ik je precies zien waar jij nu klanten misloopt — en hoe we dat oplossen.</p>
       <div class="cta-buttons reveal">
         <a href="https://wa.me/31XXXXXXXXX" class="btn-primary" target="_blank" rel="noopener">
@@ -855,14 +844,13 @@
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <p>&copy; 2026 FlowEdge</p>
   <a href="mailto:info@flowedge.nl">info@flowedge.nl</a>
 </footer>
 
 <script>
-  /* ── Mesh gradient — hero canvas ── */
+  /* ── Hero mesh gradient ── */
   (function () {
     var canvas = document.getElementById('heroMesh');
     if (!canvas) return;
@@ -870,23 +858,21 @@
     var dpr = window.devicePixelRatio || 1;
     var running = true;
     var blobs = [
-      { x: 0.18, y: 0.30, vx:  0.00014, vy:  0.00009, r: 0.44, color: 'rgba(46,125,114,0.18)' },
-      { x: 0.70, y: 0.55, vx: -0.00018, vy:  0.00012, r: 0.38, color: 'rgba(30,95,88,0.12)' },
-      { x: 0.45, y: 0.80, vx:  0.00011, vy: -0.00016, r: 0.32, color: 'rgba(70,165,148,0.10)' },
-      { x: 0.08, y: 0.65, vx:  0.00015, vy: -0.00010, r: 0.28, color: 'rgba(46,125,114,0.08)' }
+      { x: 0.18, y: 0.30, vx: 0.00014, vy: 0.00009, r: 0.44, color: 'rgba(46,125,114,0.18)' },
+      { x: 0.70, y: 0.55, vx: -0.00018, vy: 0.00012, r: 0.38, color: 'rgba(30,95,88,0.12)' },
+      { x: 0.45, y: 0.80, vx: 0.00011, vy: -0.00016, r: 0.32, color: 'rgba(70,165,148,0.10)' },
+      { x: 0.08, y: 0.65, vx: 0.00015, vy: -0.00010, r: 0.28, color: 'rgba(46,125,114,0.08)' }
     ];
     function resize() {
-      canvas.width  = canvas.offsetWidth  * dpr;
+      canvas.width = canvas.offsetWidth * dpr;
       canvas.height = canvas.offsetHeight * dpr;
     }
     resize();
     window.addEventListener('resize', resize);
-
     var heroObs = new IntersectionObserver(function (entries) {
       running = entries[0].isIntersecting;
     }, { threshold: 0 });
     heroObs.observe(document.getElementById('hero'));
-
     function draw() {
       if (!running) { requestAnimationFrame(draw); return; }
       var w = canvas.width, h = canvas.height;
@@ -907,7 +893,7 @@
     draw();
   })();
 
-  /* ── Scroll reveal with stagger ── */
+  /* ── Scroll reveal ── */
   (function () {
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -943,6 +929,70 @@
       });
     }, { threshold: 0.6 });
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
+  })();
+
+  /* ── Scroll-driven video ── */
+  (function () {
+    function init() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(init, 60);
+        return;
+      }
+      gsap.registerPlugin(ScrollTrigger);
+
+      var video = document.getElementById('scrollVideo');
+      if (!video) return;
+
+      function setup() {
+        var duration = video.duration || 5;
+
+        ScrollTrigger.create({
+          trigger: '#pijnpunten',
+          start: 'top 50%',
+          end: 'bottom 20%',
+          scrub: 0.4,
+          onUpdate: function (self) {
+            if (video.readyState >= 2) {
+              video.currentTime = self.progress * duration;
+            }
+          }
+        });
+      }
+
+      if (video.readyState >= 1) setup();
+      else video.addEventListener('loadedmetadata', setup);
+    }
+    init();
+  })();
+
+  /* ── Sticky card scale on scroll ── */
+  (function () {
+    function init() {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        setTimeout(init, 60);
+        return;
+      }
+      gsap.registerPlugin(ScrollTrigger);
+
+      var cards = document.querySelectorAll('#solStack .sol-sticky-card');
+      cards.forEach(function (card, i) {
+        if (i < cards.length - 1) {
+          ScrollTrigger.create({
+            trigger: card,
+            start: 'top ' + (80 + i * 20) + 'px',
+            end: 'bottom ' + (80 + i * 20) + 'px',
+            scrub: 0.3,
+            onUpdate: function (self) {
+              var scale = 1 - (self.progress * 0.04);
+              var opacity = 1 - (self.progress * 0.3);
+              card.style.transform = 'scale(' + scale + ')';
+              card.style.opacity = opacity;
+            }
+          });
+        }
+      });
+    }
+    init();
   })();
 </script>
 
