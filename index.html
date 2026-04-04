@@ -92,24 +92,21 @@
     }
     .eyebrow-light { color: var(--accent3); }
 
-    /* ══ NAV ══ */
+    /* ══ NAV — floating pill, chameleon (JS controls colors) ══ */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 64px; padding: 0 52px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(12,26,22,0.94);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      z-index: 100;
+      padding: 0 32px; height: 48px;
+      display: flex; align-items: center;
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-radius: 100px;
+      will-change: background-color;
     }
-    .nav-logo { font-size: 34px; font-weight: 800; color: #fff; letter-spacing: -1px; text-decoration: none; }
-    .nav-logo em { font-style: normal; color: var(--accent); }
-    .nav-cta {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--accent); color: #fff; text-decoration: none;
-      font-size: 13.5px; font-weight: 600; padding: 9px 20px;
-      border-radius: 8px; transition: background 0.2s, transform 0.15s;
+    .nav-logo {
+      font-size: 20px; font-weight: 800;
+      letter-spacing: -0.5px; text-decoration: none;
     }
-    .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+    .nav-logo em { font-style: normal; }
 
     /* ══ Buttons ══ */
     .btn-primary {
@@ -582,7 +579,7 @@
       .pain-left { position: relative; top: 0; }
     }
     @media (max-width: 768px) {
-      nav { padding: 0 24px; height: 60px; }
+      nav { padding: 0 26px; height: 44px; top: 12px; }
       #hero { padding: 110px 24px 88px; }
       .hero-h1 { letter-spacing: -2.5px; }
       .hero-ctas { flex-direction: column; align-items: center; }
@@ -612,13 +609,9 @@
 </head>
 <body>
 
-<!-- Nav -->
+<!-- Nav — floating pill, logo only -->
 <nav>
   <a href="/" class="nav-logo">Flow<em>Edge</em></a>
-  <a href="https://wa.me/31XXXXXXXXX" class="nav-cta" target="_blank" rel="noopener">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
-    Stuur een bericht
-  </a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -816,6 +809,77 @@
 </footer>
 
 <script>
+  /* ── Nav chameleon — proportional color blend at section edges ── */
+  (function () {
+    var nav = document.querySelector('nav');
+    var logo = nav.querySelector('.nav-logo');
+    var logoEm = logo.querySelector('em');
+    var darkIds = ['hero', 'impact', 'cta'];
+    var sections = document.querySelectorAll('section');
+    var ticking = false;
+    var BLEND = 24;
+
+    var LP = { bg: 'rgba(255,255,255,0.92)', border: '1px solid rgba(0,0,0,0.06)', shadow: '0 8px 32px rgba(0,0,0,0.08)' };
+    var DP = { bg: 'rgba(17,26,23,0.88)', border: '1px solid rgba(255,255,255,0.06)', shadow: '0 8px 32px rgba(0,0,0,0.18)' };
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function lerpC(c1, c2, t) {
+      return 'rgb(' + Math.round(lerp(c1[0],c2[0],t)) + ',' + Math.round(lerp(c1[1],c2[1],t)) + ',' + Math.round(lerp(c1[2],c2[2],t)) + ')';
+    }
+    function smooth(t) { return t * t * (3 - 2 * t); }
+    function isDark(s) { return darkIds.indexOf(s.id) !== -1; }
+
+    var COL_LOGO_L = [46,125,114];
+    var COL_LOGO_D = [255,255,255];
+    var COL_EM_L = [31,94,89];
+    var COL_EM_D = [70,165,148];
+
+    function apply(t) {
+      /* t=0 → light pill (on dark section), t=1 → dark pill (on light section) */
+      var s = smooth(t);
+      nav.style.background = s < 0.5 ? LP.bg : DP.bg;
+      nav.style.border = s < 0.5 ? LP.border : DP.border;
+      nav.style.boxShadow = s < 0.5 ? LP.shadow : DP.shadow;
+      logo.style.color = lerpC(COL_LOGO_L, COL_LOGO_D, s);
+      logoEm.style.color = lerpC(COL_EM_L, COL_EM_D, s);
+    }
+
+    function update() {
+      var navBot = nav.getBoundingClientRect().bottom;
+      var navMid = nav.getBoundingClientRect().top + nav.offsetHeight / 2;
+      var curDark = false;
+      var blend = -1;
+
+      for (var i = 0; i < sections.length; i++) {
+        var r = sections[i].getBoundingClientRect();
+        if (navMid >= r.top && navMid < r.bottom) {
+          curDark = isDark(sections[i]);
+          var dTop = navBot - r.top;
+          if (dTop >= 0 && dTop < BLEND && i > 0 && isDark(sections[i-1]) !== curDark) {
+            blend = dTop / BLEND;
+          }
+          var dBot = r.bottom - navBot;
+          if (dBot >= 0 && dBot < BLEND && i < sections.length-1 && isDark(sections[i+1]) !== curDark) {
+            blend = 1 - dBot / BLEND;
+          }
+          break;
+        }
+      }
+
+      if (blend >= 0) {
+        apply(curDark ? blend : 1 - blend);
+      } else {
+        apply(curDark ? 0 : 1);
+      }
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
+
   /* ── Hero mesh gradient ── */
   (function () {
     var canvas = document.getElementById('heroMesh');
