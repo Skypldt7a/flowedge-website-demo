@@ -191,13 +191,8 @@
 
     /* ══ STATS — compact modern cards ══ */
     #stats {
-      background: rgba(46,125,114,0.08);
+      background: var(--canvas);
       padding: 40px 64px;
-      border-bottom: 1px solid rgba(46,125,114,0.12);
-      transition: background 0.3s var(--ease-out);
-    }
-    #stats:hover {
-      background: rgba(46,125,114,0.13);
     }
     .stats-inner {
       max-width: 860px; margin: 0 auto;
@@ -615,15 +610,15 @@
       .hero-content {
         display: flex; flex-direction: column;
         justify-content: flex-end;
-        padding-top: 3dvh;
+        padding-top: 11dvh;
         padding-bottom: 0;
       }
       .hero-h1 { letter-spacing: -0.03em; margin-bottom: 20px; }
       .hero-sub { margin-bottom: 0; }
       .hero-bottom {
         margin-top: auto;
-        padding-top: 20px;
-        padding-bottom: calc(env(safe-area-inset-bottom, 12px) + 12px);
+        padding-top: 16px;
+        padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 8px);
       }
       .hero-ctas { flex-direction: column; align-items: stretch; gap: 10px; }
       .hero-note {
