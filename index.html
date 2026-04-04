@@ -221,27 +221,22 @@
       color: var(--ink); letter-spacing: -2.5px; line-height: 1.06;
     }
 
-    /* ── Scroll video ── */
-    .pain-video-wrap {
-      margin-top: 40px;
-      border-radius: 16px;
-      overflow: hidden;
+    /* ── Scroll canvas animation ── */
+    .pain-canvas-wrap {
+      margin-top: 44px;
       position: relative;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+      border-radius: 18px;
+      overflow: hidden;
       will-change: transform, opacity, clip-path;
-      clip-path: inset(12% 12% 12% 12% round 12px);
-      opacity: 0.4;
-      transform: scale(0.92);
-      transition: box-shadow 0.4s ease;
+      clip-path: inset(14% 14% 14% 14% round 14px);
+      opacity: 0;
+      transform: scale(0.88);
     }
-    .pain-video-wrap.is-open {
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-    }
-    .pain-video {
+    .pain-canvas-wrap canvas {
       display: block;
       width: 100%;
       height: auto;
-      border-radius: 16px;
+      border-radius: 18px;
     }
     .pain-text { font-size: 15.5px; color: var(--ink2); line-height: 1.84; }
     .pain-text p + p { margin-top: 18px; }
@@ -489,7 +484,7 @@
       .over-foto { max-width: 240px; }
       .pain-top { grid-template-columns: 1fr; gap: 48px; }
       .pain-left { position: relative; top: 0; }
-      .pain-video-wrap { margin-top: 32px; }
+      .pain-canvas-wrap { margin-top: 28px; }
     }
     @media (max-width: 768px) {
       nav { padding: 0 24px; height: 60px; }
@@ -582,10 +577,8 @@
       <div class="pain-left fade-up">
         <span class="eyebrow">Herken je dit?</span>
         <h2 class="pain-headline">Je verliest klanten<br>zonder dat je het<br>doorhebt.</h2>
-        <div class="pain-video-wrap" id="painVideo">
-          <video class="pain-video" muted playsinline preload="auto">
-            <source src="Flow%20edge%20video%20animation%20.mp4" type="video/mp4">
-          </video>
+        <div class="pain-canvas-wrap" id="painCanvas">
+          <canvas id="frameCanvas" width="720" height="720"></canvas>
         </div>
       </div>
       <div class="pain-right fade-up" data-delay="120">
@@ -832,61 +825,81 @@
     cards.forEach(function (c) { obs.observe(c); });
   })();
 
-  /* ── Scroll-driven video reveal ── */
+  /* ── Frame-by-frame scroll animation ── */
   (function () {
-    function initScrollVideo() {
+    var TOTAL_FRAMES = 151;
+    var FRAME_PATH = 'frames/frame_';
+    var canvas = document.getElementById('frameCanvas');
+    var wrap = document.getElementById('painCanvas');
+    if (!canvas || !wrap) return;
+    var ctx = canvas.getContext('2d');
+
+    /* Preload all frames */
+    var frames = [];
+    var loaded = 0;
+    var currentFrame = 0;
+
+    for (var i = 1; i <= TOTAL_FRAMES; i++) {
+      var img = new Image();
+      img.src = FRAME_PATH + String(i).padStart(4, '0') + '.jpg';
+      (function (idx, image) {
+        image.onload = function () {
+          frames[idx] = image;
+          loaded++;
+          /* Draw first frame immediately */
+          if (idx === 0 && canvas.getContext) {
+            ctx.drawImage(image, 0, 0, 720, 720);
+          }
+          /* All loaded — init scroll */
+          if (loaded === TOTAL_FRAMES) initScroll();
+        };
+      })(i - 1, img);
+    }
+
+    function drawFrame(index) {
+      if (index === currentFrame) return;
+      if (!frames[index]) return;
+      currentFrame = index;
+      ctx.clearRect(0, 0, 720, 720);
+      ctx.drawImage(frames[index], 0, 0, 720, 720);
+    }
+
+    function initScroll() {
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        setTimeout(initScrollVideo, 60);
+        setTimeout(initScroll, 60);
         return;
       }
       gsap.registerPlugin(ScrollTrigger);
 
-      var wrap = document.getElementById('painVideo');
-      if (!wrap) return;
-      var video = wrap.querySelector('video');
-      if (!video) return;
-
-      /* Wait until video metadata is loaded */
-      function setup() {
-        var duration = video.duration || 5;
-
-        /* Reveal animation: clip-path opens, scale goes to 1, opacity to 1 */
-        gsap.to(wrap, {
-          clipPath: 'inset(0% 0% 0% 0% round 16px)',
-          scale: 1,
-          opacity: 1,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: wrap,
-            start: 'top 85%',
-            end: 'top 25%',
-            scrub: 0.6,
-            onEnter: function () { wrap.classList.add('is-open'); },
-            onLeaveBack: function () { wrap.classList.remove('is-open'); }
-          }
-        });
-
-        /* Scrub video playback to scroll position */
-        ScrollTrigger.create({
+      /* Phase 1: Reveal — clip-path opens, scale + opacity animate */
+      gsap.to(wrap, {
+        clipPath: 'inset(0% 0% 0% 0% round 18px)',
+        scale: 1,
+        opacity: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
           trigger: wrap,
-          start: 'top 60%',
-          end: 'bottom 20%',
-          scrub: 0.3,
-          onUpdate: function (self) {
-            if (video.readyState >= 2) {
-              video.currentTime = self.progress * duration;
-            }
-          }
-        });
-      }
+          start: 'top 90%',
+          end: 'top 40%',
+          scrub: 0.5
+        }
+      });
 
-      if (video.readyState >= 1) {
-        setup();
-      } else {
-        video.addEventListener('loadedmetadata', setup);
-      }
+      /* Phase 2: Scrub frames to scroll position */
+      ScrollTrigger.create({
+        trigger: '#pijnpunten',
+        start: 'top 30%',
+        end: 'bottom 10%',
+        scrub: 0.2,
+        onUpdate: function (self) {
+          var frameIndex = Math.min(
+            Math.floor(self.progress * TOTAL_FRAMES),
+            TOTAL_FRAMES - 1
+          );
+          requestAnimationFrame(function () { drawFrame(frameIndex); });
+        }
+      });
     }
-    initScrollVideo();
   })();
 </script>
 
