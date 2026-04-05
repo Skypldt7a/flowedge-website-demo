@@ -55,14 +55,14 @@
       --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
     body {
       font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--canvas);
       color: var(--ink);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      overflow-x: clip;
     }
 
     /* Grain */
@@ -604,6 +604,8 @@
       .pain-left { position: relative; top: 0; }
     }
     @media (max-width: 768px) {
+      nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+      body::after { opacity: 0; }
       nav { padding: 0 26px; height: 44px; top: 12px; }
       #hero {
         padding: 0 24px;
@@ -993,12 +995,14 @@
     update();
   })();
 
-  /* ── Hero mesh gradient ── */
+  /* ── Hero mesh gradient (static on mobile, animated on desktop) ── */
   (function () {
     var canvas = document.getElementById('heroMesh');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
-    var dpr = window.devicePixelRatio || 1;
+    var isMobile = window.matchMedia('(max-width: 768px)').matches || window.matchMedia('(hover: none)').matches;
+    /* Cap DPR at 1.5 to avoid rendering 3x pixels on retina phones */
+    var dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.5);
     var running = true;
     var blobs = [
       { x: 0.18, y: 0.30, vx: 0.00014, vy: 0.00009, r: 0.44, color: 'rgba(46,125,114,0.18)' },
@@ -1012,10 +1016,31 @@
     }
     resize();
     window.addEventListener('resize', resize);
+
+    function drawStatic() {
+      var w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      blobs.forEach(function (b) {
+        var grd = ctx.createRadialGradient(b.x * w, b.y * h, 0, b.x * w, b.y * h, b.r * Math.max(w, h));
+        grd.addColorStop(0, b.color);
+        grd.addColorStop(1, 'transparent');
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.fillStyle = grd; ctx.fillRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'source-over';
+      });
+    }
+
+    if (isMobile) {
+      /* Render once, no animation loop — saves enormous battery/CPU */
+      drawStatic();
+      return;
+    }
+
     var heroObs = new IntersectionObserver(function (entries) {
       running = entries[0].isIntersecting;
     }, { threshold: 0 });
     heroObs.observe(document.getElementById('hero'));
+
     function draw() {
       if (!running) { requestAnimationFrame(draw); return; }
       var w = canvas.width, h = canvas.height;
@@ -1087,8 +1112,9 @@
       var section = document.getElementById('oplossing');
       if (!container || !section) return;
 
+      var isMobile = window.matchMedia('(max-width: 768px)').matches || window.matchMedia('(hover: none)').matches;
       var svgNS = 'http://www.w3.org/2000/svg';
-      var TOTAL = 36;
+      var TOTAL = isMobile ? 18 : 36;
 
       /* Brand colors — thick lines get strong color, thin lines get light */
       var colors = [
@@ -1145,13 +1171,19 @@
         return paths;
       }
 
-      /* Two depth layers: back (blurred, smaller) + front (sharp) */
-      var pathsLeftBack = buildSVG(1, 0);
-      var pathsRightBack = buildSVG(-1, 0);
-      var pathsLeft = buildSVG(1, 1);
-      var pathsRight = buildSVG(-1, 1);
-      var allBack = pathsLeftBack.concat(pathsRightBack);
-      var allPaths = allBack.concat(pathsLeft).concat(pathsRight);
+      /* Two depth layers on desktop, single layer on mobile */
+      var allPaths;
+      if (isMobile) {
+        var pathsLeft = buildSVG(1, 1);
+        var pathsRight = buildSVG(-1, 1);
+        allPaths = pathsLeft.concat(pathsRight);
+      } else {
+        var pathsLeftBack = buildSVG(1, 0);
+        var pathsRightBack = buildSVG(-1, 0);
+        var pathsLeftF = buildSVG(1, 1);
+        var pathsRightF = buildSVG(-1, 1);
+        allPaths = pathsLeftBack.concat(pathsRightBack).concat(pathsLeftF).concat(pathsRightF);
+      }
 
       /* After appending, measure real path lengths */
       allPaths.forEach(function (p) {
