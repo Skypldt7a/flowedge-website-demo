@@ -28,10 +28,8 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-  <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400;500;600;700;800;900&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -684,14 +682,14 @@
 
     footer {
       background: var(--night2); padding: 28px 64px;
-      font-size: 12.5px; color: rgba(255,255,255,0.58);
+      font-size: 12.5px; color: rgba(255,255,255,0.14);
       border-top: 1px solid rgba(255,255,255,0.04);
       display: flex; justify-content: space-between; align-items: center;
     }
     footer a {
-      color: rgba(255,255,255,0.72); text-decoration: none; transition: color 0.25s;
+      color: rgba(255,255,255,0.24); text-decoration: none; transition: color 0.25s;
     }
-    footer a:hover { color: rgba(255,255,255,0.92); }
+    footer a:hover { color: rgba(255,255,255,0.50); }
 
     /* ══ RESPONSIVE ══ */
     @media (max-width: 1060px) {
@@ -767,8 +765,6 @@
 <nav>
   <a href="#top" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"><span>Flow</span><em>Edge</em></a>
 </nav>
-
-<main>
 
 <!-- ══ HERO ══ -->
 <section id="hero">
@@ -891,10 +887,7 @@
   <div class="over-inner">
     <div class="over-foto-wrap reveal">
       <div class="over-foto-bezel">
-        <picture>
-          <source type="image/webp" srcset="foto-sky-320w.webp 320w, foto-sky-600w.webp 600w, foto-sky-900w.webp 900w" sizes="(max-width: 720px) 260px, 280px">
-          <img src="foto-sky-600w.jpg" srcset="foto-sky-320w.jpg 320w, foto-sky-600w.jpg 600w, foto-sky-900w.jpg 900w" sizes="(max-width: 720px) 260px, 280px" width="600" height="600" alt="Sky Lemos — oprichter FlowEdge" class="over-foto" loading="lazy" decoding="async">
-        </picture>
+        <img src="foto-sky.png" alt="Sky Lemos — oprichter FlowEdge" class="over-foto" loading="lazy">
       </div>
     </div>
     <div class="over-text">
@@ -998,8 +991,6 @@
     </div>
   </div>
 </section>
-
-</main>
 
 <footer>
   <p>&copy; 2026 FlowEdge</p>
