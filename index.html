@@ -618,7 +618,7 @@
       .hero-bottom {
         margin-top: auto;
         padding-top: 16px;
-        padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 10dvh);
+        padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 13dvh);
       }
       .hero-ctas { flex-direction: column; align-items: stretch; gap: 10px; }
       .hero-note {
@@ -897,7 +897,6 @@
     }
 
     function update() {
-      var navBot = nav.getBoundingClientRect().bottom;
       var navMid = nav.getBoundingClientRect().top + nav.offsetHeight / 2;
       var curDark = false;
       var blend = -1;
@@ -906,11 +905,11 @@
         var r = sections[i].getBoundingClientRect();
         if (navMid >= r.top && navMid < r.bottom) {
           curDark = isDark(sections[i]);
-          var dTop = navBot - r.top;
+          var dTop = navMid - r.top;
           if (dTop >= 0 && dTop < BLEND && i > 0 && isDark(sections[i-1]) !== curDark) {
             blend = dTop / BLEND;
           }
-          var dBot = r.bottom - navBot;
+          var dBot = r.bottom - navMid;
           if (dBot >= 0 && dBot < BLEND && i < sections.length-1 && isDark(sections[i+1]) !== curDark) {
             blend = 1 - dBot / BLEND;
           }
