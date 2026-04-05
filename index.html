@@ -105,8 +105,15 @@
     .nav-logo {
       font-size: 19px; font-weight: 800;
       letter-spacing: -0.5px; text-decoration: none;
+      display: inline-flex;
     }
-    .nav-logo em { font-style: normal; }
+    .nav-logo span, .nav-logo em {
+      font-style: normal;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
 
     /* ══ Buttons ══ */
     .btn-primary {
@@ -653,7 +660,7 @@
 
 <!-- Nav — floating pill, logo only -->
 <nav>
-  <a href="/" class="nav-logo">Flow<em>Edge</em></a>
+  <a href="/" class="nav-logo"><span>Flow</span><em>Edge</em></a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -861,47 +868,73 @@
 </footer>
 
 <script>
-  /* ── Nav chameleon — proportional color blend at section edges ── */
+  /* ── Nav chameleon — hard split at section edge ── */
   (function () {
     var nav = document.querySelector('nav');
     var logo = nav.querySelector('.nav-logo');
-    var logoEm = logo.querySelector('em');
+    var logoFlow = logo.querySelector('span');
+    var logoEdge = logo.querySelector('em');
     var darkIds = ['hero', 'impact', 'cta'];
     var sections = document.querySelectorAll('section');
     var ticking = false;
-    var BLEND = 24;
 
-    function lerp(a, b, t) { return a + (b - a) * t; }
-    function lerpRGBA(c1, c2, t) {
-      return 'rgba(' + Math.round(lerp(c1[0],c2[0],t)) + ',' + Math.round(lerp(c1[1],c2[1],t)) + ',' + Math.round(lerp(c1[2],c2[2],t)) + ',' + lerp(c1[3],c2[3],t).toFixed(3) + ')';
-    }
-    function lerpC(c1, c2, t) {
-      return 'rgb(' + Math.round(lerp(c1[0],c2[0],t)) + ',' + Math.round(lerp(c1[1],c2[1],t)) + ',' + Math.round(lerp(c1[2],c2[2],t)) + ')';
-    }
     function isDark(s) { return darkIds.indexOf(s.id) !== -1; }
 
     /* Light pill (on dark sections) */
-    var BG_L = [255, 255, 255, 0.92];
-    var BORDER_L = [0, 0, 0, 0.06];
+    var BG_L = 'rgba(255,255,255,0.92)';
+    var BORDER_L = 'rgba(0,0,0,0.06)';
     var SHADOW_L = 0.08;
-    var COL_LOGO_L = [46, 125, 114];
-    var COL_EM_L = [31, 94, 89];
+    var FLOW_L = '#2E7D72';
+    var EDGE_L = '#1F5E59';
 
     /* Dark pill (on light sections) */
-    var BG_D = [17, 26, 23, 0.88];
-    var BORDER_D = [255, 255, 255, 0.06];
+    var BG_D = 'rgba(17,26,23,0.88)';
+    var BORDER_D = 'rgba(255,255,255,0.06)';
     var SHADOW_D = 0.18;
-    var COL_LOGO_D = [255, 255, 255];
-    var COL_EM_D = [70, 165, 148];
+    var FLOW_D = '#FFFFFF';
+    var EDGE_D = '#46A594';
 
-    function apply(t) {
-      /* t=0 → light pill (on dark section), t=1 → dark pill (on light section) */
-      nav.style.background = lerpRGBA(BG_L, BG_D, t);
-      nav.style.border = '1px solid ' + lerpRGBA(BORDER_L, BORDER_D, t);
-      var shadowOp = lerp(SHADOW_L, SHADOW_D, t);
-      nav.style.boxShadow = '0 8px 32px rgba(0,0,0,' + shadowOp.toFixed(3) + ')';
-      logo.style.color = lerpC(COL_LOGO_L, COL_LOGO_D, t);
-      logoEm.style.color = lerpC(COL_EM_L, COL_EM_D, t);
+    function stateFor(dark) {
+      return dark
+        ? { bg: BG_L, border: BORDER_L, shadow: SHADOW_L, flow: FLOW_L, edge: EDGE_L }
+        : { bg: BG_D, border: BORDER_D, shadow: SHADOW_D, flow: FLOW_D, edge: EDGE_D };
+    }
+
+    function applySolid(state) {
+      nav.style.backgroundImage = 'none';
+      nav.style.background = state.bg;
+      nav.style.border = '1px solid ' + state.border;
+      nav.style.boxShadow = '0 8px 32px rgba(0,0,0,' + state.shadow + ')';
+      logoFlow.style.backgroundImage = 'none';
+      logoFlow.style.color = state.flow;
+      logoFlow.style.webkitTextFillColor = state.flow;
+      logoEdge.style.backgroundImage = 'none';
+      logoEdge.style.color = state.edge;
+      logoEdge.style.webkitTextFillColor = state.edge;
+    }
+
+    function applySplit(splitPct, topState, botState) {
+      var p = splitPct.toFixed(2);
+      /* Hard gradient stop — top color ends at p%, bottom starts at p% */
+      var bgGradient = 'linear-gradient(to bottom, ' + topState.bg + ' ' + p + '%, ' + botState.bg + ' ' + p + '%)';
+      nav.style.background = bgGradient;
+
+      /* Border: average at split point */
+      var borderBlend = splitPct / 100;
+      /* Keep border smooth (can't split physically) — pick the dominant one */
+      nav.style.border = '1px solid ' + (borderBlend > 0.5 ? botState.border : topState.border);
+      var shadow = topState.shadow * (1 - borderBlend) + botState.shadow * borderBlend;
+      nav.style.boxShadow = '0 8px 32px rgba(0,0,0,' + shadow.toFixed(3) + ')';
+
+      /* Flow text */
+      logoFlow.style.webkitTextFillColor = 'transparent';
+      logoFlow.style.color = 'transparent';
+      logoFlow.style.backgroundImage = 'linear-gradient(to bottom, ' + topState.flow + ' ' + p + '%, ' + botState.flow + ' ' + p + '%)';
+
+      /* Edge text */
+      logoEdge.style.webkitTextFillColor = 'transparent';
+      logoEdge.style.color = 'transparent';
+      logoEdge.style.backgroundImage = 'linear-gradient(to bottom, ' + topState.edge + ' ' + p + '%, ' + botState.edge + ' ' + p + '%)';
     }
 
     function update() {
@@ -919,34 +952,38 @@
       }
       if (idx < 0) { ticking = false; return; }
 
-      var curT = isDark(sections[idx]) ? 0 : 1;
+      var curDark = isDark(sections[idx]);
       var curRect = sections[idx].getBoundingClientRect();
-      var t = curT;
+      var curState = stateFor(curDark);
 
-      /* TOP edge: blend proportional to how much of the pill is below the edge */
-      /* When navTop = edge: t = prevT. When navBot = edge: fully inside current section, t = curT */
-      var edgeFromTop = curRect.top; /* sectie grens, relatief aan viewport */
-      if (navTop < edgeFromTop && navBot > edgeFromTop && idx > 0) {
-        var prevT = isDark(sections[idx - 1]) ? 0 : 1;
-        if (prevT !== curT) {
-          /* How much of the pill is in the NEW (current) section */
-          var pInCur = (navBot - edgeFromTop) / navH;
-          t = prevT + (curT - prevT) * pInCur;
+      /* Check if pill crosses TOP edge of current section */
+      var edgeTop = curRect.top;
+      if (navTop < edgeTop && navBot > edgeTop && idx > 0) {
+        var prevDark = isDark(sections[idx - 1]);
+        if (prevDark !== curDark) {
+          var splitY = edgeTop - navTop; /* px from top of pill to section edge */
+          var splitPct = (splitY / navH) * 100;
+          applySplit(splitPct, stateFor(prevDark), curState);
+          ticking = false;
+          return;
         }
       }
 
-      /* BOTTOM edge: blend proportional to how much of the pill is above the edge */
-      var edgeFromBot = curRect.bottom;
-      if (navTop < edgeFromBot && navBot > edgeFromBot && idx < sections.length - 1) {
-        var nextT = isDark(sections[idx + 1]) ? 0 : 1;
-        if (nextT !== curT) {
-          /* How much of the pill is in the NEW (next) section */
-          var pInNext = (navBot - edgeFromBot) / navH;
-          t = curT + (nextT - curT) * pInNext;
+      /* Check if pill crosses BOTTOM edge of current section */
+      var edgeBot = curRect.bottom;
+      if (navTop < edgeBot && navBot > edgeBot && idx < sections.length - 1) {
+        var nextDark = isDark(sections[idx + 1]);
+        if (nextDark !== curDark) {
+          var splitY2 = edgeBot - navTop;
+          var splitPct2 = (splitY2 / navH) * 100;
+          applySplit(splitPct2, curState, stateFor(nextDark));
+          ticking = false;
+          return;
         }
       }
 
-      apply(t);
+      /* No split — fully in current section */
+      applySolid(curState);
       ticking = false;
     }
 
