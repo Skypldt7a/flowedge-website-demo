@@ -213,6 +213,7 @@
       padding: 24px 22px;
       text-align: center;
       position: relative;
+      contain: layout style;
       transition: box-shadow 0.4s var(--ease-out), transform 0.3s var(--ease-out), border-color 0.4s;
     }
     .stat-card::after {
@@ -232,6 +233,8 @@
       color: var(--ink); letter-spacing: -0.04em; line-height: 1;
       margin-bottom: 6px;
       font-variant-numeric: tabular-nums;
+      will-change: contents;
+      contain: layout;
     }
     .stat-num em {
       font-style: normal; font-size: 0.55em;
@@ -1074,15 +1077,23 @@
     document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
   })();
 
-  /* ── Odometer counter ── */
+  /* ── Odometer counter — throttled to reduce layout reflow ── */
   (function () {
     function countUp(el, target, suffix, dur) {
       var start = null;
+      var lastVal = -1;
+      var lastUpdate = 0;
+      var THROTTLE = 50; /* update at most every 50ms = 20fps, minimal reflow */
       function tick(ts) {
         if (!start) start = ts;
         var p = Math.min((ts - start) / dur, 1);
         var eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(target * eased) + suffix;
+        var v = Math.round(target * eased);
+        if (v !== lastVal && (ts - lastUpdate > THROTTLE || p === 1)) {
+          el.textContent = v + suffix;
+          lastVal = v;
+          lastUpdate = ts;
+        }
         if (p < 1) requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
@@ -1091,11 +1102,11 @@
       entries.forEach(function (e) {
         if (e.isIntersecting) {
           var el = e.target;
-          countUp(el, parseInt(el.dataset.count), el.dataset.suffix || '', 1600);
+          countUp(el, parseInt(el.dataset.count), el.dataset.suffix || '', 1000);
           obs.unobserve(el);
         }
       });
-    }, { threshold: 0.6 });
+    }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
     document.querySelectorAll('[data-count]').forEach(function (el) { obs.observe(el); });
   })();
 
