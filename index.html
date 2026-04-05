@@ -897,7 +897,11 @@
     }
 
     function update() {
-      var navMid = nav.getBoundingClientRect().top + nav.offsetHeight / 2;
+      var navRect = nav.getBoundingClientRect();
+      var navTop = navRect.top;
+      var navBot = navRect.bottom;
+      var navH = navRect.height;
+      var navMid = navTop + navH / 2;
 
       /* Find which section navMid is in */
       var idx = -1;
@@ -909,26 +913,28 @@
 
       var curT = isDark(sections[idx]) ? 0 : 1;
       var curRect = sections[idx].getBoundingClientRect();
-      var HALF = BLEND / 2;
       var t = curT;
 
-      /* Blend zone centered on TOP edge (12px each side) */
-      var dTop = navMid - curRect.top;
-      if (dTop < HALF && idx > 0) {
+      /* TOP edge: blend proportional to how much of the pill is below the edge */
+      /* When navTop = edge: t = prevT. When navBot = edge: fully inside current section, t = curT */
+      var edgeFromTop = curRect.top; /* sectie grens, relatief aan viewport */
+      if (navTop < edgeFromTop && navBot > edgeFromTop && idx > 0) {
         var prevT = isDark(sections[idx - 1]) ? 0 : 1;
         if (prevT !== curT) {
-          var p = 0.5 + (dTop / BLEND); /* dTop=0 → 0.5, dTop=HALF → 1.0 */
-          t = prevT + (curT - prevT) * p;
+          /* How much of the pill is in the NEW (current) section */
+          var pInCur = (navBot - edgeFromTop) / navH;
+          t = prevT + (curT - prevT) * pInCur;
         }
       }
 
-      /* Blend zone centered on BOTTOM edge (12px each side) */
-      var dBot = curRect.bottom - navMid;
-      if (dBot < HALF && idx < sections.length - 1) {
+      /* BOTTOM edge: blend proportional to how much of the pill is above the edge */
+      var edgeFromBot = curRect.bottom;
+      if (navTop < edgeFromBot && navBot > edgeFromBot && idx < sections.length - 1) {
         var nextT = isDark(sections[idx + 1]) ? 0 : 1;
         if (nextT !== curT) {
-          var p2 = 0.5 - (dBot / BLEND); /* dBot=HALF → 0, dBot=0 → 0.5 */
-          t = curT + (nextT - curT) * p2;
+          /* How much of the pill is in the NEW (next) section */
+          var pInNext = (navBot - edgeFromBot) / navH;
+          t = curT + (nextT - curT) * pInNext;
         }
       }
 
