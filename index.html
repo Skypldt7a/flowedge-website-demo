@@ -196,51 +196,120 @@
     .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
     .hero-note { font-size: 13px; color: rgba(255,255,255,0.14); font-weight: 500; }
 
-    /* ══ STATS — compact modern cards ══ */
+    /* ══ STATS — editorial asymmetric bar ══ */
     #stats {
       background: var(--canvas);
-      padding: 40px 64px;
+      padding: 56px 64px;
     }
     .stats-inner {
-      max-width: 860px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 3fr 2fr;
+      gap: 16px;
     }
-    .stat-card {
-      background: var(--canvas);
+
+    /* Feature stat — dominant */
+    .stat-feature {
+      background: linear-gradient(135deg, rgba(46,125,114,0.06), rgba(70,165,148,0.03));
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 36px 38px;
+      position: relative;
+      contain: layout style;
+      transition: box-shadow 0.4s var(--ease-out), transform 0.3s var(--ease-out);
+      display: flex; flex-direction: column; justify-content: space-between;
+      min-height: 180px;
+    }
+    .stat-feature::after {
+      content: '';
+      position: absolute; inset: 3px 3px 3px 0;
+      border-radius: calc(var(--radius) - 3px);
+      border: 1px solid rgba(255,255,255,0.5);
+      pointer-events: none;
+    }
+    .stat-feature:hover {
+      box-shadow: 0 16px 48px -12px rgba(46,125,114,0.14);
+      transform: translateY(-2px);
+    }
+    .stat-feature-head {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 8px;
+    }
+    .stat-icon {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      background: rgba(46,125,114,0.10);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .stat-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .stat-feature-num {
+      font-size: clamp(64px, 9vw, 112px); font-weight: 900;
+      color: var(--ink); letter-spacing: -0.05em; line-height: 0.9;
+      font-variant-numeric: tabular-nums;
+      will-change: contents;
+      contain: layout;
+      margin-bottom: 12px;
+    }
+    .stat-feature-label {
+      font-size: 15px; font-weight: 500; color: var(--ink2);
+      line-height: 1.5; max-width: 360px;
+    }
+
+    /* Secondary stats — stacked */
+    .stats-secondary {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .stat-small {
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px 22px;
-      text-align: center;
+      padding: 24px 26px;
       position: relative;
       contain: layout style;
       transition: box-shadow 0.4s var(--ease-out), transform 0.3s var(--ease-out), border-color 0.4s;
+      flex: 1;
+      display: flex; flex-direction: column; justify-content: center;
     }
-    .stat-card::after {
+    .stat-small::after {
       content: '';
       position: absolute; inset: 3px;
       border-radius: calc(var(--radius) - 3px);
       border: 1px solid rgba(255,255,255,0.6);
       pointer-events: none;
     }
-    .stat-card:hover {
+    .stat-small:hover {
       box-shadow: 0 12px 36px -8px rgba(46,125,114,0.10);
       border-color: var(--accent3);
       transform: translateY(-2px);
     }
-    .stat-num {
-      font-size: clamp(36px, 4vw, 48px); font-weight: 900;
-      color: var(--ink); letter-spacing: -0.04em; line-height: 1;
-      margin-bottom: 6px;
+    .stat-small-head {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .stat-small-icon {
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px;
+      background: rgba(46,125,114,0.08);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .stat-small-num {
+      font-size: clamp(32px, 3.6vw, 44px); font-weight: 900;
+      color: var(--ink); letter-spacing: -0.03em; line-height: 0.95;
       font-variant-numeric: tabular-nums;
-      will-change: contents;
-      contain: layout;
+      margin-bottom: 6px;
     }
-    .stat-num em {
+    .stat-small-num em {
       font-style: normal; font-size: 0.55em;
-      color: var(--ink3); letter-spacing: -0.02em;
+      color: var(--ink3); letter-spacing: -0.01em;
     }
-    .stat-label {
+    .stat-small-label {
       font-size: 13px; font-weight: 500; color: var(--ink3);
       line-height: 1.4;
     }
@@ -605,6 +674,8 @@
       .over-foto-wrap { position: relative; top: 0; max-width: 260px; margin: 0 auto; }
       .pain-grid { grid-template-columns: 1fr; gap: 48px; }
       .pain-left { position: relative; top: 0; }
+      .stats-inner { grid-template-columns: 1fr; gap: 14px; max-width: 640px; }
+      .stats-secondary { flex-direction: row; }
     }
     @media (max-width: 768px) {
       html { scroll-behavior: auto; }
@@ -639,9 +710,12 @@
         padding-bottom: 4px;
       }
       .btn-primary, .btn-ghost, .btn-secondary { width: 100%; justify-content: center; }
-      #stats { padding: 28px 24px; }
-      .stats-inner { grid-template-columns: 1fr; gap: 10px; max-width: 320px; }
-      .stat-card { padding: 18px; }
+      #stats { padding: 40px 24px; }
+      .stats-inner { grid-template-columns: 1fr; gap: 12px; max-width: 520px; }
+      .stat-feature { padding: 26px 24px; min-height: 0; }
+      .stats-secondary { flex-direction: row; gap: 12px; }
+      .stat-small { padding: 20px 18px; }
+      .stat-small-label { font-size: 12px; }
       #pijnpunten, #impact, #over, #oplossing, #cta {
         padding-left: 24px; padding-right: 24px;
         padding-top: 64px; padding-bottom: 64px;
@@ -698,21 +772,48 @@
   </div>
 </section>
 
-<!-- ══ STATS — compact cards ══ -->
+<!-- ══ STATS — editorial asymmetric bar ══ -->
 <section id="stats">
   <div class="stats-inner stagger">
-    <div class="stat-card reveal">
-      <p class="stat-num" data-count="85" data-suffix="%">0%</p>
-      <p class="stat-label">zoekt via Google</p>
+
+    <!-- Feature stat: dominant -->
+    <div class="stat-feature reveal">
+      <div class="stat-feature-head">
+        <div class="stat-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <span class="stat-eyebrow">De realiteit</span>
+      </div>
+      <div>
+        <p class="stat-feature-num" data-count="85" data-suffix="%">0%</p>
+        <p class="stat-feature-label">van alle zoekopdrachten loopt via Google — als je daar niet staat, besta je niet.</p>
+      </div>
     </div>
-    <div class="stat-card reveal">
-      <p class="stat-num">&lt;1<em>sec</em></p>
-      <p class="stat-label">om vertrouwen te winnen</p>
+
+    <!-- Secondary stats: stacked -->
+    <div class="stats-secondary">
+      <div class="stat-small reveal">
+        <div class="stat-small-head">
+          <div class="stat-small-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <span class="stat-eyebrow">Eerste indruk</span>
+        </div>
+        <p class="stat-small-num">&lt;1<em>sec</em></p>
+        <p class="stat-small-label">om vertrouwen te winnen — of te verliezen.</p>
+      </div>
+      <div class="stat-small reveal">
+        <div class="stat-small-head">
+          <div class="stat-small-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </div>
+          <span class="stat-eyebrow">Technisch</span>
+        </div>
+        <p class="stat-small-num">9<em>/10</em></p>
+        <p class="stat-small-label">lokale websites niet gekoppeld aan Google.</p>
+      </div>
     </div>
-    <div class="stat-card reveal">
-      <p class="stat-num">9<em>/10</em></p>
-      <p class="stat-label">niet gekoppeld aan Google</p>
-    </div>
+
   </div>
 </section>
 
