@@ -85,29 +85,6 @@
     .stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
     .stagger > .reveal:nth-child(4) { transition-delay: 240ms; }
 
-    /* Focus states — accessibility */
-    a:focus-visible, button:focus-visible {
-      outline: 2px solid var(--accent3);
-      outline-offset: 3px;
-      border-radius: 6px;
-    }
-    .btn-primary:focus-visible, .btn-ghost:focus-visible, .btn-secondary:focus-visible,
-    .nav-logo:focus-visible {
-      outline-offset: 4px;
-    }
-
-    /* Reduced motion — respect user preference */
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-      .reveal { opacity: 1; transform: none; }
-    }
-
     .eyebrow {
       font-size: 11px; font-weight: 700; letter-spacing: 2.6px;
       text-transform: uppercase; color: var(--accent); margin-bottom: 18px;
@@ -828,9 +805,9 @@
       <div class="stat-small reveal">
         <div class="stat-small-head">
           <div class="stat-small-icon">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 10a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
           </div>
-          <span class="stat-eyebrow">Niet gekoppeld</span>
+          <span class="stat-eyebrow">Technisch</span>
         </div>
         <p class="stat-small-num">9<em>/10</em></p>
         <p class="stat-small-label">lokale websites niet gekoppeld aan Google.</p>
@@ -998,15 +975,6 @@
 </footer>
 
 <script>
-  /* ── Dev warning: placeholder phone numbers ── */
-  (function () {
-    var hasPlaceholder = /31XXXXXXXXX/.test(document.documentElement.innerHTML);
-    if (hasPlaceholder) {
-      console.warn('%c⚠ FlowEdge: placeholder phone numbers (31XXXXXXXXX) still in page — WhatsApp + Bel links werken niet.',
-        'background:#F59E0B;color:#000;padding:8px 12px;border-radius:4px;font-weight:bold;');
-    }
-  })();
-
   /* ── Nav chameleon — hard split at section edge ── */
   (function () {
     var nav = document.querySelector('nav');
