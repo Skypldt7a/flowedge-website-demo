@@ -871,29 +871,37 @@
     var ticking = false;
     var BLEND = 24;
 
-    var LP = { bg: 'rgba(255,255,255,0.92)', border: '1px solid rgba(0,0,0,0.06)', shadow: '0 8px 32px rgba(0,0,0,0.08)' };
-    var DP = { bg: 'rgba(17,26,23,0.88)', border: '1px solid rgba(255,255,255,0.06)', shadow: '0 8px 32px rgba(0,0,0,0.18)' };
-
     function lerp(a, b, t) { return a + (b - a) * t; }
+    function lerpRGBA(c1, c2, t) {
+      return 'rgba(' + Math.round(lerp(c1[0],c2[0],t)) + ',' + Math.round(lerp(c1[1],c2[1],t)) + ',' + Math.round(lerp(c1[2],c2[2],t)) + ',' + lerp(c1[3],c2[3],t).toFixed(3) + ')';
+    }
     function lerpC(c1, c2, t) {
       return 'rgb(' + Math.round(lerp(c1[0],c2[0],t)) + ',' + Math.round(lerp(c1[1],c2[1],t)) + ',' + Math.round(lerp(c1[2],c2[2],t)) + ')';
     }
-    function smooth(t) { return t * t * (3 - 2 * t); }
     function isDark(s) { return darkIds.indexOf(s.id) !== -1; }
 
-    var COL_LOGO_L = [46,125,114];
-    var COL_LOGO_D = [255,255,255];
-    var COL_EM_L = [31,94,89];
-    var COL_EM_D = [70,165,148];
+    /* Light pill (on dark sections) */
+    var BG_L = [255, 255, 255, 0.92];
+    var BORDER_L = [0, 0, 0, 0.06];
+    var SHADOW_L = 0.08;
+    var COL_LOGO_L = [46, 125, 114];
+    var COL_EM_L = [31, 94, 89];
+
+    /* Dark pill (on light sections) */
+    var BG_D = [17, 26, 23, 0.88];
+    var BORDER_D = [255, 255, 255, 0.06];
+    var SHADOW_D = 0.18;
+    var COL_LOGO_D = [255, 255, 255];
+    var COL_EM_D = [70, 165, 148];
 
     function apply(t) {
       /* t=0 → light pill (on dark section), t=1 → dark pill (on light section) */
-      var s = smooth(t);
-      nav.style.background = s < 0.5 ? LP.bg : DP.bg;
-      nav.style.border = s < 0.5 ? LP.border : DP.border;
-      nav.style.boxShadow = s < 0.5 ? LP.shadow : DP.shadow;
-      logo.style.color = lerpC(COL_LOGO_L, COL_LOGO_D, s);
-      logoEm.style.color = lerpC(COL_EM_L, COL_EM_D, s);
+      nav.style.background = lerpRGBA(BG_L, BG_D, t);
+      nav.style.border = '1px solid ' + lerpRGBA(BORDER_L, BORDER_D, t);
+      var shadowOp = lerp(SHADOW_L, SHADOW_D, t);
+      nav.style.boxShadow = '0 8px 32px rgba(0,0,0,' + shadowOp.toFixed(3) + ')';
+      logo.style.color = lerpC(COL_LOGO_L, COL_LOGO_D, t);
+      logoEm.style.color = lerpC(COL_EM_L, COL_EM_D, t);
     }
 
     function update() {
