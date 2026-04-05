@@ -898,30 +898,41 @@
 
     function update() {
       var navMid = nav.getBoundingClientRect().top + nav.offsetHeight / 2;
-      var curDark = false;
-      var blend = -1;
 
+      /* Find which section navMid is in */
+      var idx = -1;
       for (var i = 0; i < sections.length; i++) {
         var r = sections[i].getBoundingClientRect();
-        if (navMid >= r.top && navMid < r.bottom) {
-          curDark = isDark(sections[i]);
-          var dTop = navMid - r.top;
-          if (dTop >= 0 && dTop < BLEND && i > 0 && isDark(sections[i-1]) !== curDark) {
-            blend = dTop / BLEND;
-          }
-          var dBot = r.bottom - navMid;
-          if (dBot >= 0 && dBot < BLEND && i < sections.length-1 && isDark(sections[i+1]) !== curDark) {
-            blend = 1 - dBot / BLEND;
-          }
-          break;
+        if (navMid >= r.top && navMid < r.bottom) { idx = i; break; }
+      }
+      if (idx < 0) { ticking = false; return; }
+
+      var curT = isDark(sections[idx]) ? 0 : 1;
+      var curRect = sections[idx].getBoundingClientRect();
+      var HALF = BLEND / 2;
+      var t = curT;
+
+      /* Blend zone centered on TOP edge (12px each side) */
+      var dTop = navMid - curRect.top;
+      if (dTop < HALF && idx > 0) {
+        var prevT = isDark(sections[idx - 1]) ? 0 : 1;
+        if (prevT !== curT) {
+          var p = 0.5 + (dTop / BLEND); /* dTop=0 → 0.5, dTop=HALF → 1.0 */
+          t = prevT + (curT - prevT) * p;
         }
       }
 
-      if (blend >= 0) {
-        apply(curDark ? blend : 1 - blend);
-      } else {
-        apply(curDark ? 0 : 1);
+      /* Blend zone centered on BOTTOM edge (12px each side) */
+      var dBot = curRect.bottom - navMid;
+      if (dBot < HALF && idx < sections.length - 1) {
+        var nextT = isDark(sections[idx + 1]) ? 0 : 1;
+        if (nextT !== curT) {
+          var p2 = 0.5 - (dBot / BLEND); /* dBot=HALF → 0, dBot=0 → 0.5 */
+          t = curT + (nextT - curT) * p2;
+        }
       }
+
+      apply(t);
       ticking = false;
     }
 
