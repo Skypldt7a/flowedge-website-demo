@@ -607,6 +607,7 @@
       .pain-left { position: relative; top: 0; }
     }
     @media (max-width: 768px) {
+      html { scroll-behavior: auto; }
       nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
       body::after { opacity: 0; }
       nav { padding: 0 26px; height: 44px; top: 12px; }
@@ -942,32 +943,51 @@
       logoEdge.style.backgroundImage = 'linear-gradient(to bottom, ' + topState.edge + ' ' + p + '%, ' + botState.edge + ' ' + p + '%)';
     }
 
-    function update() {
+    /* Cache section offsets — only recompute on resize to avoid layout thrashing */
+    var cachedNavH = 48;
+    var cachedNavTopPx = 0; /* nav top offset from viewport (fixed) */
+    var secOffsets = []; /* { top: absoluteY, bottom: absoluteY, dark: bool } */
+
+    function measure() {
       var navRect = nav.getBoundingClientRect();
-      var navTop = navRect.top;
-      var navBot = navRect.bottom;
-      var navH = navRect.height;
+      cachedNavH = navRect.height;
+      cachedNavTopPx = navRect.top; /* relative to viewport */
+      secOffsets = [];
+      for (var i = 0; i < sections.length; i++) {
+        var r = sections[i].getBoundingClientRect();
+        var scrollY = window.pageYOffset;
+        secOffsets.push({
+          top: r.top + scrollY,
+          bottom: r.bottom + scrollY,
+          dark: isDark(sections[i])
+        });
+      }
+    }
+
+    function update() {
+      /* Only use scrollY — no getBoundingClientRect calls during scroll */
+      var scrollY = window.pageYOffset;
+      var navTop = cachedNavTopPx + scrollY;
+      var navH = cachedNavH;
+      var navBot = navTop + navH;
       var navMid = navTop + navH / 2;
 
       /* Find which section navMid is in */
       var idx = -1;
-      for (var i = 0; i < sections.length; i++) {
-        var r = sections[i].getBoundingClientRect();
-        if (navMid >= r.top && navMid < r.bottom) { idx = i; break; }
+      for (var i = 0; i < secOffsets.length; i++) {
+        if (navMid >= secOffsets[i].top && navMid < secOffsets[i].bottom) { idx = i; break; }
       }
       if (idx < 0) { ticking = false; return; }
 
-      var curDark = isDark(sections[idx]);
-      var curRect = sections[idx].getBoundingClientRect();
+      var curDark = secOffsets[idx].dark;
       var curState = stateFor(curDark);
 
       /* Check if pill crosses TOP edge of current section */
-      var edgeTop = curRect.top;
+      var edgeTop = secOffsets[idx].top;
       if (navTop < edgeTop && navBot > edgeTop && idx > 0) {
-        var prevDark = isDark(sections[idx - 1]);
+        var prevDark = secOffsets[idx - 1].dark;
         if (prevDark !== curDark) {
-          var splitY = edgeTop - navTop; /* px from top of pill to section edge */
-          var splitPct = (splitY / navH) * 100;
+          var splitPct = ((edgeTop - navTop) / navH) * 100;
           applySplit(splitPct, stateFor(prevDark), curState);
           ticking = false;
           return;
@@ -975,12 +995,11 @@
       }
 
       /* Check if pill crosses BOTTOM edge of current section */
-      var edgeBot = curRect.bottom;
-      if (navTop < edgeBot && navBot > edgeBot && idx < sections.length - 1) {
-        var nextDark = isDark(sections[idx + 1]);
+      var edgeBot = secOffsets[idx].bottom;
+      if (navTop < edgeBot && navBot > edgeBot && idx < secOffsets.length - 1) {
+        var nextDark = secOffsets[idx + 1].dark;
         if (nextDark !== curDark) {
-          var splitY2 = edgeBot - navTop;
-          var splitPct2 = (splitY2 / navH) * 100;
+          var splitPct2 = ((edgeBot - navTop) / navH) * 100;
           applySplit(splitPct2, curState, stateFor(nextDark));
           ticking = false;
           return;
@@ -995,6 +1014,17 @@
     window.addEventListener('scroll', function () {
       if (!ticking) { requestAnimationFrame(update); ticking = true; }
     }, { passive: true });
+
+    var resizeTimeout;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(function () { measure(); update(); }, 150);
+    });
+
+    /* Re-measure after images/fonts load (layout can shift) */
+    window.addEventListener('load', function () { measure(); update(); });
+
+    measure();
     update();
   })();
 
