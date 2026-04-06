@@ -222,11 +222,7 @@
     .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
     .hero-note { font-size: 13px; color: rgba(255,255,255,0.14); font-weight: 500; }
 
-    /* ══ STATS — editorial asymmetric bar ══ */
-    #stats {
-      background: var(--canvas);
-      padding: 56px 64px;
-    }
+    /* ══ STATS — old, removed ══ */
     .stats-inner {
       max-width: 1100px; margin: 0 auto;
       display: grid; grid-template-columns: 3fr 2fr;
@@ -404,7 +400,7 @@
     /* ══ IMPACT ══ */
     #impact {
       background: var(--night);
-      padding: 44px 64px;
+      padding: 100px 64px;
       position: relative; overflow: hidden;
     }
     #impact::before {
@@ -416,7 +412,12 @@
     }
     .impact-inner {
       position: relative; z-index: 1; max-width: 900px; margin: 0 auto;
-      text-align: center;
+      text-align: left;
+    }
+    .impact-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.4px;
+      text-transform: uppercase; color: var(--accent3);
+      margin-bottom: 28px;
     }
     .impact-text {
       font-size: clamp(30px, 4.5vw, 56px); font-weight: 900;
@@ -429,21 +430,34 @@
 
     /* ══ ABOUT ══ */
     #over {
-      background: var(--surface); padding: 80px 52px;
+      background: var(--white); padding: 72px 64px;
     }
     .over-inner {
-      max-width: 1040px; margin: 0 auto;
-      display: grid; grid-template-columns: 260px 1fr;
-      gap: 64px; align-items: center;
+      max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: 280px 1fr;
+      gap: 72px; align-items: start;
+    }
+    .over-foto-wrap { position: sticky; top: 100px; }
+    .over-foto-bezel {
+      background: var(--canvas);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 8px;
+      box-shadow: 0 24px 56px -16px var(--shadow);
     }
     .over-foto {
-      width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: center 5%;
-      border-radius: 14px; display: block;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+      width: 100%; height: auto; aspect-ratio: 1/1 !important; object-fit: cover; object-position: center 20%;
+      border-radius: calc(var(--radius-lg) - 6px); display: block;
     }
     .over-naam {
-      font-size: clamp(26px, 2.6vw, 38px); font-weight: 900;
-      color: var(--ink); letter-spacing: -1.2px; line-height: 1.06; margin-bottom: 16px;
+      font-size: clamp(28px, 3vw, 42px); font-weight: 900;
+      color: var(--ink); letter-spacing: -0.03em; line-height: 1.04; margin-bottom: 20px;
+    }
+    .over-tagline {
+      font-size: 15.5px; font-weight: 500;
+      color: var(--ink2); line-height: 1.8;
+      border-left: 3px solid var(--accent); padding-left: 18px;
+      margin-bottom: 24px;
     }
     .over-bio { font-size: 14.5px; color: var(--ink3); line-height: 1.84; }
     .over-bio p + p { margin-top: 16px; }
@@ -460,20 +474,79 @@
     }
     .over-fact-label { font-size: 12px; color: var(--ink3); margin-top: 5px; font-weight: 500; }
 
+    /* ══ STATS BAR ══ */
+    #stats { background: var(--canvas); padding: 80px 64px 48px; }
+    .stats-grid {
+      max-width: 720px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 18px;
+      position: relative;
+      transition: box-shadow 0.4s var(--ease-out), transform 0.3s var(--ease-out);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .stat-card::after {
+      content: '';
+      position: absolute; inset: 3px;
+      border-radius: calc(var(--radius) - 3px);
+      border: 1px solid rgba(255,255,255,0.5);
+      pointer-events: none;
+    }
+    .stat-card:hover {
+      box-shadow: 0 12px 36px -8px rgba(46,125,114,0.12);
+      transform: translateY(-2px);
+    }
+    .stat-card-head {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px;
+    }
+    .stat-card-icon {
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 8px;
+      background: rgba(46,125,114,0.08);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .stat-card-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .stat-card-num {
+      font-size: clamp(32px, 3.5vw, 44px); font-weight: 900;
+      color: var(--ink); letter-spacing: -0.04em; line-height: 0.9;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 8px;
+    }
+    .stat-card-num em {
+      font-style: normal; font-size: 0.55em;
+      color: var(--ink3); letter-spacing: -0.01em;
+    }
+    .stat-card-label {
+      font-size: 13px; font-weight: 500; color: var(--ink3);
+      line-height: 1.45;
+    }
+
     /* ══ SOLUTION — vertical pillars ══ */
     #oplossing {
       background: var(--canvas);
-      border-top: 1px solid var(--border);
-      padding: 120px 64px 100px;
+      padding: 48px 64px 72px;
     }
-    .sol-inner { max-width: 1400px; margin: 0 auto; }
 
     .sol-header {
       display: grid;
       grid-template-columns: 5fr 7fr;
       gap: 80px; align-items: end;
-      margin-bottom: 80px;
-      padding-top: 20px;
+      padding: 20px 0 28px;
+      position: sticky;
+      top: 88px;
+      z-index: 5;
+      background: var(--canvas);
+      margin-bottom: 32px;
     }
     .sol-headline {
       font-size: clamp(32px, 4vw, 52px); font-weight: 900;
@@ -483,20 +556,24 @@
     .sol-intro {
       font-size: 15.5px; color: var(--ink3); line-height: 1.78;
       max-width: 52ch;
+      transform: translateY(28px);
     }
     .sol-intro strong { color: var(--ink); font-weight: 700; }
 
     /* Sticky card stack */
     .sol-cards-wrap {
-      max-width: 720px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding-bottom: 130px;
+      padding-bottom: 40px;
     }
     .sol-card {
       position: sticky;
       border-radius: 20px;
       padding: 32px 40px 32px;
       margin-bottom: 32px;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 720px;
       min-height: 200px;
       background: var(--white);
       border: 1px solid var(--border);
@@ -504,10 +581,10 @@
       will-change: transform;
       transition: transform 0.1s ease;
     }
-    .sol-card:nth-child(1) { top: 80px;  z-index: 1; }
-    .sol-card:nth-child(2) { top: 100px; z-index: 2; }
-    .sol-card:nth-child(3) { top: 120px; z-index: 3; }
-    .sol-card:nth-child(4) { top: 140px; z-index: 4; }
+    .sol-card:nth-child(2) { top: 296px; z-index: 6; }
+    .sol-card:nth-child(3) { top: 316px; z-index: 7; }
+    .sol-card:nth-child(4) { top: 336px; z-index: 8; }
+    .sol-card:nth-child(5) { top: 356px; z-index: 9; }
     .sol-card--featured {
       background: var(--night);
       border-color: rgba(46,125,114,0.20);
@@ -544,7 +621,11 @@
 
     /* Bottom tagline */
     .sol-bottom {
-      text-align: center; margin-top: 58px;
+      text-align: center;
+      padding-top: 24px;
+      position: relative;
+      z-index: 10;
+      background: var(--canvas);
     }
     .sol-bottom-label {
       font-size: 11px; font-weight: 700; letter-spacing: 2.2px;
@@ -562,6 +643,7 @@
       background: var(--night2);
       padding: 100px 64px;
       position: relative; overflow: hidden;
+      z-index: 20;
     }
     #cta::before {
       content: ''; position: absolute;
@@ -594,6 +676,7 @@
       font-size: 12.5px; color: rgba(255,255,255,0.58);
       border-top: 1px solid rgba(255,255,255,0.04);
       display: flex; justify-content: space-between; align-items: center;
+      position: relative; z-index: 20;
     }
     footer a {
       color: rgba(255,255,255,0.72); text-decoration: none; transition: color 0.25s;
@@ -603,12 +686,13 @@
     /* ══ RESPONSIVE ══ */
     @media (max-width: 1060px) {
       .over-inner { grid-template-columns: 1fr; gap: 40px; }
-      .over-foto { max-width: 240px; }
+      .over-foto-wrap { position: relative; top: 0; max-width: 260px; margin: 0 auto; }
       .pain-grid { grid-template-columns: 1fr; gap: 48px; }
       .pain-left { position: relative; top: 0; }
       .pain-card { padding: 32px 28px 28px; }
-      .stats-inner { grid-template-columns: 1fr; gap: 14px; max-width: 640px; }
-      .stats-secondary { flex-direction: row; }
+      .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .stat-card { padding: 22px 20px; }
+      .stat-card-num { font-size: clamp(32px, 4vw, 48px); }
     }
     @media (max-width: 768px) {
       html { scroll-behavior: auto; }
@@ -643,18 +727,25 @@
         padding-bottom: 4px;
       }
       .btn-primary, .btn-ghost, .btn-secondary { width: 100%; justify-content: center; }
-      #stats { padding: 40px 24px; }
-      .stats-inner { grid-template-columns: 1fr; gap: 12px; max-width: 520px; }
-      .stat-feature { padding: 26px 24px; min-height: 0; }
-      .stats-secondary { flex-direction: row; gap: 12px; }
-      .stat-small { padding: 20px 18px; }
-      .stat-small-label { font-size: 12px; }
+      #stats { padding: 48px 16px 32px; }
+      .stats-grid { max-width: 100%; gap: 8px; }
+      .stat-card { padding: 14px 12px; }
+      .stat-card-head { margin-bottom: 8px; gap: 6px; }
+      .stat-card-icon { width: 22px; height: 22px; border-radius: 6px; }
+      .stat-card-icon svg { width: 12px; height: 12px; }
+      .stat-card-eyebrow { font-size: 8px; letter-spacing: 1.5px; }
+      .stat-card-num { font-size: 24px; margin-bottom: 4px; }
+      .stat-card-num em { font-size: 0.5em; }
+      .stat-card-label { font-size: 10px; line-height: 1.35; }
       #pijnpunten, #impact, #over, #oplossing, #cta {
         padding-left: 24px; padding-right: 24px;
         padding-top: 64px; padding-bottom: 64px;
       }
-      .sol-header { grid-template-columns: 1fr; gap: 24px; }
+      .sol-header { grid-template-columns: 1fr; gap: 24px; margin-bottom: 24px; top: 64px; }
+      .sol-intro { transform: none; }
       .sol-card { padding: 32px 24px; min-height: 0; }
+      .sol-bottom { margin-top: 16px; }
+      .sol-cards-wrap { padding-bottom: 24px; }
       .cta-buttons { flex-direction: column; }
       footer { padding: 20px 24px; }
     }
@@ -753,9 +844,16 @@
 <!-- ══ IMPACT ══ -->
 <section id="impact">
   <div class="impact-inner">
+    <p class="impact-eyebrow reveal">Het probleem</p>
     <p class="impact-text reveal">
       Niet gevonden worden kost je meer klanten dan slecht werk <em>ooit zou doen.</em>
     </p>
+    <div class="impact-cta reveal">
+      <a href="https://wa.me/31XXXXXXXXX" class="btn-primary" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.852L.057 23.854a.5.5 0 0 0 .609.61l6.101-1.525A11.934 11.934 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.857a9.831 9.831 0 0 1-5.032-1.384l-.36-.213-3.724.931.977-3.633-.236-.374A9.839 9.839 0 0 1 2.143 12C2.143 6.542 6.542 2.143 12 2.143c5.458 0 9.857 4.399 9.857 9.857 0 5.458-4.399 9.857-9.857 9.857z"/></svg>
+        Benieuwd waar jij klanten misloopt?
+      </a>
+    </div>
   </div>
 </section>
 
@@ -763,42 +861,74 @@
 <section id="over">
   <div class="over-inner">
     <div class="over-foto-wrap reveal">
-      <picture>
-        <source type="image/webp" srcset="foto-sky-320w.webp 320w, foto-sky-600w.webp 600w, foto-sky-900w.webp 900w" sizes="(max-width: 720px) 240px, 260px">
-        <img src="foto-sky-600w.jpg" srcset="foto-sky-320w.jpg 320w, foto-sky-600w.jpg 600w, foto-sky-900w.jpg 900w" sizes="(max-width: 720px) 240px, 260px" width="600" height="600" alt="Sky Lemos — oprichter FlowEdge" class="over-foto" loading="lazy" decoding="async">
-      </picture>
+      <div class="over-foto-bezel">
+        <picture>
+          <source type="image/webp" srcset="foto-sky-new-320w.webp 320w, foto-sky-new-600w.webp 600w, foto-sky-new-900w.webp 900w" sizes="(max-width: 720px) 260px, 280px">
+          <img src="foto-sky-new-600w.jpg" srcset="foto-sky-new-320w.jpg 320w, foto-sky-new-600w.jpg 600w, foto-sky-new-900w.jpg 900w" sizes="(max-width: 720px) 260px, 280px" width="600" height="600" alt="Sky Lemos — oprichter FlowEdge" class="over-foto" loading="lazy" decoding="async">
+        </picture>
+      </div>
     </div>
     <div class="over-text">
       <span class="eyebrow reveal">Wie ik ben</span>
       <h2 class="over-naam reveal">Ik bouw websites die werken.</h2>
-      <div class="over-bio reveal">
-        <p>Ik zag steeds opnieuw hetzelfde probleem: goede kleine bedrijven die regionaal operationeel zijn die klanten mislopen. Niet omdat ze niet goed zijn in wat ze doen, maar omdat hun online uitstraling dat niet laat zien.</p>
-        <p>Dat is waar FlowEdge het verschil maakt. Ik zorg ervoor dat jouw online aanwezigheid klopt, zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
+      <div class="over-tagline reveal">
+        Niet alleen mooi, maar vindbaar, snel, en gebouwd om klanten binnen te halen.
       </div>
-      <div class="over-facts">
-        <div><div class="over-fact-num">7–10</div><div class="over-fact-label">dagen doorlooptijd</div></div>
-        <div><div class="over-fact-num">100%</div><div class="over-fact-label">focus op vakmensen</div></div>
-        <div><div class="over-fact-num">NL</div><div class="over-fact-label">heel Nederland</div></div>
+      <div class="over-bio reveal">
+        <p>Ik zag steeds opnieuw hetzelfde probleem: kleine bedrijven die regionaal opereren en klanten mislopen. Niet omdat ze niet goed zijn in wat ze doen, maar omdat ze simpelweg niet meegegroeid zijn met de veranderingen van het online landschap.</p>
+        <p>Dat is waar FlowEdge het verschil maakt. Ik zorg ervoor dat jouw online aanwezigheid klopt — zodat je gevonden wordt wanneer mensen zoeken, en overtuigt op het moment dat ze op je website komen.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ SOLUTION — vertical pillars ══ -->
+<!-- ══ STATS BAR ══ -->
+<section id="stats">
+  <div class="stats-grid stagger">
+    <div class="stat-card reveal">
+      <div class="stat-card-head">
+        <div class="stat-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+        <span class="stat-card-eyebrow">De realiteit</span>
+      </div>
+      <p class="stat-card-num" data-count="85" data-suffix="%">0%</p>
+      <p class="stat-card-label">van alle zoekopdrachten loopt via Google.</p>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-card-head">
+        <div class="stat-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <span class="stat-card-eyebrow">Eerste indruk</span>
+      </div>
+      <p class="stat-card-num">&lt;1<em>sec</em></p>
+      <p class="stat-card-label">om vertrouwen te winnen of te verliezen.</p>
+    </div>
+    <div class="stat-card reveal">
+      <div class="stat-card-head">
+        <div class="stat-card-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <span class="stat-card-eyebrow">Technisch</span>
+      </div>
+      <p class="stat-card-num">9<em>/10</em></p>
+      <p class="stat-card-label">lokale websites niet gekoppeld aan Google.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOLUTION — sticky card stack ══ -->
 <section id="oplossing">
-  <div class="sol-inner">
+  <div class="sol-cards-wrap" id="solCards">
 
     <div class="sol-header">
       <div>
         <span class="eyebrow reveal">Wat ik doe</span>
         <h2 class="sol-headline reveal">Vier pijlers. Eén doel.</h2>
       </div>
-      <p class="sol-intro reveal"><strong>Ik bouw websites die onder de motorkap alles doen om jou zichtbaar te maken — zonder dat je duizenden euro's kwijt bent aan advertenties.</strong></p>
+      <p class="sol-intro reveal">Ik bouw websites die onder de motorkap alles doen om jou zichtbaar te maken zonder dat je duizenden euro's kwijt bent aan advertenties.</p>
     </div>
-
-  </div>
-
-    <div class="sol-cards-wrap" id="solCards">
       <div class="sol-card">
         <lord-icon class="sol-card-icon" src="https://cdn.lordicon.com/wloilxuq.json" trigger="hover" colors="primary:#2E7D72,secondary:#46A594" stroke="regular" style="width:44px;height:44px;display:block"></lord-icon>
         <div class="sol-card-num">01 — Design</div>
@@ -1266,7 +1396,7 @@
 
 
 
-  /* ── Sticky card stack — scale + fade on scroll ── */
+  /* ── Sticky card stack — scale on scroll + pinned header ── */
   (function () {
     function init() {
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
@@ -1291,6 +1421,22 @@
           });
         }
       });
+
+      /* Hide sticky header after last card (desktop only) */
+      var header = document.querySelector('.sol-header');
+      var lastCard = cards[cards.length - 1];
+      if (header && lastCard && window.innerWidth > 768) {
+        gsap.to(header, {
+          opacity: 0,
+          pointerEvents: 'none',
+          scrollTrigger: {
+            trigger: lastCard,
+            start: 'bottom 60%',
+            end: 'bottom 30%',
+            scrub: true
+          }
+        });
+      }
     }
     init();
   })();
